@@ -42,7 +42,7 @@ public class MainPage extends javax.swing.JFrame {
         nhanvien.setVisible(false);
     }
 
-    Color COLOR_DEFAULT = new Color(31,58,96);
+    Color COLOR_DEFAULT = new Color(31,58,95);
     Color COLOR_HOVER   = new Color(31,33,95);
     Color COLOR_ACTIVE  = new Color(31,33,95); // đang chọn
     private JPanel currentMenu = null;
