@@ -509,7 +509,7 @@ public class MainPage extends javax.swing.JFrame {
             currentMenu.setBackground(COLOR_ACTIVE);
         }
     });
-}
+}   
     /**
      * @param args the command line arguments
      */
