@@ -274,6 +274,9 @@
               <Dimension value="[136, 55]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnMuonTraMouseClicked"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">
@@ -324,6 +327,9 @@
               <Dimension value="[136, 55]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="pnPhieuPhatMouseClicked"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">

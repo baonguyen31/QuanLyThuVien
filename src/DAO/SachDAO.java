@@ -17,14 +17,16 @@ import javax.swing.JOptionPane;
  * @author noname
  */
 public class SachDAO {
-//    Connection conn;
+    Statement st = null;
+    ResultSet rs = null;
+    Connection conn = null;
     public ArrayList<SachDTO> selectAll(){
         ArrayList<SachDTO> result = new ArrayList<SachDTO>();
         try {
-            Connection conn = JDBCUtil.getConnect();
+            conn = JDBCUtil.getConnect();
             String qry = "Select * from sach";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(qry);
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
             while (rs.next()){
                 SachDTO sach = new SachDTO();
                 sach.setMaSach(rs.getString("MaSach"));
@@ -44,6 +46,27 @@ public class SachDAO {
             
         }
         return result;    
+    }
+    
+    public String getTenSachByMa(String MaSach){
+        String tenSach = null;
+         try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select TenSach from sach where MaSach = "+"'"+ MaSach +"'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            if (rs.next()){
+                tenSach = rs.getString("TenSach");
+            } 
+            System.out.print(qry);
+            JDBCUtil.closeConnection(conn);
+            
+        }catch(java.sql.SQLException e)
+            {
+                    JOptionPane.showMessageDialog(null, "Khong the lay du lieu sach !","Lỗi",JOptionPane.ERROR_MESSAGE);
+            
+        }
+         return tenSach;
     }
     
 }

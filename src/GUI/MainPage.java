@@ -19,6 +19,8 @@ public class MainPage extends javax.swing.JFrame {
     sachForm sach = new sachForm();
     docgiaForm docgia = new docgiaForm();
     nhanvienForm nhanvien = new nhanvienForm();
+    phieuPhatForm phieuphat = new phieuPhatForm();
+    phieuMuonForm phieumuon = new phieuMuonForm();
     
     public MainPage() {
         initComponents();
@@ -37,9 +39,13 @@ public class MainPage extends javax.swing.JFrame {
         content.add(sach);
         content.add(docgia);
         content.add(nhanvien);
+        content.add(phieuphat);
+        content.add(phieumuon);
         sach.setVisible(false);
         docgia.setVisible(false);
         nhanvien.setVisible(false);
+        phieuphat.setVisible(false);
+        phieumuon.setVisible(false);
     }
 
     Color COLOR_DEFAULT = new Color(31,58,95);
@@ -182,6 +188,11 @@ public class MainPage extends javax.swing.JFrame {
         pnMuonTra.setBackground(new java.awt.Color(31, 58, 95));
         pnMuonTra.setForeground(new java.awt.Color(255, 255, 255));
         pnMuonTra.setPreferredSize(new java.awt.Dimension(136, 55));
+        pnMuonTra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnMuonTraMouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -208,6 +219,11 @@ public class MainPage extends javax.swing.JFrame {
         pnPhieuPhat.setBackground(new java.awt.Color(31, 58, 95));
         pnPhieuPhat.setForeground(new java.awt.Color(255, 255, 255));
         pnPhieuPhat.setPreferredSize(new java.awt.Dimension(136, 55));
+        pnPhieuPhat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnPhieuPhatMouseClicked(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -436,6 +452,8 @@ public class MainPage extends javax.swing.JFrame {
         sach.setVisible(true);
         docgia.setVisible(false);
         nhanvien.setVisible(false);
+        phieuphat.setVisible(false);
+        phieumuon.setVisible(false);
     }//GEN-LAST:event_pnSachMouseClicked
 
     private void pnDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDocGiaMouseClicked
@@ -443,6 +461,8 @@ public class MainPage extends javax.swing.JFrame {
         sach.setVisible(false);
         docgia.setVisible(true);
         nhanvien.setVisible(false);
+        phieuphat.setVisible(false);
+        phieumuon.setVisible(false);
     }//GEN-LAST:event_pnDocGiaMouseClicked
 
     private void pnNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNhanVienMouseClicked
@@ -450,6 +470,8 @@ public class MainPage extends javax.swing.JFrame {
         sach.setVisible(false);
         docgia.setVisible(false);
         nhanvien.setVisible(true);
+        phieuphat.setVisible(false);
+        phieumuon.setVisible(false);
     }//GEN-LAST:event_pnNhanVienMouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
@@ -481,6 +503,24 @@ public class MainPage extends javax.swing.JFrame {
         // TODO add your handling code here:
         pnClose.setBackground(new Color(46,92,138));
     }//GEN-LAST:event_pnCloseMouseExited
+
+    private void pnPhieuPhatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnPhieuPhatMouseClicked
+        // TODO add your handling code here:
+        sach.setVisible(false);
+        docgia.setVisible(false);
+        nhanvien.setVisible(false);
+        phieuphat.setVisible(true);
+        phieumuon.setVisible(false);
+    }//GEN-LAST:event_pnPhieuPhatMouseClicked
+
+    private void pnMuonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnMuonTraMouseClicked
+        // TODO add your handling code here:
+        sach.setVisible(false);
+        docgia.setVisible(false);
+        nhanvien.setVisible(false);
+        phieuphat.setVisible(false);
+        phieumuon.setVisible(true);
+    }//GEN-LAST:event_pnMuonTraMouseClicked
 
     private void addMenuEffect(JPanel menuPanel) {
 

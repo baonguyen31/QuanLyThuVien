@@ -14,11 +14,14 @@ import java.util.ArrayList;
  */
 public class SachBUS {
     public static ArrayList<SachDTO> dsSach;
+    private  SachDAO sachDao = new SachDAO();
     public ArrayList<SachDTO> getALL(){
-        SachDAO sachDao = new SachDAO();
         if(dsSach == null ) dsSach = new ArrayList<SachDTO>();
         dsSach = sachDao.selectAll();
         return dsSach;
     }
     
+    public String getTenByMaSach(String MaSach){
+        return sachDao.getTenSachByMa(MaSach);
+    } 
 }

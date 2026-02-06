@@ -3,15 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DTO/SachDTO.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/CTPhieuMuonDAO.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/phieuMuonForm.java</file>
             <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/AddBookForm.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/docgiaForm.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/CTPhieuMuonBUS.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/CT_Phieuphat.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/PhieuPhatDAO.java</file>
             <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/SachDAO.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/CT_PhieuMuon.java</file>
             <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/SachBUS.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/nhanvienForm.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/Util/JDBCUtil.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/sachForm.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/PhieuMuonDAO.java</file>
             <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/MainPage.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/PhieuMuonBUS.java</file>
         </group>
     </open-files>
 </project-private>

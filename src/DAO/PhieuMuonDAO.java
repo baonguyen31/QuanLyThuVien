@@ -1,0 +1,74 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package DAO;
+
+import DTO.PhieuMuonDTO;
+import Util.JDBCUtil;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author noname
+ */
+public class PhieuMuonDAO {
+    Statement st = null;
+    ResultSet rs = null;
+    Connection conn = null;
+    
+    public ArrayList<PhieuMuonDTO> selectAll (){
+        ArrayList<PhieuMuonDTO> phieumuonDs = new ArrayList<>();
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select * from phieumuon";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            while(rs.next()){
+                PhieuMuonDTO phieuMuonDto = new PhieuMuonDTO();
+                phieuMuonDto.setMaPM(rs.getString("MaPM"));
+                phieuMuonDto.setMaDG(rs.getString("MaDG"));
+                phieuMuonDto.setMaNV(rs.getString("MaNV"));
+                phieuMuonDto.setNgayMuon(rs.getString("NgayMuon"));
+                phieuMuonDto.setHanTra(rs.getString("HanTra"));
+                phieuMuonDto.setNgayTraThucTe(rs.getString("NgayTraThucTe"));
+                phieuMuonDto.setTrangThai(rs.getInt("TrangThai"));
+                phieumuonDs.add(phieuMuonDto);
+            }
+            JDBCUtil.closeConnection(conn);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return phieumuonDs;
+    }
+    
+    
+     public PhieuMuonDTO getByMaPM(String MaPM){
+        PhieuMuonDTO phieuMuonDto = null;
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select * from phieumuon where MaPM = " + "'"+ MaPM +"'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            while(rs.next()){
+                phieuMuonDto = new PhieuMuonDTO();
+                phieuMuonDto.setMaPM(rs.getString("MaPM"));
+                phieuMuonDto.setMaDG(rs.getString("MaDG"));
+                phieuMuonDto.setMaNV(rs.getString("MaNV"));
+                phieuMuonDto.setNgayMuon(rs.getString("NgayMuon"));
+                phieuMuonDto.setHanTra(rs.getString("HanTra"));
+                phieuMuonDto.setNgayTraThucTe(rs.getString("NgayTraThucTe"));
+                phieuMuonDto.setTrangThai(rs.getInt("TrangThai"));
+            }
+            JDBCUtil.closeConnection(conn);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return phieuMuonDto;
+    }
+    
+}
