@@ -70,5 +70,23 @@ public class PhieuMuonDAO {
         }
         return phieuMuonDto;
     }
+     
+    public String getLastMaPM() {
+    String sql = "SELECT MaPM FROM phieumuon ORDER BY MaPM DESC LIMIT 1";
+    try {
+        conn = JDBCUtil.getConnect();
+        st = conn.createStatement();
+        rs = st.executeQuery(sql);
+        if (rs.next()) {
+            return rs.getString("MaPM");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+    public void insert(){
+        
+    }
     
 }

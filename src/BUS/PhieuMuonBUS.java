@@ -24,4 +24,28 @@ public class PhieuMuonBUS {
     public PhieuMuonDTO getByMaPM(String MaPM){
         return phieuMuonDao.getByMaPM(MaPM);
   }
+    
+   public String generateMaPM() {
+    PhieuMuonDAO dao = new PhieuMuonDAO();
+    String lastMaPM = dao.getLastMaPM();
+
+    if (lastMaPM == null) {
+        return "PM001";
+    }
+
+    int number = Integer.parseInt(lastMaPM.substring(2));
+    number++;
+
+    if (number < 10) {
+        return "PM00" + number;
+    }else if (number < 100){
+         return "PM0" + number;
+    }else{
+      return "PM" + number;
+            }
+    
+   
+}
+
+
 }
