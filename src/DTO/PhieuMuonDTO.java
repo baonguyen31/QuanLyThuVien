@@ -4,6 +4,8 @@
  */
 package DTO;
 
+import java.util.Date;
+
 /**
  *
  * @author noname
@@ -12,15 +14,15 @@ public class PhieuMuonDTO {
     private String MaPM;
     private String MaDG;
     private String MaNV;
-    private String NgayMuon;
-    private String HanTra;
-    private String NgayTraThucTe;
+    private Date NgayMuon;
+    private Date HanTra;
+    private Date NgayTraThucTe;
     private int TrangThai;
 
     public PhieuMuonDTO() {
     }
 
-    public PhieuMuonDTO(String MaPM, String MaDG, String MaNV, String NgayMuon, String HanTra, String NgayTraThucTe, int TrangThai) {
+    public PhieuMuonDTO(String MaPM, String MaDG, String MaNV, Date NgayMuon, Date HanTra, Date NgayTraThucTe, int TrangThai) {
         this.MaPM = MaPM;
         this.MaDG = MaDG;
         this.MaNV = MaNV;
@@ -54,29 +56,31 @@ public class PhieuMuonDTO {
         this.MaNV = MaNV;
     }
 
-    public String getNgayMuon() {
+    public Date getNgayMuon() {
         return NgayMuon;
     }
 
-    public void setNgayMuon(String NgayMuon) {
+    public void setNgayMuon(Date NgayMuon) {
         this.NgayMuon = NgayMuon;
     }
 
-    public String getHanTra() {
+    public Date getHanTra() {
         return HanTra;
     }
 
-    public void setHanTra(String HanTra) {
+    public void setHanTra(Date HanTra) {
         this.HanTra = HanTra;
     }
 
-    public String getNgayTraThucTe() {
+    public Date getNgayTraThucTe() {
         return NgayTraThucTe;
     }
 
-    public void setNgayTraThucTe(String NgayTraThucTe) {
+    public void setNgayTraThucTe(Date NgayTraThucTe) {
         this.NgayTraThucTe = NgayTraThucTe;
     }
+
+    
 
     public int getTrangThai() {
         return TrangThai;

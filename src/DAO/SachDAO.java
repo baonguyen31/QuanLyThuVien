@@ -58,7 +58,7 @@ public class SachDAO {
             if (rs.next()){
                 tenSach = rs.getString("TenSach");
             } 
-            System.out.print(qry);
+//            System.out.print(qry);
             JDBCUtil.closeConnection(conn);
             
         }catch(java.sql.SQLException e)

@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import java.awt.CardLayout;
 import java.awt.Color;
+import javax.smartcardio.Card;
 import javax.swing.JPanel;
 
 
@@ -16,11 +18,13 @@ public class MainPage extends javax.swing.JFrame {
     /**
      * Creates new form MainPage
      */
+    CardLayout cardlayout;
     sachForm sach = new sachForm();
     docgiaForm docgia = new docgiaForm();
     nhanvienForm nhanvien = new nhanvienForm();
     phieuPhatForm phieuphat = new phieuPhatForm();
-    phieuMuonForm phieumuon = new phieuMuonForm();
+    phieuMuonForm phieumuon = new phieuMuonForm(this);
+    AddPhieuMuon addPM = new AddPhieuMuon(this);
     
     public MainPage() {
         initComponents();
@@ -33,19 +37,23 @@ public class MainPage extends javax.swing.JFrame {
         addMenuEffect(pnThongKe);
 
     // Mặc định chọn Sách
+        
+        cardlayout = (CardLayout) content.getLayout();
         currentMenu = pnSach;
         pnSach.setBackground(COLOR_ACTIVE);
-        
-        content.add(sach);
-        content.add(docgia);
-        content.add(nhanvien);
-        content.add(phieuphat);
-        content.add(phieumuon);
+
+        content.add(sach, "sach_list");
+        content.add(docgia, "docgia_list");
+        content.add(nhanvien, "nhanvien_list");
+        content.add(phieuphat, "phieuphat_list");
+        content.add(phieumuon,"phieumuon_list");
+        content.add(addPM,"addPM" );
         sach.setVisible(false);
         docgia.setVisible(false);
         nhanvien.setVisible(false);
         phieuphat.setVisible(false);
         phieumuon.setVisible(false);
+        
     }
 
     Color COLOR_DEFAULT = new Color(31,58,95);
@@ -447,31 +455,47 @@ public class MainPage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void pnSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnSachMouseClicked
         // TODO add your handling code here:
-        sach.setVisible(true);
-        docgia.setVisible(false);
-        nhanvien.setVisible(false);
-        phieuphat.setVisible(false);
-        phieumuon.setVisible(false);
+//        sach.setVisible(true);
+//        docgia.setVisible(false);
+//        nhanvien.setVisible(false);
+//        phieuphat.setVisible(false);
+//        phieumuon.setVisible(false);
+          cardlayout.show(content, "sach_list");
     }//GEN-LAST:event_pnSachMouseClicked
-
+    public void showPMList() {
+        cardlayout.show(content, "phieumuon_list");
+}
+    public void showAddPhieuMuon() {
+        addPM.initAddMode();        // reset form
+        cardlayout.show(content, "addPM");
+}
+    public void showEditPhieuMuon(String maPM) {
+        addPM.initEditMode(maPM);        // reset form
+        cardlayout.show(content, "addPM");
+}
+    
+    
     private void pnDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDocGiaMouseClicked
         // TODO add your handling code here:
-        sach.setVisible(false);
-        docgia.setVisible(true);
-        nhanvien.setVisible(false);
-        phieuphat.setVisible(false);
-        phieumuon.setVisible(false);
+//        sach.setVisible(false);
+//        docgia.setVisible(true);
+//        nhanvien.setVisible(false);
+//        phieuphat.setVisible(false);
+//        phieumuon.setVisible(false);
+          cardlayout.show(content, "docgia_list");
     }//GEN-LAST:event_pnDocGiaMouseClicked
 
     private void pnNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNhanVienMouseClicked
         // TODO add your handling code here:
-        sach.setVisible(false);
-        docgia.setVisible(false);
-        nhanvien.setVisible(true);
-        phieuphat.setVisible(false);
-        phieumuon.setVisible(false);
+//        sach.setVisible(false);
+//        docgia.setVisible(false);
+//        nhanvien.setVisible(true);
+//        phieuphat.setVisible(false);
+//        phieumuon.setVisible(false);
+          cardlayout.show(content, "nhanvien_list");
     }//GEN-LAST:event_pnNhanVienMouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
@@ -506,22 +530,24 @@ public class MainPage extends javax.swing.JFrame {
 
     private void pnPhieuPhatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnPhieuPhatMouseClicked
         // TODO add your handling code here:
-        sach.setVisible(false);
-        docgia.setVisible(false);
-        nhanvien.setVisible(false);
-        phieuphat.setVisible(true);
-        phieumuon.setVisible(false);
+//        sach.setVisible(false);
+//        docgia.setVisible(false);
+//        nhanvien.setVisible(false);
+//        phieuphat.setVisible(true);
+//        phieumuon.setVisible(false);
+          cardlayout.show(content, "phieuphat_list");
     }//GEN-LAST:event_pnPhieuPhatMouseClicked
 
     private void pnMuonTraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnMuonTraMouseClicked
         // TODO add your handling code here:
-        sach.setVisible(false);
-        docgia.setVisible(false);
-        nhanvien.setVisible(false);
-        phieuphat.setVisible(false);
-        phieumuon.setVisible(true);
+//        sach.setVisible(false);
+//        docgia.setVisible(false);
+//        nhanvien.setVisible(false);
+//        phieuphat.setVisible(false);
+//        phieumuon.setVisible(true);
+          cardlayout.show(content, "phieumuon_list");
     }//GEN-LAST:event_pnMuonTraMouseClicked
-
+ 
     private void addMenuEffect(JPanel menuPanel) {
 
     menuPanel.addMouseListener(new java.awt.event.MouseAdapter() {

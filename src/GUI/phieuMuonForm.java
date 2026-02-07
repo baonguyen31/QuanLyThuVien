@@ -4,12 +4,14 @@
  */
 package GUI;
 
+import Content.CT_PhieuMuon;
 import BUS.PhieuMuonBUS;
 import DTO.PhieuMuonDTO;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,10 +23,13 @@ public class phieuMuonForm extends javax.swing.JPanel {
     /**
      * Creates new form phieuMuonForm
      */
-    public phieuMuonForm() {
+    private MainPage mainPage;
+    public phieuMuonForm(MainPage main) {
         initComponents();
+        this.mainPage = main;
         loadData();
-        initEvent();
+        initAdd();
+        initEdit();
     }
 
     /**
@@ -36,14 +41,26 @@ public class phieuMuonForm extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jDialog1 = new javax.swing.JDialog();
         pnTimkiem4 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
-        addBook3 = new javax.swing.JButton();
-        showDetail = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         phieuMuonTable = new javax.swing.JTable();
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         pnTimkiem4.setBackground(new java.awt.Color(255, 255, 255));
         pnTimkiem4.setPreferredSize(new java.awt.Dimension(1237, 60));
@@ -64,29 +81,29 @@ public class phieuMuonForm extends javax.swing.JPanel {
             }
         });
 
-        addBook3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add (1).png"))); // NOI18N
-        addBook3.setText("Thêm");
-        addBook3.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add (1).png"))); // NOI18N
+        btnAdd.setText("Thêm");
+        btnAdd.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addBook3MouseClicked(evt);
+                btnAddMouseClicked(evt);
             }
         });
-        addBook3.addActionListener(new java.awt.event.ActionListener() {
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBook3ActionPerformed(evt);
+                btnAddActionPerformed(evt);
             }
         });
 
-        showDetail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
-        showDetail.setText("Xem chi tiet");
-        showDetail.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/delete.png"))); // NOI18N
+        btnEdit.setText("Xem chi tiet");
+        btnEdit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                showDetailMouseClicked(evt);
+                btnEditMouseClicked(evt);
             }
         });
-        showDetail.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                showDetailActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -96,9 +113,9 @@ public class phieuMuonForm extends javax.swing.JPanel {
             pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addBook3)
+                .addComponent(btnAdd)
                 .addGap(18, 18, 18)
-                .addComponent(showDetail)
+                .addComponent(btnEdit)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -120,8 +137,8 @@ public class phieuMuonForm extends javax.swing.JPanel {
             .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(showDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -163,23 +180,41 @@ public class phieuMuonForm extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void addBook3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBook3MouseClicked
+    private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_addBook3MouseClicked
+    }//GEN-LAST:event_btnAddMouseClicked
 
-    private void addBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBook3ActionPerformed
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-        AddBookForm bookForm = new AddBookForm();
-        bookForm.setVisible(true);
-    }//GEN-LAST:event_addBook3ActionPerformed
+//        AddBookForm bookForm = new AddBookForm();
+//        bookForm.setVisible(true);
+    }//GEN-LAST:event_btnAddActionPerformed
+    private void initAdd(){
+        btnAdd.addActionListener(e -> {
+           mainPage.showAddPhieuMuon();
+        });
+    }
+    private void initEdit(){
+        btnEdit.addActionListener(e -> {
+        int row = phieuMuonTable.getSelectedRow();
+                    if(row == -1 ){
+                       JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 phiếu mượn");
+                            return;
+                        }
+                    String maPm = phieuMuonTable.getValueAt(row, 0).toString();
+//                    btnEdit.addActionListener(e -> {
+                    mainPage.showEditPhieuMuon(maPm);
+                     });
+ }
+    
+    
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditActionPerformed
 
-    private void showDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showDetailActionPerformed
+    private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_showDetailActionPerformed
-
-    private void showDetailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_showDetailMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_showDetailMouseClicked
+    }//GEN-LAST:event_btnEditMouseClicked
     private void loadData(){
         PhieuMuonBUS phieuMuonBus = new PhieuMuonBUS();
         if(phieuMuonBus.dsPhieuMuon == null ) phieuMuonBus.getAll();
@@ -208,41 +243,19 @@ public class phieuMuonForm extends javax.swing.JPanel {
             phieuMuonTable.setModel(modelPm);
         
     }
-    private void initEvent(){
-        showDetail.addActionListener(e -> openDetail());
-    }
-    
-    private void openDetail(){
-//        showDetail.addMouseListener(new MouseAdapter(){
-//            @Override
-//            public void mouseClicked(MouseEvent evt){
-//                System.out.print("clicked");
-//                if(evt.getClickCount() == 2){
-//                     System.out.print("double clicked");
-                    int row = phieuMuonTable.getSelectedRow();
-                    if(row == -1 ){
-                       JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 phiếu mượn");
-                            return;
-                        }
-                    String maPm = phieuMuonTable.getValueAt(row, 0).toString();
-                    CT_PhieuMuon ct = new CT_PhieuMuon(maPm);
-                    ct.setVisible(true);
-                    
-//                }
-//            }
-//    });
- }
+
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addBook3;
+    private javax.swing.JButton btnAdd;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton jButton8;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTable phieuMuonTable;
     private javax.swing.JPanel pnTimkiem4;
-    private javax.swing.JButton showDetail;
     // End of variables declaration//GEN-END:variables
 }

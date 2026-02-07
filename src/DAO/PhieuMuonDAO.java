@@ -33,9 +33,9 @@ public class PhieuMuonDAO {
                 phieuMuonDto.setMaPM(rs.getString("MaPM"));
                 phieuMuonDto.setMaDG(rs.getString("MaDG"));
                 phieuMuonDto.setMaNV(rs.getString("MaNV"));
-                phieuMuonDto.setNgayMuon(rs.getString("NgayMuon"));
-                phieuMuonDto.setHanTra(rs.getString("HanTra"));
-                phieuMuonDto.setNgayTraThucTe(rs.getString("NgayTraThucTe"));
+                phieuMuonDto.setNgayMuon(rs.getDate("NgayMuon"));
+                phieuMuonDto.setHanTra(rs.getDate("HanTra"));
+                phieuMuonDto.setNgayTraThucTe(rs.getDate("NgayTraThucTe"));
                 phieuMuonDto.setTrangThai(rs.getInt("TrangThai"));
                 phieumuonDs.add(phieuMuonDto);
             }
@@ -59,9 +59,9 @@ public class PhieuMuonDAO {
                 phieuMuonDto.setMaPM(rs.getString("MaPM"));
                 phieuMuonDto.setMaDG(rs.getString("MaDG"));
                 phieuMuonDto.setMaNV(rs.getString("MaNV"));
-                phieuMuonDto.setNgayMuon(rs.getString("NgayMuon"));
-                phieuMuonDto.setHanTra(rs.getString("HanTra"));
-                phieuMuonDto.setNgayTraThucTe(rs.getString("NgayTraThucTe"));
+                phieuMuonDto.setNgayMuon(rs.getDate("NgayMuon"));
+                phieuMuonDto.setHanTra(rs.getDate("HanTra"));
+                phieuMuonDto.setNgayTraThucTe(rs.getDate("NgayTraThucTe"));
                 phieuMuonDto.setTrangThai(rs.getInt("TrangThai"));
             }
             JDBCUtil.closeConnection(conn);
