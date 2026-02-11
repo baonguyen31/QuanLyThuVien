@@ -224,6 +224,7 @@ public class LoginForm extends javax.swing.JFrame {
         this.setState(ICONIFIED);
     }//GEN-LAST:event_jLabel6MouseClicked
 
+    //Lưu thong tin nhân viên đã đăng nhập
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
         String maNV = txtMaNV.getText().trim();
@@ -238,7 +239,7 @@ public class LoginForm extends javax.swing.JFrame {
         NhanVienDTO nv = bus.login(maNV, matKhau);
             
         if (nv != null) {
-            Auth.user = nv; // ⭐ LƯU SESSION
+            Auth.user = nv; // ⭐ LƯU SESSION (Nhân viên đã đăng nhập
             System.out.print(nv.getMatKhau()+nv.getMaNV());
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công");
 
@@ -251,6 +252,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jButton2ActionPerformed
 
   

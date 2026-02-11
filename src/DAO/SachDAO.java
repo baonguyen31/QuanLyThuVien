@@ -8,6 +8,7 @@ import DTO.SachDTO;
 import Util.JDBCUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -69,4 +70,52 @@ public class SachDAO {
          return tenSach;
     }
     
+    public boolean giamSoluong(String maSach, int soLuong){
+        try  {
+            conn = JDBCUtil.getConnect();
+            String qry = "Update sach set SoLuong = SoLuong - ";
+            qry += soLuong + " where MaSach = "+ "'" + maSach  + "'";
+            System.out.print(qry);
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            JDBCUtil.closeConnection(conn);
+            return true;           
+    }
+    catch(SQLException e){
+        e.printStackTrace();
+}
+        return false;
+}
+    public boolean tangSoluong(String maSach, int soLuong){
+        try  {
+            conn = JDBCUtil.getConnect();
+            String qry = "Update sach set SoLuong = SoLuong + ";
+            qry += soLuong + "where MaSach = " + "'" + maSach  + "'";
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            JDBCUtil.closeConnection(conn);
+            return true;           
+    }
+    catch(SQLException e){
+        e.printStackTrace();
+}
+        return false;
+}
+    public int getSoluong(String maSach){
+        int soLuong = 0;
+        try  {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select SoLuong from sach where MaSach = " + "'" +maSach + "'" ;
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            if (rs.next()){
+                soLuong = rs.getInt("SoLuong");
+            } 
+            JDBCUtil.closeConnection(conn);
+    }
+    catch(SQLException e){
+        e.printStackTrace();
+}
+        return soLuong;
+}
 }

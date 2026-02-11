@@ -42,6 +42,7 @@ public class sachForm extends javax.swing.JPanel {
         addBook3 = new javax.swing.JButton();
         editBook3 = new javax.swing.JButton();
         deleteBook3 = new javax.swing.JButton();
+        btnAdd1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         sachTable = new javax.swing.JTable();
 
@@ -95,6 +96,19 @@ public class sachForm extends javax.swing.JPanel {
             }
         });
 
+        btnAdd1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add (1).png"))); // NOI18N
+        btnAdd1.setText("Lam moi");
+        btnAdd1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAdd1MouseClicked(evt);
+            }
+        });
+        btnAdd1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdd1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnTimkiem4Layout = new javax.swing.GroupLayout(pnTimkiem4);
         pnTimkiem4.setLayout(pnTimkiem4Layout);
         pnTimkiem4Layout.setHorizontalGroup(
@@ -106,13 +120,15 @@ public class sachForm extends javax.swing.JPanel {
                 .addComponent(editBook3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteBook3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 416, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addGap(159, 159, 159))
+                .addGap(18, 18, 18)
+                .addComponent(btnAdd1)
+                .addGap(37, 37, 37))
         );
         pnTimkiem4Layout.setVerticalGroup(
             pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +145,8 @@ public class sachForm extends javax.swing.JPanel {
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(addBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(editBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deleteBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(deleteBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdd1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -191,6 +208,17 @@ public class sachForm extends javax.swing.JPanel {
     private void deleteBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBook3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteBook3ActionPerformed
+
+    private void btnAdd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAdd1MouseClicked
+
+    private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
+        // TODO add your handling code here:
+        SachBUS sachBus = new SachBUS();
+        sachBus.getALL();
+        loadData();
+    }//GEN-LAST:event_btnAdd1ActionPerformed
     private void customizeTable() {
     sachTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // cho phép chỉnh tay
 
@@ -243,6 +271,7 @@ public class sachForm extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBook3;
+    private javax.swing.JButton btnAdd1;
     private javax.swing.JButton deleteBook3;
     private javax.swing.JButton editBook3;
     private javax.swing.JButton jButton8;

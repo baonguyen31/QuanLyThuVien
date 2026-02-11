@@ -5,12 +5,14 @@
 package DAO;
 
 import DTO.PhieuMuonDTO;
+import Util.FormatDate;
 import Util.JDBCUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -85,8 +87,26 @@ public class PhieuMuonDAO {
     }
     return null;
 }
-    public void insert(){
-        
+    public boolean insert(PhieuMuonDTO pm){
+        try {
+        conn = JDBCUtil.getConnect();
+        String qry = "Insert into phieumuon values(";
+        qry += "'" + pm.getMaPM() + "'";
+        qry += "," +"'" + pm.getMaDG() + "'";
+        qry += "," +"'" + pm.getMaNV() + "'";
+        qry += "," +"'" + new java.sql.Date(pm.getNgayMuon().getTime()) + "'";
+        qry += "," +"'" + new java.sql.Date(pm.getHanTra().getTime()) + "'";
+        qry += ","  + pm.getNgayTraThucTe();
+        qry += "," + pm.getTrangThai()+")";
+        System.out.print(qry);
+        st = conn.createStatement();
+        st.executeUpdate(qry); 
+        JDBCUtil.closeConnection(conn);
+        return true;
+        } catch(SQLException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Thêm phiếu mượn không thành công");
+        }
+        return false;
     }
-    
 }

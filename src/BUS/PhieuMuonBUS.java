@@ -4,9 +4,13 @@
  */
 package BUS;
 
+import DAO.CTPhieuMuonDAO;
 import DAO.PhieuMuonDAO;
+import DAO.SachDAO;
+import DTO.CTPhieuMuonDTO;
 import DTO.PhieuMuonDTO;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 public class PhieuMuonBUS {
     public static ArrayList<PhieuMuonDTO> dsPhieuMuon;
     private PhieuMuonDAO phieuMuonDao = new PhieuMuonDAO();
+    private CTPhieuMuonDAO ctpmDao = new CTPhieuMuonDAO();
     public ArrayList<PhieuMuonDTO> getAll(){
        if(dsPhieuMuon == null ) dsPhieuMuon = new ArrayList<PhieuMuonDTO>();
        dsPhieuMuon = phieuMuonDao.selectAll();
@@ -44,8 +49,40 @@ public class PhieuMuonBUS {
       return "PM" + number;
             }
     
-   
 }
-
-
+   public boolean insert(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){
+//     public void insert(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){
+       SachDAO sachDao = new SachDAO();
+       
+       for (CTPhieuMuonDTO ct : ctpm){
+           int soLuongcon = sachDao.getSoluong(ct.getMaSach());
+           int soLuongmuon = ct.getSoLuong();
+           System.out.print(soLuongcon +"," +soLuongmuon);
+           if (soLuongcon < soLuongmuon){
+                JOptionPane.showMessageDialog(null, "Số lượng sách còn lại không đủ");
+                return false;
+           }
+          boolean sach =  sachDao.giamSoluong(ct.getMaSach(), soLuongmuon);
+           if(!sach){
+               return false;
+           }
+        boolean check = phieuMuonDao.insert(pm);
+//       System.out.println("Insert PM: " + check);
+        if (!check) {
+          System.out.println("PM insert fail");
+          return false;
+       }
+       
+       if (ctpm == null || ctpm.isEmpty()) {
+//          System.out.println("ctpm insert null");
+          return false;
+        }
+        ct.setMaPM(pm.getMaPM());
+        boolean checkCt = ctpmDao.insert(ct);
+           if (!checkCt){
+               return false;
+           }
+       }
+       return true;
+   }
 }
