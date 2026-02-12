@@ -85,4 +85,17 @@ public class PhieuMuonBUS {
        }
        return true;
    }
+   public boolean returnSach(String MaPm){
+       PhieuMuonDTO pm = phieuMuonDao.getByMaPM(MaPm);   
+       ArrayList<CTPhieuMuonDTO> ctpmList = ctpmDao.getCTPMByMaPM(MaPm);
+       SachDAO sachDao = new SachDAO();
+       if (pm == null) return false;
+       
+       for(CTPhieuMuonDTO ct : ctpmList){
+           boolean checkCt = sachDao.tangSoluong(ct.getMaSach(), ct.getSoLuong());
+           if (!checkCt) return false;
+           
+       }            
+       return phieuMuonDao.traSach(MaPm);
+   }
 }

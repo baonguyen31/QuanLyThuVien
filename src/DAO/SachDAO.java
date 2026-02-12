@@ -90,7 +90,8 @@ public class SachDAO {
         try  {
             conn = JDBCUtil.getConnect();
             String qry = "Update sach set SoLuong = SoLuong + ";
-            qry += soLuong + "where MaSach = " + "'" + maSach  + "'";
+            qry += soLuong + " where MaSach = " + "'" + maSach  + "'";
+            System.out.print(qry);
             st = conn.createStatement();
             st.executeUpdate(qry);
             JDBCUtil.closeConnection(conn);
@@ -117,5 +118,5 @@ public class SachDAO {
         e.printStackTrace();
 }
         return soLuong;
-}
+    }
 }

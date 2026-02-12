@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th1 30, 2026 lúc 01:04 PM
+-- Thời gian đã tạo: Th2 12, 2026 lúc 06:51 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -44,7 +44,9 @@ INSERT INTO `ct_phieumuon` (`MaPM`, `MaSach`, `SoLuong`) VALUES
 ('PM003', 'S003', 1),
 ('PM003', 'S004', 1),
 ('PM004', 'S005', 1),
-('PM004', 'S006', 1);
+('PM004', 'S006', 1),
+('PM005', 'S002', 2),
+('PM006', 'S002', 2);
 
 -- --------------------------------------------------------
 
@@ -123,19 +125,20 @@ CREATE TABLE `nhanvien` (
   `Ten` varchar(50) DEFAULT NULL,
   `SDT` varchar(15) DEFAULT NULL,
   `NgaySinh` date DEFAULT NULL,
-  `ChucVu` varchar(50) DEFAULT NULL
+  `ChucVu` varchar(50) DEFAULT NULL,
+  `MatKhau` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`MaNV`, `Ho`, `Ten`, `SDT`, `NgaySinh`, `ChucVu`) VALUES
-('NV01', 'Nguyễn', 'An', '0901234567', '1995-04-12', 'Nhân viên'),
-('NV02', 'Trần', 'Bình', '0912345678', '1992-08-25', 'Nhân viên'),
-('NV03', 'Lê', 'Hà', '0987654321', '1998-01-15', 'Nhân viên'),
-('NV04', 'Phạm', 'Minh', '0978123456', '1996-11-30', 'Nhân viên'),
-('NV05', 'Võ', 'Lan', '0934567890', '1994-06-20', 'Nhân viên');
+INSERT INTO `nhanvien` (`MaNV`, `Ho`, `Ten`, `SDT`, `NgaySinh`, `ChucVu`, `MatKhau`) VALUES
+('NV01', 'Nguyễn', 'An', '0901234567', '1995-04-12', 'Nhân viên', '123456'),
+('NV02', 'Trần', 'Bình', '0912345678', '1992-08-25', 'Nhân viên', '310503'),
+('NV03', 'Lê', 'Hà', '0987654321', '1998-01-15', 'Nhân viên', ''),
+('NV04', 'Phạm', 'Minh', '0978123456', '1996-11-30', 'Nhân viên', ''),
+('NV05', 'Võ', 'Lan', '0934567890', '1994-06-20', 'Nhân viên', '');
 
 -- --------------------------------------------------------
 
@@ -172,7 +175,7 @@ CREATE TABLE `phieumuon` (
   `NgayMuon` date DEFAULT NULL,
   `HanTra` date DEFAULT NULL,
   `NgayTraThucTe` date DEFAULT NULL,
-  `TrangThai` varchar(30) DEFAULT NULL
+  `TrangThai` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -180,10 +183,12 @@ CREATE TABLE `phieumuon` (
 --
 
 INSERT INTO `phieumuon` (`MaPM`, `MaDG`, `MaNV`, `NgayMuon`, `HanTra`, `NgayTraThucTe`, `TrangThai`) VALUES
-('PM001', 'DG01', 'NV01', '2024-10-01', '2024-10-10', NULL, 'Đang mượn'),
-('PM002', 'DG02', 'NV01', '2024-10-02', '2024-10-12', '2024-10-09', 'Đã trả'),
-('PM003', 'DG03', 'NV02', '2024-10-03', '2024-10-13', NULL, 'Quá hạn'),
-('PM004', 'DG01', 'NV02', '2024-10-05', '2024-10-15', NULL, 'Đang mượn');
+('PM001', 'DG01', 'NV01', '2024-10-01', '2024-10-10', NULL, 2),
+('PM002', 'DG02', 'NV01', '2024-10-02', '2024-10-12', '2024-10-09', 1),
+('PM003', 'DG03', 'NV02', '2024-10-03', '2024-10-13', NULL, 0),
+('PM004', 'DG01', 'NV02', '2024-10-05', '2024-10-15', NULL, 0),
+('PM005', 'DG03', 'NV01', '2026-02-19', '2026-02-28', '2026-02-13', 1),
+('PM006', 'DG04', 'NV01', '2026-02-02', '2026-02-15', '2026-02-13', 1);
 
 -- --------------------------------------------------------
 
@@ -248,7 +253,7 @@ CREATE TABLE `sach` (
 
 INSERT INTO `sach` (`MaSach`, `TenSach`, `MaTL`, `MaNXB`, `NgayXuatBan`, `DonGia`, `SoLuong`) VALUES
 ('S001', 'Cho tôi xin một vé đi tuổi thơ', 'TL01', 'NXB01', '2010-06-01', '85000.00', 20),
-('S002', 'Lão Hạc', 'TL01', 'NXB05', '2005-03-15', '45000.00', 15),
+('S002', 'Lão Hạc', 'TL01', 'NXB05', '2005-03-15', '45000.00', 27),
 ('S003', 'Rừng Na Uy', 'TL01', 'NXB05', '2012-09-10', '120000.00', 10),
 ('S004', 'Nhà giả kim', 'TL01', 'NXB04', '2014-01-20', '95000.00', 18),
 ('S005', 'Đắc nhân tâm', 'TL05', 'NXB04', '2016-05-05', '110000.00', 25),

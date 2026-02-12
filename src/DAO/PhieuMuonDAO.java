@@ -109,4 +109,21 @@ public class PhieuMuonDAO {
         }
         return false;
     }
+    public boolean traSach(String maPm){
+        try  {
+            conn = JDBCUtil.getConnect();
+            String qry = "Update phieumuon set TrangThai = 1";
+            qry += " , NgayTraThucTe = CURDATE()";
+            qry += " where MaPM = " + "'" + maPm  + "'";
+            System.out.print(qry);
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            JDBCUtil.closeConnection(conn);
+            return true;           
+    }
+    catch(SQLException e){
+        e.printStackTrace();
+}
+        return false;
+}
 }

@@ -367,8 +367,13 @@ public class AddPhieuMuon extends javax.swing.JPanel {
                 btnTraSach.setVisible(true);
                 btnPhieuphat.setVisible(false);
                 btnTraSach.setText("Trả Sách");
+                
+                if (pm.getTrangThai() == 1) {
+                    btnTraSach.setVisible(false);
+                    btnSave.setEnabled(false);
                 }
-
+                }
+        
         System.out.println("MaPM nhận được: " + maPM);
         loadPMByMaPm(maPM);
         loadData(maPM);
@@ -405,6 +410,7 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         txtNhanVien.setText(Auth.user.getMaNV());
         btnSave.setText("Thêm phiếu");
         btnTraSach.setVisible(false);
+        btnPhieuphat.setVisible(false);
 //        CTPhieuMuonBUS.dsCTPM.clear();
         revalidate();
         repaint();
@@ -481,6 +487,8 @@ public class AddPhieuMuon extends javax.swing.JPanel {
 
     private void btnTraSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraSachActionPerformed
         // TODO add your handling code here:
+        PhieuMuonBUS pmBus = new PhieuMuonBUS();
+        pmBus.returnSach(MaPM);
     }//GEN-LAST:event_btnTraSachActionPerformed
 
     private void btnPhieuphatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuphatActionPerformed
