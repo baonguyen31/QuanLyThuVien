@@ -11,13 +11,13 @@ import java.util.Date;
  * @author PC
  */
 public class DocGiaDTO {
-    public String maDG;
-    public String hoDG;
-    public String tenDG;
-    public String SDT;
-    public Date namSinh;
-    public int trangThai;
-    public String matKhau;
+    private String maDG;
+    private String hoDG;
+    private String tenDG;
+    private String SDT;
+    private Date namSinh;
+    private int trangThai;
+    private String matKhau;
     
     public DocGiaDTO(){}
 

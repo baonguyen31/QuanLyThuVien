@@ -461,6 +461,7 @@ public class MainPage extends javax.swing.JFrame {
 //        phieumuon.setVisible(false);
           cardlayout.show(content, "sach_list");
     }//GEN-LAST:event_pnSachMouseClicked
+   //=====================Phieu muon=======================
     public void showPMList() {
 //        PhieuMuonBUS pmBus  = new PhieuMuonBUS();
 //        pmBus.getAll();
@@ -474,7 +475,7 @@ public class MainPage extends javax.swing.JFrame {
         addPM.initEditMode(maPM);        // reset form
         cardlayout.show(content, "addPM");
 }
-    
+   //================================================================//
     
     private void pnDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDocGiaMouseClicked
         // TODO add your handling code here:

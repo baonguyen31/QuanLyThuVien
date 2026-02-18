@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th2 12, 2026 lúc 06:51 PM
+-- Thời gian đã tạo: Th2 18, 2026 lúc 05:42 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -46,7 +46,15 @@ INSERT INTO `ct_phieumuon` (`MaPM`, `MaSach`, `SoLuong`) VALUES
 ('PM004', 'S005', 1),
 ('PM004', 'S006', 1),
 ('PM005', 'S002', 2),
-('PM006', 'S002', 2);
+('PM006', 'S002', 2),
+('PM007', 'S001', 2),
+('PM009', 'S002', 2),
+('PM009', 'S004', 2),
+('PM010', 'S004', 3),
+('PM010', 'S005', 3),
+('PM011', 'S004', 2),
+('PM011', 'S005', 4),
+('PM012', 'S005', 4);
 
 -- --------------------------------------------------------
 
@@ -86,7 +94,7 @@ CREATE TABLE `docgia` (
   `Ten` varchar(50) DEFAULT NULL,
   `SDT` varchar(15) DEFAULT NULL,
   `DiaChi` varchar(255) DEFAULT NULL,
-  `TrangThai` varchar(30) DEFAULT NULL
+  `TrangThai` int(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -94,13 +102,13 @@ CREATE TABLE `docgia` (
 --
 
 INSERT INTO `docgia` (`MaDG`, `Ho`, `Ten`, `SDT`, `DiaChi`, `TrangThai`) VALUES
-('DG01', 'Nguyễn Văn', 'An', '0901234567', 'Hà Nội', 'Đang hoạt động'),
-('DG02', 'Trần Thị', 'Bình', '0912345678', 'TP. Hồ Chí Minh', 'Đang hoạt động'),
-('DG03', 'Lê Minh', 'Châu', '0923456789', 'Đà Nẵng', 'Đang hoạt động'),
-('DG04', 'Phạm Quốc', 'Dũng', '0934567890', 'Hải Phòng', 'Tạm khóa'),
-('DG05', 'Hoàng Thị', 'Hà', '0945678901', 'Cần Thơ', 'Đang hoạt động'),
-('DG06', 'Vũ Đức', 'Long', '0956789012', 'Bắc Ninh', 'Đang hoạt động'),
-('DG07', 'Đặng Thị', 'Mai', '0967890123', 'Nghệ An', 'Đang hoạt động');
+('DG01', 'Nguyễn Văn', 'An', '0901234567', 'Hà Nội', 0),
+('DG02', 'Trần Thị', 'Bình', '0912345678', 'TP. Hồ Chí Minh', 1),
+('DG03', 'Lê Minh', 'Châu', '0923456789', 'Đà Nẵng', 0),
+('DG04', 'Phạm Quốc', 'Dũng', '0934567890', 'Hải Phòng', 0),
+('DG05', 'Hoàng Thị', 'Hà', '0945678901', 'Cần Thơ', 1),
+('DG06', 'Vũ Đức', 'Long', '0956789012', 'Bắc Ninh', 0),
+('DG07', 'Đặng Thị', 'Mai', '0967890123', 'Nghệ An', 0);
 
 -- --------------------------------------------------------
 
@@ -188,7 +196,13 @@ INSERT INTO `phieumuon` (`MaPM`, `MaDG`, `MaNV`, `NgayMuon`, `HanTra`, `NgayTraT
 ('PM003', 'DG03', 'NV02', '2024-10-03', '2024-10-13', NULL, 0),
 ('PM004', 'DG01', 'NV02', '2024-10-05', '2024-10-15', NULL, 0),
 ('PM005', 'DG03', 'NV01', '2026-02-19', '2026-02-28', '2026-02-13', 1),
-('PM006', 'DG04', 'NV01', '2026-02-02', '2026-02-15', '2026-02-13', 1);
+('PM006', 'DG04', 'NV01', '2026-02-02', '2026-02-15', '2026-02-13', 1),
+('PM007', 'DG01', 'NV01', '2026-02-01', '2026-02-21', NULL, 0),
+('PM008', 'DG01', 'NV01', '2026-02-18', '2026-02-28', NULL, 0),
+('PM009', 'DG03', 'NV01', '2026-02-18', '2026-02-28', NULL, 0),
+('PM010', 'DG03', 'NV01', '2026-02-18', '2026-02-28', NULL, 0),
+('PM011', 'DG03', 'NV01', '2026-02-11', '2026-02-28', '2026-02-18', 1),
+('PM012', 'DG03', 'NV01', '2026-02-11', '2026-02-28', '2026-02-18', 1);
 
 -- --------------------------------------------------------
 
@@ -252,10 +266,10 @@ CREATE TABLE `sach` (
 --
 
 INSERT INTO `sach` (`MaSach`, `TenSach`, `MaTL`, `MaNXB`, `NgayXuatBan`, `DonGia`, `SoLuong`) VALUES
-('S001', 'Cho tôi xin một vé đi tuổi thơ', 'TL01', 'NXB01', '2010-06-01', '85000.00', 20),
-('S002', 'Lão Hạc', 'TL01', 'NXB05', '2005-03-15', '45000.00', 27),
+('S001', 'Cho tôi xin một vé đi tuổi thơ', 'TL01', 'NXB01', '2010-06-01', '85000.00', 18),
+('S002', 'Lão Hạc', 'TL01', 'NXB05', '2005-03-15', '45000.00', 23),
 ('S003', 'Rừng Na Uy', 'TL01', 'NXB05', '2012-09-10', '120000.00', 10),
-('S004', 'Nhà giả kim', 'TL01', 'NXB04', '2014-01-20', '95000.00', 18),
+('S004', 'Nhà giả kim', 'TL01', 'NXB04', '2014-01-20', '95000.00', 14),
 ('S005', 'Đắc nhân tâm', 'TL05', 'NXB04', '2016-05-05', '110000.00', 25),
 ('S006', 'Giáo trình Java cơ bản', 'TL03', 'NXB03', '2020-08-01', '150000.00', 30),
 ('S007', 'Doraemon tập 1', 'TL04', 'NXB02', '2018-02-12', '30000.00', 40);

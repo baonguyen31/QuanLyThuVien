@@ -52,33 +52,36 @@ public class PhieuMuonBUS {
 }
    public boolean insert(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){
 //     public void insert(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){
+       int soLuongmuon = 0; 
+       int soLuongcon = 0;
+       
        SachDAO sachDao = new SachDAO();
-       
-       for (CTPhieuMuonDTO ct : ctpm){
-           int soLuongcon = sachDao.getSoluong(ct.getMaSach());
-           int soLuongmuon = ct.getSoLuong();
-           System.out.print(soLuongcon +"," +soLuongmuon);
-           if (soLuongcon < soLuongmuon){
-                JOptionPane.showMessageDialog(null, "Số lượng sách còn lại không đủ");
-                return false;
-           }
-          boolean sach =  sachDao.giamSoluong(ct.getMaSach(), soLuongmuon);
-           if(!sach){
-               return false;
-           }
-        boolean check = phieuMuonDao.insert(pm);
-//       System.out.println("Insert PM: " + check);
-        if (!check) {
-          System.out.println("PM insert fail");
-          return false;
-       }
-       
        if (ctpm == null || ctpm.isEmpty()) {
 //          System.out.println("ctpm insert null");
           return false;
         }
-        ct.setMaPM(pm.getMaPM());
-        boolean checkCt = ctpmDao.insert(ct);
+       for (CTPhieuMuonDTO ct : ctpm){
+           soLuongmuon = ct.getSoLuong();
+           soLuongcon = sachDao.getSoluong(ct.getMaSach());
+           if (soLuongcon < soLuongmuon){            
+                JOptionPane.showMessageDialog(null, "Số lượng sách còn lại không đủ");
+                return false;
+           }
+       }
+       boolean check = phieuMuonDao.insert(pm);
+//       System.out.println("Insert PM: " + check);
+        if (!check) {
+          System.out.println("PM insert fail");
+          return false;
+        }
+        for (CTPhieuMuonDTO ct : ctpm){
+           soLuongmuon = ct.getSoLuong();
+           boolean sach =  sachDao.giamSoluong(ct.getMaSach(), soLuongmuon);
+           if(!sach){
+               return false;
+           }
+           ct.setMaPM(pm.getMaPM());
+           boolean checkCt = ctpmDao.insert(ct);
            if (!checkCt){
                return false;
            }
