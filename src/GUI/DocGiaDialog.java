@@ -6,6 +6,7 @@ package GUI;
 
 import BUS.DocGiaBUS;
 import DTO.DocGiaDTO;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,11 +20,13 @@ public class DocGiaDialog extends javax.swing.JDialog {
      * Creates new form docGiaLog
      */
     private DocGiaDTO selectedDocGia;
+    private ArrayList<DocGiaDTO> list = new ArrayList<>();
     public DocGiaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         setUndecorated(true);
         initComponents();
-        loadData();
+//        loadData(list);
+        loadList();
         tblDocGia.setDefaultEditor(Object.class, null);
     }
 
@@ -40,7 +43,7 @@ public class DocGiaDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDocGia = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtDocGia = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -71,6 +74,12 @@ public class DocGiaDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Tìm kiếm");
 
+        txtDocGia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtDocGiaKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,7 +93,7 @@ public class DocGiaDialog extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDocGia, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2)
                             .addGap(21, 21, 21)))
@@ -96,10 +105,11 @@ public class DocGiaDialog extends javax.swing.JDialog {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtDocGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(18, 18, 18)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -134,16 +144,32 @@ public class DocGiaDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblDocGiaMouseClicked
 
-    public void loadData(){
+    private void txtDocGiaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDocGiaKeyReleased
+        loadList();
+         System.out.print("Da nhap tu");
+    }//GEN-LAST:event_txtDocGiaKeyReleased
+    public void loadList(){
+        String keyWord = txtDocGia.getText().trim();
         DocGiaBUS bus = new DocGiaBUS();
-        if(bus.dsdg == null) bus.getAll();
+        
+        if(keyWord.isEmpty()) list = bus.getAll();
+        else{
+            list = bus.searchList(keyWord);            
+        }
+        loadData(list);
+        System.out.print(list.size());
+    }
+    public void loadData(ArrayList<DocGiaDTO> list){
+//        DocGiaBUS bus = new DocGiaBUS();
+//        if(bus.dsdg == null) bus.getAll();
         Vector header = new Vector();
         header.add("Mã Độc Giả");
         header.add("Tên Độc Giả");
         
         DefaultTableModel model = new DefaultTableModel(header,0);
+        model.setRowCount(0); //reload bảng khi có keyWord mới
         
-        for(DocGiaDTO dto : bus.dsdg){
+        for(DocGiaDTO dto : list){
             Vector row = new Vector();
             row.add(dto.getMaDG());
             row.add(dto.getHoDG() + " " + dto.getTenDG());
@@ -202,7 +228,7 @@ public class DocGiaDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblDocGia;
+    private javax.swing.JTextField txtDocGia;
     // End of variables declaration//GEN-END:variables
 }

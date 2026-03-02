@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author noname
@@ -13,7 +15,9 @@ public class phieuPhatForm extends javax.swing.JPanel {
     /**
      * Creates new form phieuPhatForm
      */
-    public phieuPhatForm() {
+    private MainPage mainPage;
+    public phieuPhatForm(MainPage main) {
+        this.mainPage = main;
         initComponents();
     }
 
@@ -30,11 +34,10 @@ public class phieuPhatForm extends javax.swing.JPanel {
         jLabel16 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
-        addBook3 = new javax.swing.JButton();
-        editBook3 = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         deleteBook3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        sachTable = new javax.swing.JTable();
+        tblPhieuPhat = new javax.swing.JTable();
 
         pnTimkiem4.setBackground(new java.awt.Color(255, 255, 255));
         pnTimkiem4.setPreferredSize(new java.awt.Dimension(1237, 60));
@@ -55,24 +58,11 @@ public class phieuPhatForm extends javax.swing.JPanel {
             }
         });
 
-        addBook3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add (1).png"))); // NOI18N
-        addBook3.setText("Thêm");
-        addBook3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addBook3MouseClicked(evt);
-            }
-        });
-        addBook3.addActionListener(new java.awt.event.ActionListener() {
+        btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png"))); // NOI18N
+        btnEdit.setText("Chi tiết");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addBook3ActionPerformed(evt);
-            }
-        });
-
-        editBook3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/edit.png"))); // NOI18N
-        editBook3.setText("Sửa");
-        editBook3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                editBook3ActionPerformed(evt);
+                btnEditActionPerformed(evt);
             }
         });
 
@@ -90,12 +80,10 @@ public class phieuPhatForm extends javax.swing.JPanel {
             pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(addBook3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editBook3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEdit)
+                .addGap(18, 18, 18)
                 .addComponent(deleteBook3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -116,13 +104,12 @@ public class phieuPhatForm extends javax.swing.JPanel {
             .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deleteBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(deleteBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
-        sachTable.setModel(new javax.swing.table.DefaultTableModel(
+        tblPhieuPhat.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -133,13 +120,13 @@ public class phieuPhatForm extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(sachTable);
+        jScrollPane2.setViewportView(tblPhieuPhat);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnTimkiem4, javax.swing.GroupLayout.DEFAULT_SIZE, 803, Short.MAX_VALUE)
+            .addComponent(pnTimkiem4, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
             .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
@@ -160,36 +147,35 @@ public class phieuPhatForm extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton8ActionPerformed
 
-    private void addBook3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBook3MouseClicked
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_addBook3MouseClicked
-
-    private void addBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBook3ActionPerformed
-        // TODO add your handling code here:
-        AddBookForm bookForm = new AddBookForm();
-        bookForm.setVisible(true);
-    }//GEN-LAST:event_addBook3ActionPerformed
-
-    private void editBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBook3ActionPerformed
-        // TODO add your handling code here:
-        AddBookForm bookForm = new AddBookForm();
-        bookForm.setVisible(true);
-    }//GEN-LAST:event_editBook3ActionPerformed
+//        AddBookForm bookForm = new AddBookForm();
+//        bookForm.setVisible(true);
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void deleteBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBook3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteBook3ActionPerformed
-
-
+    private void initEdit(){
+        btnEdit.addActionListener(e -> {
+            int row = tblPhieuPhat.getSelectedRow();
+            if(row == -1){
+                JOptionPane.showMessageDialog(this, "Vui long chon 1 phieu phat");
+                
+            }
+            String maPP = tblPhieuPhat.getValueAt(row, 0).toString();
+            mainPage.showEditPhieuPhat(maPP);                    
+        });
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addBook3;
+    private javax.swing.JButton btnEdit;
     private javax.swing.JButton deleteBook3;
-    private javax.swing.JButton editBook3;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JPanel pnTimkiem4;
-    private javax.swing.JTable sachTable;
+    private javax.swing.JTable tblPhieuPhat;
     // End of variables declaration//GEN-END:variables
 }

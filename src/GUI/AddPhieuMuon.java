@@ -35,7 +35,8 @@ public class AddPhieuMuon extends javax.swing.JPanel {
     private boolean isEdit = false;
     private MainPage mainPage;
     DefaultTableModel modelCt;
-    ArrayList<CTPhieuMuonDTO> dsCTPM = CTPhieuMuonBUS.dsCTPM;
+    ArrayList<CTPhieuMuonDTO> dsCTPM = new ArrayList<>();
+    public static String currentMaPM;
     public AddPhieuMuon(MainPage main) {
         this.mainPage = main;
         initComponents();  
@@ -252,7 +253,7 @@ public class AddPhieuMuon extends javax.swing.JPanel {
             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 791, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -362,6 +363,7 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         txtMaPm.setEditable(false);
         txtDocGia.setEditable(false);
         txtNhanVien.setEditable(false);
+        btnXoa.setEnabled(false);
 //        txtNgayMuon.setEditable(false);
 //        txtHanTra.setEditable(false);
         btnSave.setText("Cập nhật");
@@ -370,14 +372,14 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         PhieuMuonDTO pm = phieuMuonBus.getByMaPM(maPM);
         Date today = new Date();
         Date hanTra = pm.getHanTra();
+        btnPhieuphat.setText("Tạo phiếu phạt");
+        btnTraSach.setText("Trả Sách");    
         if(today.after(hanTra)){
         btnTraSach.setVisible(false);
         btnPhieuphat.setVisible(true);
-        btnPhieuphat.setText("Tạo phiếu phạt");
         } else{
                 btnTraSach.setVisible(true);
-                btnPhieuphat.setVisible(false);
-                btnTraSach.setText("Trả Sách");               
+                btnPhieuphat.setVisible(true);
                 }
         if (pm.getTrangThai() == 1) {
                     btnTraSach.setVisible(false);
@@ -405,6 +407,9 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         
         txtMaSach.setText("");
         txtSoLuong.setText("");       
+        
+        dsCTPM.clear();
+        modelCt.setRowCount(0);
     }
     //Hàm tạo form add 
     public void initAddMode() {
@@ -462,12 +467,14 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         pm.setHanTra(txtHanTra.getDate());
         
         PhieuMuonBUS bus = new PhieuMuonBUS();
-        
+        //Thêm
         boolean ok = bus.insert(pm, dsCTPM);
         if (ok){
             JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công");
             resetform();
         }
+        //Sửa===========
+        
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -531,6 +538,8 @@ public class AddPhieuMuon extends javax.swing.JPanel {
 
     private void btnPhieuphatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuphatActionPerformed
         // TODO add your handling code here:
+        currentMaPM = txtMaPm.getText();
+        mainPage.showAddPhieuPhat(currentMaPM);
     }//GEN-LAST:event_btnPhieuphatActionPerformed
 
     private void btnDocGiaListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocGiaListActionPerformed
@@ -560,8 +569,8 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         PhieuMuonBUS pm = new PhieuMuonBUS();
         PhieuMuonDTO dto = pm.getByMaPM(MaPM);
         
-        CTPhieuMuonBUS bus = new CTPhieuMuonBUS();       
-        bus.getCTPMByMaPm(MaPM);
+//        CTPhieuMuonBUS bus = new CTPhieuMuonBUS();       
+//        bus.getCTPMByMaPm(MaPM);
         
         int trangthai = dto.getTrangThai();
         
@@ -587,7 +596,9 @@ public class AddPhieuMuon extends javax.swing.JPanel {
     }
     private void loadData(String MaPM){
         loadTableCt();
-        for(CTPhieuMuonDTO ctpm : CTPhieuMuonBUS.dsCTPM){
+        CTPhieuMuonBUS busCt = new CTPhieuMuonBUS();
+        dsCTPM = busCt.getCTPMByMaPm(MaPM);
+        for(CTPhieuMuonDTO ctpm : dsCTPM){
             SachBUS sachBus = new SachBUS();
             String tenSach = sachBus.getTenByMaSach(ctpm.getMaSach());
             System.out.print(tenSach);

@@ -8,6 +8,7 @@ import BUS.DocGiaBUS;
 import BUS.SachBUS;
 import DTO.DocGiaDTO;
 import DTO.SachDTO;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
@@ -21,11 +22,14 @@ public class SachDialog extends javax.swing.JDialog {
      * Creates new form SachDialog
      */
     private SachDTO selectedSach;
+    private SachBUS bus = new SachBUS();
+    private ArrayList<SachDTO> list  = new ArrayList<>();
     public SachDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);   
         setUndecorated(true);
         initComponents();
-        loadData();
+        loadAll();
+        loadList();
         tblSach.setDefaultEditor(Object.class, null);
     }
 
@@ -42,7 +46,7 @@ public class SachDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSach = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTenSach = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(0, 102, 255));
@@ -74,6 +78,18 @@ public class SachDialog extends javax.swing.JDialog {
 
         jLabel1.setText("Tìm kiếm");
 
+        txtTenSach.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtTenSachKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTenSachKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTenSachKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -87,7 +103,7 @@ public class SachDialog extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGap(18, 18, 18)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTenSach, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2)
                             .addGap(21, 21, 21)))
@@ -99,10 +115,11 @@ public class SachDialog extends javax.swing.JDialog {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel2))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtTenSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(18, 18, 18)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(14, Short.MAX_VALUE)))
@@ -137,16 +154,44 @@ public class SachDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblSachMouseClicked
 
-     public void loadData(){
-        SachBUS bus = new SachBUS();
-        if(bus.dsSach == null) bus.getALL();
+    private void txtTenSachKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenSachKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTenSachKeyTyped
+
+    private void txtTenSachKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenSachKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTenSachKeyPressed
+
+    private void txtTenSachKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenSachKeyReleased
+        // TODO add your handling code here:
+        loadList();
+        System.out.println("Da go phim");
+    }//GEN-LAST:event_txtTenSachKeyReleased
+    private void loadAll(){
+        if(bus.dsSach == null) list = new ArrayList<>();
+        list = bus.getALL();
+        loadData(list);
+    }
+    private void loadList(){
+        String keyWord = txtTenSach.getText().trim();
+        if(keyWord.isEmpty()) list = bus.getALL();
+        else {
+            list = bus.searchByTenSach(keyWord);
+            
+        }
+        System.out.println(list.size());
+         loadData(list);
+    }
+    
+     public void loadData(ArrayList<SachDTO> list){
         Vector header = new Vector();
         header.add("Mã Sach");
         header.add("Tên Sach");
         
         DefaultTableModel model = new DefaultTableModel(header,0);
+        model.setRowCount(0); //reset model 
         
-        for(SachDTO dto : bus.dsSach){
+        for(SachDTO dto : list){
             Vector row = new Vector();
             row.add(dto.getMaSach());
             row.add(dto.getTenSach());
@@ -205,7 +250,7 @@ public class SachDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblSach;
+    private javax.swing.JTextField txtTenSach;
     // End of variables declaration//GEN-END:variables
 }

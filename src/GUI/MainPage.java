@@ -24,9 +24,10 @@ public class MainPage extends javax.swing.JFrame {
     sachForm sach = new sachForm();
     docgiaForm docgia = new docgiaForm();
     nhanvienForm nhanvien = new nhanvienForm();
-    phieuPhatForm phieuphat = new phieuPhatForm();
+    phieuPhatForm phieuphat = new phieuPhatForm(this);
     phieuMuonForm phieumuon = new phieuMuonForm(this);
     AddPhieuMuon addPM = new AddPhieuMuon(this);
+    AddPhieuPhat addPP = new AddPhieuPhat(this);
     
     public MainPage() {
         initComponents();
@@ -50,6 +51,7 @@ public class MainPage extends javax.swing.JFrame {
         content.add(phieuphat, "phieuphat_list");
         content.add(phieumuon,"phieumuon_list");
         content.add(addPM,"addPM" );
+        content.add(addPP,"addPP");
         sach.setVisible(false);
         docgia.setVisible(false);
         nhanvien.setVisible(false);
@@ -476,7 +478,19 @@ public class MainPage extends javax.swing.JFrame {
         cardlayout.show(content, "addPM");
 }
    //================================================================//
+    public void showPPList(){
+        cardlayout.show(content, "phieuphat_list");
+    }
+    public void showEditPhieuPhat(String maPP){
+        addPP.initEditMode(maPP);
+        cardlayout.show(content, "addPP");
+    }
     
+    public void showAddPhieuPhat(String maPm){
+        addPP.initAddMode(maPm);
+        cardlayout.show(content, "addPP");
+    }
+    //=============================================================//
     private void pnDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDocGiaMouseClicked
         // TODO add your handling code here:
 //        sach.setVisible(false);

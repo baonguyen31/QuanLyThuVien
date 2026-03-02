@@ -20,4 +20,14 @@ public class DocGiaBUS {
         dsdg =  dao.getAll();
         return dsdg;
     }
+    
+    public ArrayList<DocGiaDTO> searchList(String keyWord){
+        ArrayList<DocGiaDTO> result = new ArrayList<>();
+        for(DocGiaDTO dg : dsdg){
+            if ((dg.getHoDG() + " " + dg.getTenDG()).toLowerCase()
+                    .contains(keyWord.toLowerCase()))
+                result.add(dg);
+        }
+        return result;
+    }
 }
