@@ -6,6 +6,7 @@ package GUI;
 
 import BUS.CTPhieuMuonBUS;
 import BUS.PhieuMuonBUS;
+import BUS.PhieuPhatBUS;
 import BUS.SachBUS;
 import DTO.CTPhieuMuonDTO;
 import DTO.PhieuMuonDTO;
@@ -30,7 +31,9 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private boolean isEdit = false;
     private MainPage mainPage;
     DefaultTableModel modelCt;
+    private CTPhieuMuonBUS pmBus;
     ArrayList<CTPhieuMuonDTO> dsCTPP = new ArrayList<>();
+    ArrayList<CTPhieuMuonDTO> dsCTPM = new ArrayList<>();
     public AddPhieuPhat(MainPage main) {
         this.mainPage = main;
 //        modelCt = (DefaultTableModel) CTPPTable.getModel();
@@ -56,7 +59,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         btnBack = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        txtMaPm = new javax.swing.JTextField();
+        txtMaPP = new javax.swing.JTextField();
         txtNhanVien = new javax.swing.JTextField();
         txtDocGia = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -79,6 +82,10 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtSoNgayTre = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        cbxLyDo = new javax.swing.JComboBox<>();
+
+        setPreferredSize(new java.awt.Dimension(1250, 821));
 
         jPanel1.setName("Chi tiết phiếu mượn"); // NOI18N
         jPanel1.setPreferredSize(new java.awt.Dimension(833, 861));
@@ -124,10 +131,10 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
-        txtMaPm.setText("jTextField1");
-        txtMaPm.addActionListener(new java.awt.event.ActionListener() {
+        txtMaPP.setText("jTextField1");
+        txtMaPP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMaPmActionPerformed(evt);
+                txtMaPPActionPerformed(evt);
             }
         });
 
@@ -202,28 +209,22 @@ public class AddPhieuPhat extends javax.swing.JPanel {
             }
         });
 
+        jLabel12.setText("Lý do");
+
+        cbxLyDo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxLyDo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxLyDoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel8)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSachList, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton1)
-                        .addGap(132, 132, 132)))
+                .addComponent(jScrollPane2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
@@ -242,7 +243,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                     .addComponent(txtNhanVien, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(txtDocGia, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtMaPm, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtMaPP, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(85, 85, 85)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
@@ -267,13 +268,32 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                         .addComponent(txtSoNgayTre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(29, 29, 29)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnSave))
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addGap(29, 29, 29)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnSave)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSachList, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
+                        .addComponent(jLabel12)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbxLyDo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -284,7 +304,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(txtMaPm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtMaPP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel3)
                         .addComponent(txtMaPm1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9))
@@ -319,7 +339,9 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                             .addComponent(jButton1)
                             .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSachList))
+                            .addComponent(btnSachList)
+                            .addComponent(jLabel12)
+                            .addComponent(cbxLyDo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
@@ -351,6 +373,10 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private String generateMaPP(){
+        PhieuPhatBUS bus= new PhieuPhatBUS();
+        return bus.generateMaPM();
+    }
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
         // TODO add your handling code here:
         mainPage.showPPList();
@@ -366,10 +392,11 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         
         PhieuMuonBUS pmBus = new PhieuMuonBUS();
         PhieuMuonDTO pmDto = pmBus.getByMaPM(AddPhieuMuon.currentMaPM);
+        txtMaPP.setText(generateMaPP());
         txtMaPm1.setText(AddPhieuMuon.currentMaPM);
         txtDocGia.setText(pmDto.getMaDG());
         txtNgaytrathucte.setVisible(false);
-        txtMaPm.setEnabled(false);
+        txtMaPP.setEnabled(false);
         txtNhanVien.setEditable(false);
         txtNhanVien.setText(pmDto.getMaNV());
         txtNgayMuon.setDate(pmDto.getNgayMuon());
@@ -485,18 +512,20 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 
     private void btnSachListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSachListActionPerformed
         // TODO add your handling code here:
+        pmBus = new CTPhieuMuonBUS();
+        dsCTPM = pmBus.getCTPMByMaPm(AddPhieuMuon.currentMaPM);     
         Frame parent = (Frame) SwingUtilities.getWindowAncestor(this);
-        SachDialog sachDia = new SachDialog(parent, true);
+        SachMuonDialog sachDia = new SachMuonDialog(parent, true, dsCTPM);
         sachDia.setLocationRelativeTo(this);
         sachDia.setVisible(true);
 
-        SachDTO sach = sachDia.getSelectedSach();
-        if(sach != null) txtMaSach.setText(sach.getMaSach());
+        CTPhieuMuonDTO ctpm = sachDia.getSelectedSach();
+        if(ctpm != null) txtMaSach.setText(ctpm.getMaSach());
     }//GEN-LAST:event_btnSachListActionPerformed
 
-    private void txtMaPmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPmActionPerformed
+    private void txtMaPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPPActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtMaPmActionPerformed
+    }//GEN-LAST:event_txtMaPPActionPerformed
 
     private void txtMaPm1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPm1ActionPerformed
         // TODO add your handling code here:
@@ -507,6 +536,11 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSoNgayTreActionPerformed
 
+    private void cbxLyDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxLyDoActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_cbxLyDoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CTPPTable;
@@ -514,10 +548,12 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private javax.swing.JButton btnSachList;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnXoa;
+    private javax.swing.JComboBox<String> cbxLyDo;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -534,7 +570,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private javax.swing.JLabel traSach;
     private javax.swing.JTextField txtDocGia;
     private com.toedter.calendar.JDateChooser txtHanTra;
-    private javax.swing.JTextField txtMaPm;
+    private javax.swing.JTextField txtMaPP;
     private javax.swing.JTextField txtMaPm1;
     private javax.swing.JTextField txtMaSach;
     private com.toedter.calendar.JDateChooser txtNgayMuon;

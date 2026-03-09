@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th2 18, 2026 lúc 05:42 PM
+-- Thời gian đã tạo: Th3 09, 2026 lúc 01:17 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -54,7 +54,12 @@ INSERT INTO `ct_phieumuon` (`MaPM`, `MaSach`, `SoLuong`) VALUES
 ('PM010', 'S005', 3),
 ('PM011', 'S004', 2),
 ('PM011', 'S005', 4),
-('PM012', 'S005', 4);
+('PM012', 'S005', 4),
+('PM013', 'S002', 2),
+('PM014', 'S001', 2),
+('PM015', 'S003', 1),
+('PM015', 'S004', 1),
+('PM016', 'S003', 1);
 
 -- --------------------------------------------------------
 
@@ -66,8 +71,20 @@ CREATE TABLE `ct_phieunhap` (
   `MaPN` varchar(10) NOT NULL,
   `MaSach` varchar(10) NOT NULL,
   `SoLuong` int(11) DEFAULT NULL,
-  `DonGia` decimal(12,2) DEFAULT NULL
+  `DonGia` decimal(12,2) DEFAULT NULL,
+  `ThanhTien` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `ct_phieunhap`
+--
+
+INSERT INTO `ct_phieunhap` (`MaPN`, `MaSach`, `SoLuong`, `DonGia`, `ThanhTien`) VALUES
+('PN001', 'S001', 10, '20000.00', 200000),
+('PN002', 'S002', 20, '10000.00', 200000),
+('PN003', 'S003', 7, '15000.00', 105000),
+('PN004', 'S004', 15, '25000.00', 375000),
+('PN005', 'S005', 5, '10000.00', 50000);
 
 -- --------------------------------------------------------
 
@@ -78,7 +95,8 @@ CREATE TABLE `ct_phieunhap` (
 CREATE TABLE `ct_phieuphat` (
   `MaPP` varchar(10) NOT NULL,
   `MaQDP` varchar(10) NOT NULL,
-  `SoNgayTre` int(11) DEFAULT NULL,
+  `SoNgayTre` int(11) NOT NULL,
+  `LyDo` varchar(256) DEFAULT NULL,
   `ThanhTien` decimal(12,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -120,6 +138,14 @@ CREATE TABLE `nhacungcap` (
   `MaNCC` varchar(10) NOT NULL,
   `TenNCC` varchar(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `nhacungcap`
+--
+
+INSERT INTO `nhacungcap` (`MaNCC`, `TenNCC`) VALUES
+('NCC001', 'Công Ty Cổ Phần TACA Việt Nam'),
+('NCC002', 'FAHASA');
 
 -- --------------------------------------------------------
 
@@ -194,15 +220,19 @@ INSERT INTO `phieumuon` (`MaPM`, `MaDG`, `MaNV`, `NgayMuon`, `HanTra`, `NgayTraT
 ('PM001', 'DG01', 'NV01', '2024-10-01', '2024-10-10', NULL, 2),
 ('PM002', 'DG02', 'NV01', '2024-10-02', '2024-10-12', '2024-10-09', 1),
 ('PM003', 'DG03', 'NV02', '2024-10-03', '2024-10-13', NULL, 0),
-('PM004', 'DG01', 'NV02', '2024-10-05', '2024-10-15', NULL, 0),
+('PM004', 'DG01', 'NV02', '2024-10-05', '2024-10-15', '2026-03-04', 2),
 ('PM005', 'DG03', 'NV01', '2026-02-19', '2026-02-28', '2026-02-13', 1),
 ('PM006', 'DG04', 'NV01', '2026-02-02', '2026-02-15', '2026-02-13', 1),
 ('PM007', 'DG01', 'NV01', '2026-02-01', '2026-02-21', NULL, 0),
-('PM008', 'DG01', 'NV01', '2026-02-18', '2026-02-28', NULL, 0),
-('PM009', 'DG03', 'NV01', '2026-02-18', '2026-02-28', NULL, 0),
-('PM010', 'DG03', 'NV01', '2026-02-18', '2026-02-28', NULL, 0),
+('PM008', 'DG01', 'NV01', '2026-02-18', '2026-02-28', '2026-03-04', 2),
+('PM009', 'DG03', 'NV01', '2026-02-18', '2026-02-28', '2026-03-04', 2),
+('PM010', 'DG03', 'NV01', '2026-02-18', '2026-02-28', '2026-02-19', 1),
 ('PM011', 'DG03', 'NV01', '2026-02-11', '2026-02-28', '2026-02-18', 1),
-('PM012', 'DG03', 'NV01', '2026-02-11', '2026-02-28', '2026-02-18', 1);
+('PM012', 'DG03', 'NV01', '2026-02-11', '2026-02-28', '2026-02-18', 1),
+('PM013', 'DG06', 'NV01', '2026-02-12', '2026-02-20', '2026-03-03', 2),
+('PM014', 'DG01', 'NV01', '2026-03-03', '2026-03-26', '2026-03-04', 2),
+('PM015', 'DG04', 'NV01', '2026-03-01', '2026-03-03', '2026-03-04', 2),
+('PM016', 'DG03', 'NV01', '2026-03-04', '2026-03-11', '2026-03-04', 1);
 
 -- --------------------------------------------------------
 
@@ -218,6 +248,17 @@ CREATE TABLE `phieunhap` (
   `TongTien` decimal(12,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `phieunhap`
+--
+
+INSERT INTO `phieunhap` (`MaPN`, `MaNV`, `MaNCC`, `NgayNhap`, `TongTien`) VALUES
+('PN001', 'NV01', 'NCC001', '2026-03-01', '150000.00'),
+('PN002', 'NV02', 'NCC002', '2026-03-02', '220000.00'),
+('PN003', 'NV01', 'NCC001', '2026-03-03', '175000.00'),
+('PN004', 'NV03', 'NCC001', '2026-03-04', '300000.00'),
+('PN005', 'NV02', 'NCC002', '2026-03-05', '125000.00');
+
 -- --------------------------------------------------------
 
 --
@@ -228,10 +269,17 @@ CREATE TABLE `phieuphat` (
   `MaPP` varchar(10) NOT NULL,
   `MaPM` varchar(10) DEFAULT NULL,
   `MaDG` varchar(10) DEFAULT NULL,
+  `NgayLap` date NOT NULL,
   `TongTien` decimal(12,2) DEFAULT NULL,
-  `LyDo` varchar(255) DEFAULT NULL,
   `TrangThai` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `phieuphat`
+--
+
+INSERT INTO `phieuphat` (`MaPP`, `MaPM`, `MaDG`, `NgayLap`, `TongTien`, `TrangThai`) VALUES
+('PP001', 'PM001', 'DG01', '2026-02-23', '100000.00', '0');
 
 -- --------------------------------------------------------
 
@@ -266,11 +314,11 @@ CREATE TABLE `sach` (
 --
 
 INSERT INTO `sach` (`MaSach`, `TenSach`, `MaTL`, `MaNXB`, `NgayXuatBan`, `DonGia`, `SoLuong`) VALUES
-('S001', 'Cho tôi xin một vé đi tuổi thơ', 'TL01', 'NXB01', '2010-06-01', '85000.00', 18),
-('S002', 'Lão Hạc', 'TL01', 'NXB05', '2005-03-15', '45000.00', 23),
-('S003', 'Rừng Na Uy', 'TL01', 'NXB05', '2012-09-10', '120000.00', 10),
-('S004', 'Nhà giả kim', 'TL01', 'NXB04', '2014-01-20', '95000.00', 14),
-('S005', 'Đắc nhân tâm', 'TL05', 'NXB04', '2016-05-05', '110000.00', 25),
+('S001', 'Cho tôi xin một vé đi tuổi thơ', 'TL01', 'NXB01', '2010-06-01', '85000.00', 16),
+('S002', 'Lão Hạc', 'TL01', 'NXB05', '2005-03-15', '45000.00', 21),
+('S003', 'Rừng Na Uy', 'TL01', 'NXB05', '2012-09-10', '120000.00', 9),
+('S004', 'Nhà giả kim', 'TL01', 'NXB04', '2014-01-20', '95000.00', 16),
+('S005', 'Đắc nhân tâm', 'TL05', 'NXB04', '2016-05-05', '110000.00', 28),
 ('S006', 'Giáo trình Java cơ bản', 'TL03', 'NXB03', '2020-08-01', '150000.00', 30),
 ('S007', 'Doraemon tập 1', 'TL04', 'NXB02', '2018-02-12', '30000.00', 40);
 

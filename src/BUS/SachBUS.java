@@ -120,4 +120,16 @@ public class SachBUS {
         return sachDao.getTenSachByMa(MaSach);
     } 
 
+    
+    public ArrayList<SachDTO> searchByTenSach(String keyWord){
+        ArrayList<SachDTO> result = new ArrayList<>();
+        for(SachDTO s: dsSach){
+            if(s.getTenSach().toLowerCase().contains(keyWord.toLowerCase())){
+                result.add(s);
+            }
+//            System.out.println("Keyword: " + keyWord);
+//            System.out.println("Ten sach: " + s.getTenSach());
+        }
+        return result;
+    }
 }

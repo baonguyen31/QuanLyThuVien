@@ -4,8 +4,11 @@
  */
 package GUI;
 
+import BUS.CTPhieuMuonBUS;
 import BUS.DocGiaBUS;
+import BUS.PhieuMuonBUS;
 import BUS.SachBUS;
+import DTO.CTPhieuMuonDTO;
 import DTO.DocGiaDTO;
 import DTO.SachDTO;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class SachDialog extends javax.swing.JDialog {
      * Creates new form SachDialog
      */
     private SachDTO selectedSach;
+    private ArrayList<CTPhieuMuonDTO> ctpm = new ArrayList<>();
     private SachBUS bus = new SachBUS();
     private ArrayList<SachDTO> list  = new ArrayList<>();
     public SachDialog(java.awt.Frame parent, boolean modal) {
@@ -182,8 +186,8 @@ public class SachDialog extends javax.swing.JDialog {
         System.out.println(list.size());
          loadData(list);
     }
-    
-     public void loadData(ArrayList<SachDTO> list){
+      
+    public void loadData(ArrayList<SachDTO> list){
         Vector header = new Vector();
         header.add("Mã Sach");
         header.add("Tên Sach");
@@ -191,6 +195,7 @@ public class SachDialog extends javax.swing.JDialog {
         DefaultTableModel model = new DefaultTableModel(header,0);
         model.setRowCount(0); //reset model 
         
+        tblSach.setModel(model);
         for(SachDTO dto : list){
             Vector row = new Vector();
             row.add(dto.getMaSach());

@@ -9,7 +9,9 @@ import DAO.PhieuMuonDAO;
 import DAO.SachDAO;
 import DTO.CTPhieuMuonDTO;
 import DTO.PhieuMuonDTO;
+import Util.JDBCUtil;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -88,6 +90,10 @@ public class PhieuMuonBUS {
        }
        return true;
    }
+   
+   public boolean updateQuaHan(PhieuMuonDTO pm){
+       return phieuMuonDao.updateQuaHan(pm);
+   }
    public boolean returnSach(String MaPm){
        PhieuMuonDTO pm = phieuMuonDao.getByMaPM(MaPm);   
        ArrayList<CTPhieuMuonDTO> ctpmList = ctpmDao.getCTPMByMaPM(MaPm);
@@ -100,5 +106,16 @@ public class PhieuMuonBUS {
            
        }            
        return phieuMuonDao.traSach(MaPm);
+   }
+   public ArrayList<PhieuMuonDTO> filter(String loaiNgay, int trangThai, Date tuNgay, Date denNgay){
+       return phieuMuonDao.filter(loaiNgay, trangThai, tuNgay, denNgay);
+   }
+   
+   public PhieuMuonDTO searchByMaPm(String maPm, ArrayList<PhieuMuonDTO> listPm){
+       for( PhieuMuonDTO dto : dsPhieuMuon){
+           if(dto.getMaPM().equalsIgnoreCase(maPm))
+               return dto;
+       }
+       return null;
    }
 }

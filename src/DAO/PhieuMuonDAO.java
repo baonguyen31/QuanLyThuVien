@@ -11,7 +11,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -109,6 +111,24 @@ public class PhieuMuonDAO {
         }
         return false;
     }
+    public boolean updateQuaHan(PhieuMuonDTO pm){
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "Update phieumuon ";
+            qry += "Set NgayTraThucTe = CURDATE() ";
+            qry += "," + "TrangThai = 2" ;
+            qry += " where MaPM = '" + pm.getMaPM() +"'";
+        System.out.print(qry);
+        st = conn.createStatement();
+        st.executeUpdate(qry); 
+        JDBCUtil.closeConnection(conn);
+        return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Sửa phiếu mượn không thành công");
+        }
+        return false;
+    }
     public boolean traSach(String maPm){
         try  {
             conn = JDBCUtil.getConnect();
@@ -126,4 +146,47 @@ public class PhieuMuonDAO {
 }
         return false;
 }
+     public ArrayList<PhieuMuonDTO> filter(String loaiNgay, int trangThai, Date tuNgay, Date denNgay){
+        ArrayList<PhieuMuonDTO> phieumuonDs = new ArrayList<>();
+       try{
+           conn = JDBCUtil.getConnect();
+           String column = "";
+           if(loaiNgay.equals("Ngày Mượn")){
+               column = "NgayMuon";
+           }
+           else if(loaiNgay.equals("Hạn Trả")){
+               column = "HanTra";
+           }
+           else if(loaiNgay.equals("Ngày trả thực tế")){
+               column = "NgayTraThucTe";
+           }
+           String qry = "Select * from phieumuon where 1 = 1 ";
+           SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+           if(!column.trim().isEmpty()){
+           if(tuNgay != null) qry += " and " + column + " >= '" + sdf.format(tuNgay) + "'";
+           if(denNgay != null) qry += " and " + column+ "<= '" + sdf.format(denNgay) + "'" ;
+           }
+           if(trangThai != -1)   qry += " and TrangThai = " + trangThai;
+           System.out.print(qry);
+            st  = conn.createStatement();
+            rs = st.executeQuery(qry);
+            while (rs.next()){
+                PhieuMuonDTO phieuMuonDto = new PhieuMuonDTO();
+                phieuMuonDto.setMaPM(rs.getString("MaPM"));
+                phieuMuonDto.setMaDG(rs.getString("MaDG"));
+                phieuMuonDto.setMaNV(rs.getString("MaNV"));
+                phieuMuonDto.setNgayMuon(rs.getDate("NgayMuon"));
+                phieuMuonDto.setHanTra(rs.getDate("HanTra"));
+                phieuMuonDto.setNgayTraThucTe(rs.getDate("NgayTraThucTe"));
+                phieuMuonDto.setTrangThai(rs.getInt("TrangThai"));
+                phieumuonDs.add(phieuMuonDto);
+            }
+            JDBCUtil.closeConnection(conn);
+            
+       } catch(SQLException e){
+                e.printStackTrace();
+                }
+       return phieumuonDs;
+     }
 }
