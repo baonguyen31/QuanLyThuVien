@@ -152,7 +152,7 @@ public class DocGiaDialog extends javax.swing.JDialog {
         String keyWord = txtDocGia.getText().trim();
         DocGiaBUS bus = new DocGiaBUS();
         
-        if(keyWord.isEmpty()) list = bus.getAll();
+        if(keyWord.isEmpty()) list = bus.getALL();
         else{
             list = bus.searchList(keyWord);            
         }
