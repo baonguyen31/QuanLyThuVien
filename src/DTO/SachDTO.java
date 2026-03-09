@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package DTO;
-
+import java.util.Date;
 /**
  *
  * @author noname
@@ -13,14 +13,14 @@ public class SachDTO {
     private String TenSach;
     private String MaTL;
     private String MaNXB;
-    private String NgayXB;
+    private Date NgayXB;
     private int SoLuong;
     private int DonGia;
 
     public SachDTO() {
     }
 
-    public SachDTO(String MaSach, String TenSach, String MaTL, String MaNXB, String NgayXB, int SoLuong, int DonGia) {
+    public SachDTO(String MaSach, String TenSach, String MaTL, String MaNXB, Date NgayXB, int SoLuong, int DonGia) {
         this.MaSach = MaSach;
         this.TenSach = TenSach;
         this.MaTL = MaTL;
@@ -62,11 +62,11 @@ public class SachDTO {
         this.MaNXB = MaNXB;
     }
 
-    public String getNgayXB() {
+    public Date getNgayXB() {
         return NgayXB;
     }
 
-    public void setNgayXB(String NgayXB) {
+    public void setNgayXB(Date NgayXB) {
         this.NgayXB = NgayXB;
     }
 

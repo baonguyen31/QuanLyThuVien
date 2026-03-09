@@ -5,12 +5,17 @@
 package GUI;
 
 import BUS.SachBUS;
+import static BUS.SachBUS.dsSach;
 import DTO.SachDTO;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
@@ -51,7 +56,8 @@ public class sachForm extends javax.swing.JPanel {
         pnTimkiem4.setBackground(new java.awt.Color(255, 255, 255));
         pnTimkiem4.setPreferredSize(new java.awt.Dimension(1237, 60));
 
-        jLabel16.setText("Tìm kiếm theo tên ");
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel16.setText("TÌM KIẾM THEO MÃ ");
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +103,7 @@ public class sachForm extends javax.swing.JPanel {
         });
 
         btnAdd1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add (1).png"))); // NOI18N
-        btnAdd1.setText("Lam moi");
+        btnAdd1.setText("Làm mới");
         btnAdd1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAdd1MouseClicked(evt);
@@ -116,38 +122,38 @@ public class sachForm extends javax.swing.JPanel {
             .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(addBook3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(editBook3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(editBook3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(deleteBook3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 416, Short.MAX_VALUE)
+                .addGap(88, 88, 88)
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8)
-                .addGap(18, 18, 18)
-                .addComponent(btnAdd1)
-                .addGap(37, 37, 37))
+                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
+                .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         pnTimkiem4Layout.setVerticalGroup(
             pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnTimkiem4Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(editBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addBook3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdd1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteBook3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton8)
                     .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel16)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(pnTimkiem4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(addBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(editBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(deleteBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdd1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel16)))
+                .addGap(15, 15, 15))
         );
 
         sachTable.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -186,7 +192,15 @@ public class sachForm extends javax.swing.JPanel {
     }//GEN-LAST:event_jTextField5ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
+        // tìm kiếm theo tên
+        String keyword = jTextField5.getText();
+        SachBUS sachBus = new SachBUS();
+        String kq = sachBus.timTenSachTheoMa(keyword);
+        
+        DefaultTableModel model = new DefaultTableModel();
+        
+        sachTable.setModel(model);
+                
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void addBook3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBook3MouseClicked
@@ -194,19 +208,48 @@ public class sachForm extends javax.swing.JPanel {
     }//GEN-LAST:event_addBook3MouseClicked
 
     private void addBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBook3ActionPerformed
-        // TODO add your handling code here:
+        // nút thêm
         AddBookForm bookForm = new AddBookForm();
         bookForm.setVisible(true);
     }//GEN-LAST:event_addBook3ActionPerformed
 
     private void editBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBook3ActionPerformed
-        // TODO add your handling code here:
+        // nút sửa
+        int selectedRow = sachTable.getSelectedRow();
+        if(selectedRow == -1){
+            JOptionPane.showMessageDialog(this, "Bạn chưa chọn sách muốn sửa");
+            return;
+        }
+        
+        String maSach = (String)sachTable.getValueAt(selectedRow, 0);
+        String tenSach = (String)sachTable.getValueAt(selectedRow, 1);
+        String maTL = (String)sachTable.getValueAt(selectedRow, 2);
+        String maNXB = (String)sachTable.getValueAt(selectedRow, 3);
+        Date ngayXB = (Date)sachTable.getValueAt(selectedRow, 4);
+        int soLuong = (int)sachTable.getValueAt(selectedRow, 5);
+        int donGia = (int)sachTable.getValueAt(selectedRow, 6);
+        
+        SachDTO sach1 = new SachDTO(maSach, tenSach, maTL, maNXB, ngayXB, soLuong, donGia);
+        
         AddBookForm bookForm = new AddBookForm();
+        bookForm.setModeSua(sach1);
         bookForm.setVisible(true);
     }//GEN-LAST:event_editBook3ActionPerformed
 
     private void deleteBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBook3ActionPerformed
-        // TODO add your handling code here:
+        // Xóa
+        int selectedRow = sachTable.getSelectedRow();
+        String maSach = dsSach.get(selectedRow).getMaSach();
+        
+        SachBUS bus = new SachBUS();
+        boolean ok = bus.deleteSach(maSach);
+        
+        if(ok){
+            JOptionPane.showMessageDialog(null, "Xóa sách thành công");
+        }
+        else if(!ok){
+            JOptionPane.showMessageDialog(null, "Xóa sách thất bại");
+        }
     }//GEN-LAST:event_deleteBook3ActionPerformed
 
     private void btnAdd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd1MouseClicked
