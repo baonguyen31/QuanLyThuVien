@@ -31,8 +31,8 @@ public class SachBUS {
             if(s.getTenSach().toLowerCase().contains(keyWord.toLowerCase())){
                 result.add(s);
             }
-            System.out.println("Keyword: " + keyWord);
-            System.out.println("Ten sach: " + s.getTenSach());
+//            System.out.println("Keyword: " + keyWord);
+//            System.out.println("Ten sach: " + s.getTenSach());
         }
         return result;
     }

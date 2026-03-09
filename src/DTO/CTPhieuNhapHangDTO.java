@@ -9,28 +9,28 @@ package DTO;
  * @author PC
  */
 public class CTPhieuNhapHangDTO {
-    public String maCTPNH;
-    public String maSach;
-    public int sl;
-    public String donGia;
-    public int thanhTien;
+    private String maPn;
+    private String maSach;
+    private int sl;
+    private double donGia;
+    private double thanhTien;
     
     public CTPhieuNhapHangDTO(){}
 
-    public CTPhieuNhapHangDTO(String maCTPNH, String maSach, int sl, String donGia, int thanhTien) {
-        this.maCTPNH = maCTPNH;
+    public CTPhieuNhapHangDTO(String maPn, String maSach, int sl, double donGia, double thanhTien) {
+        this.maPn = maPn;
         this.maSach = maSach;
         this.sl = sl;
         this.donGia = donGia;
         this.thanhTien = thanhTien;
     }
 
-    public String getMaCTPNH() {
-        return maCTPNH;
+    public String getMaPn() {
+        return maPn;
     }
 
-    public void setMaCTPNH(String maCTPNH) {
-        this.maCTPNH = maCTPNH;
+    public void setMaPn(String maPn) {
+        this.maPn = maPn;
     }
 
     public String getMaSach() {
@@ -49,19 +49,19 @@ public class CTPhieuNhapHangDTO {
         this.sl = sl;
     }
 
-    public String getDonGia() {
+    public double getDonGia() {
         return donGia;
     }
 
-    public void setDonGia(String donGia) {
+    public void setDonGia(double donGia) {
         this.donGia = donGia;
     }
 
-    public int getThanhTien() {
+    public double getThanhTien() {
         return thanhTien;
     }
 
-    public void setThanhTien(int thanhTien) {
+    public void setThanhTien(double thanhTien) {
         this.thanhTien = thanhTien;
     }
     

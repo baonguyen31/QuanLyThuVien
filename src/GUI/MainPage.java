@@ -26,8 +26,11 @@ public class MainPage extends javax.swing.JFrame {
     nhanvienForm nhanvien = new nhanvienForm();
     phieuPhatForm phieuphat = new phieuPhatForm(this);
     phieuMuonForm phieumuon = new phieuMuonForm(this);
+    phieuNhapForm phieunhap = new phieuNhapForm(this);
+    ThongKeForm thongke = new ThongKeForm();
     AddPhieuMuon addPM = new AddPhieuMuon(this);
     AddPhieuPhat addPP = new AddPhieuPhat(this);
+    AddPhieuNhap addPN = new AddPhieuNhap(this);
     
     public MainPage() {
         initComponents();
@@ -50,13 +53,18 @@ public class MainPage extends javax.swing.JFrame {
         content.add(nhanvien, "nhanvien_list");
         content.add(phieuphat, "phieuphat_list");
         content.add(phieumuon,"phieumuon_list");
+        content.add(phieunhap,"phieunhap_list");
+        content.add(thongke,"thongke_panel");
         content.add(addPM,"addPM" );
         content.add(addPP,"addPP");
+        content.add(addPN,"addPN");
         sach.setVisible(false);
         docgia.setVisible(false);
         nhanvien.setVisible(false);
         phieuphat.setVisible(false);
         phieumuon.setVisible(false);
+        phieunhap.setVisible(false);
+        thongke.setVisible(false);
         
     }
 
@@ -186,7 +194,7 @@ public class MainPage extends javax.swing.JFrame {
             .addGroup(pnNhanVienLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel8)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnNhanVienLayout.setVerticalGroup(
             pnNhanVienLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,6 +269,11 @@ public class MainPage extends javax.swing.JFrame {
         pnNhapSach.setBackground(new java.awt.Color(31, 58, 95));
         pnNhapSach.setForeground(new java.awt.Color(255, 255, 255));
         pnNhapSach.setPreferredSize(new java.awt.Dimension(136, 55));
+        pnNhapSach.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnNhapSachMouseClicked(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -287,6 +300,11 @@ public class MainPage extends javax.swing.JFrame {
         pnThongKe.setBackground(new java.awt.Color(31, 58, 95));
         pnThongKe.setForeground(new java.awt.Color(255, 255, 255));
         pnThongKe.setPreferredSize(new java.awt.Dimension(136, 55));
+        pnThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnThongKeMouseClicked(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -478,6 +496,20 @@ public class MainPage extends javax.swing.JFrame {
         cardlayout.show(content, "addPM");
 }
    //================================================================//
+    public void showPNList(){
+        cardlayout.show(content, "phieunhap_list");
+    }
+    public void showEditPhieuNhap(String maPN){
+        addPN.initEditMode(maPN);
+        cardlayout.show(content, "addPN");
+    }
+    
+    public void showAddPhieuNhap(){
+        addPN.initAddMode();
+        cardlayout.show(content, "addPN");
+    }
+    //=============================================================//
+    
     public void showPPList(){
         cardlayout.show(content, "phieuphat_list");
     }
@@ -486,11 +518,10 @@ public class MainPage extends javax.swing.JFrame {
         cardlayout.show(content, "addPP");
     }
     
-    public void showAddPhieuPhat(String maPm){
-        addPP.initAddMode(maPm);
+    public void showAddPhieuPhat(String maPP){
+        addPP.initAddMode(maPP);
         cardlayout.show(content, "addPP");
     }
-    //=============================================================//
     private void pnDocGiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnDocGiaMouseClicked
         // TODO add your handling code here:
 //        sach.setVisible(false);
@@ -559,10 +590,20 @@ public class MainPage extends javax.swing.JFrame {
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         // TODO add your handling code here:
         LoginForm login = new LoginForm();
-        JOptionPane.showMessageDialog(this, "Xác nhận đăng xuất ?");
+        JOptionPane.showConfirmDialog(this, "Xác nhận đăng xuất ?");
         dispose();
         login.setVisible(true);
     }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void pnThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnThongKeMouseClicked
+        // TODO add your handling code here:
+        cardlayout.show(content, "thongke_panel");
+    }//GEN-LAST:event_pnThongKeMouseClicked
+
+    private void pnNhapSachMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnNhapSachMouseClicked
+        // TODO add your handling code here:
+        cardlayout.show(content, "phieunhap_list");
+    }//GEN-LAST:event_pnNhapSachMouseClicked
  
     private void addMenuEffect(JPanel menuPanel) {
 

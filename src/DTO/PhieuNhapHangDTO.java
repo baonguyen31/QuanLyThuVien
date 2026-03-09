@@ -11,16 +11,18 @@ import java.util.Date;
  * @author PC
  */
 public class PhieuNhapHangDTO {
-    public String maPNH;
-    public String maNV;
-    public Date ngayNhap;
-    public int tongTien;
+    private String maPNH;
+    private String maNV;
+    private String maNCC;
+    private Date ngayNhap;
+    private double tongTien;
     
     public PhieuNhapHangDTO(){}
 
-    public PhieuNhapHangDTO(String maPNH, String maNV, Date ngayNhap, int tongTien) {
+    public PhieuNhapHangDTO(String maPNH, String maNV, String maNCC, Date ngayNhap, double tongTien) {
         this.maPNH = maPNH;
         this.maNV = maNV;
+        this.maNCC = maNCC;
         this.ngayNhap = ngayNhap;
         this.tongTien = tongTien;
     }
@@ -37,8 +39,16 @@ public class PhieuNhapHangDTO {
         return maNV;
     }
 
-    public void setMaNV(String NV) {
+    public void setMaNV(String maNV) {
         this.maNV = maNV;
+    }
+
+    public String getMaNCC() {
+        return maNCC;
+    }
+
+    public void setMaNCC(String maNCC) {
+        this.maNCC = maNCC;
     }
 
     public Date getNgayNhap() {
@@ -49,13 +59,15 @@ public class PhieuNhapHangDTO {
         this.ngayNhap = ngayNhap;
     }
 
-    public int getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(int tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
+
     
     
+   
 }

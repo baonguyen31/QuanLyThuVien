@@ -4,42 +4,32 @@
  */
 package GUI;
 
-import Content.CT_PhieuMuon;
-import BUS.PhieuMuonBUS;
-import DTO.PhieuMuonDTO;
-import DTO.SachDTO;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.text.SimpleDateFormat;
+import BUS.PhieuNhapBUS;
+import DTO.PhieuNhapHangDTO;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Vector;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author noname
  */
-public class phieuMuonForm extends javax.swing.JPanel {
+public class phieuNhapForm extends javax.swing.JPanel {
 
     /**
-     * Creates new form phieuMuonForm
+     * Creates new form phieuNhapForm
      */
-    private MainPage mainPage;
-    private PhieuMuonBUS phieuMuonBus;
-    private ArrayList<PhieuMuonDTO> listPm  = new ArrayList<>();
-    private ArrayList<PhieuMuonDTO> currentList;
-    public phieuMuonForm(MainPage main) {
-        initComponents();
+    MainPage mainPage;
+    private PhieuNhapBUS phieuNhapBus;
+    private ArrayList<PhieuNhapHangDTO> listPn  = new ArrayList<>();
+    private ArrayList<PhieuNhapHangDTO> currentList;
+    public phieuNhapForm(MainPage main) {
         this.mainPage = main;
-        loaiNgay();
+        initComponents();
         loadList();
         initAdd();
         initEdit();
-        
     }
 
     /**
@@ -51,7 +41,6 @@ public class phieuMuonForm extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDialog1 = new javax.swing.JDialog();
         pnTimkiem4 = new javax.swing.JPanel();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
@@ -68,18 +57,7 @@ public class phieuMuonForm extends javax.swing.JPanel {
         txtDenNgay = new com.toedter.calendar.JDateChooser();
         cbxTrangThai = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        phieuMuonTable = new javax.swing.JTable();
-
-        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
-        jDialog1.getContentPane().setLayout(jDialog1Layout);
-        jDialog1Layout.setHorizontalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jDialog1Layout.setVerticalGroup(
-            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        phieuNhapTable = new javax.swing.JTable();
 
         pnTimkiem4.setBackground(new java.awt.Color(255, 255, 255));
         pnTimkiem4.setPreferredSize(new java.awt.Dimension(1237, 60));
@@ -239,7 +217,7 @@ public class phieuMuonForm extends javax.swing.JPanel {
                 .addGap(18, 18, 18))
         );
 
-        phieuMuonTable.setModel(new javax.swing.table.DefaultTableModel(
+        phieuNhapTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -250,14 +228,14 @@ public class phieuMuonForm extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(phieuMuonTable);
+        jScrollPane2.setViewportView(phieuNhapTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnTimkiem4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1237, Short.MAX_VALUE)
+            .addComponent(pnTimkiem4, javax.swing.GroupLayout.DEFAULT_SIZE, 1207, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1207, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,148 +251,111 @@ public class phieuMuonForm extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSearchActionPerformed
 
-    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+    private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
         // TODO add your handling code here:
-        phieuMuonBus = new PhieuMuonBUS();
-        String maPm = txtSearch.getText();
-        PhieuMuonDTO dto = phieuMuonBus.searchByMaPm(maPm, currentList);
-        if(dto == null){
-            JOptionPane.showMessageDialog(null, "Không tìm thấy phiếu mượn");
-        }else{
-            ArrayList<PhieuMuonDTO> result = new ArrayList<>();
-            result.add(dto);   
-            loadData(result);
-            System.out.println(dto.getMaPM());
-            System.out.print(result);
-        }
+
+    }//GEN-LAST:event_btnSearchMouseClicked
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+//        // TODO add your handling code here:
+//        phieuNhapBus = new PhieuNhapBUS();
+//        String maPm = txtSearch.getText();
+//        PhieuNhapHangDTO dto = phieuNhapBus.searchByMaPm(maPm, currentList);
+//        if(dto == null){
+//            JOptionPane.showMessageDialog(null, "Không tìm thấy phiếu mượn");
+//        }else{
+//            ArrayList<PhieuNhapHangDTO> result = new ArrayList<>();
+//            result.add(dto);
+//            loadData(result);
+//            System.out.println(dto.getMaPM());
+////            System.out.print(result);
+//        }
         // TODO add your handling code h
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void btnAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAddMouseClicked
+
     }//GEN-LAST:event_btnAddMouseClicked
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
-//        AddBookForm bookForm = new AddBookForm();
-//        bookForm.setVisible(true);
+        //        AddBookForm bookForm = new AddBookForm();
+        //        bookForm.setVisible(true);
     }//GEN-LAST:event_btnAddActionPerformed
-   //=======Hàm gọi content mainpage cho add và edit 
-    private void initAdd(){
-        btnAdd.addActionListener(e -> {
-           mainPage.showAddPhieuMuon();
-        });
-    }
-    private void initEdit(){
-        btnEdit.addActionListener(e -> {
-        int row = phieuMuonTable.getSelectedRow();
-                    if(row == -1 ){
-                       JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 phiếu mượn");
-                            return;
-                        }
-                    String maPm = phieuMuonTable.getValueAt(row, 0).toString();
-//                    btnEdit.addActionListener(e -> {
-                    mainPage.showEditPhieuMuon(maPm);
-                     });
- }
-    //====================================================================//
-    
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-    }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditMouseClicked
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+
+    }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnAdd1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdd1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAdd1MouseClicked
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        currentList = new ArrayList<>(listPm);
+        currentList = new ArrayList<>(listPn);
         loadData(currentList);
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
         // TODO add your handling code here:
-        filter();
+//        filter();
     }//GEN-LAST:event_btnLocActionPerformed
-
-    private void btnSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSearchMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_btnSearchMouseClicked
-    private void filter(){
-        phieuMuonBus = new PhieuMuonBUS();
-        String loaiNgay = cbxLoaiNgay.getSelectedItem().toString();
-        Date tuNgay = txtTuNgay.getDate();
-        Date denNgay = txtDenNgay.getDate();
-        
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        int trangThai = cbxTrangThai.getSelectedIndex() - 1;
-        
-        currentList = phieuMuonBus.filter(loaiNgay, trangThai, tuNgay, denNgay);
+    private void initAdd(){
+        btnAdd.addActionListener(e -> {
+           mainPage.showAddPhieuNhap();
+        });
+    }
+    private void initEdit(){
+        btnEdit.addActionListener(e -> {
+        int row = phieuNhapTable.getSelectedRow();
+                    if(row == -1 ){
+                       JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 phiếu nhập");
+                            return;
+                        }
+                    String maPn = phieuNhapTable.getValueAt(row, 0).toString();
+//                    btnEdit.addActionListener(e -> {
+                    mainPage.showEditPhieuNhap(maPn);
+                     });
+ }
+    public void loadList(){
+        phieuNhapBus = new PhieuNhapBUS();
+        listPn = phieuNhapBus.getAll();
+        currentList = new ArrayList<>(listPn);
         loadData(currentList);
     }
-    private void loadList(){
-        phieuMuonBus = new PhieuMuonBUS();
-        listPm = phieuMuonBus.getAll();
-        currentList = new ArrayList<>(listPm);
-        loadData(currentList);
-    }
-    private void loaiNgay(){
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        model.addElement("Tất cả");
-        model.addElement("Ngày Mượn");
-        model.addElement("Hạn Trả");
-        model.addElement("Ngày Trả Thực Tế");
+    public void loadData(ArrayList<PhieuNhapHangDTO> pnList){
+        PhieuNhapBUS phieuNhapBus = new PhieuNhapBUS();
+        PhieuNhapHangDTO pm = new PhieuNhapHangDTO();
         
-        cbxLoaiNgay.setModel(model);
-    
-        DefaultComboBoxModel model1 = new DefaultComboBoxModel();
-        model1.addElement("Tất cả");
-        model1.addElement("Đang mượn");
-        model1.addElement("Đã Trả");
-        model1.addElement("Quá Hạn");
-        
-        cbxTrangThai.setModel(model1);
-    }
-  
-//Hàm đổ dữ liệu cho table chi tiết
-    private void loadData(ArrayList<PhieuMuonDTO> list){
-        PhieuMuonBUS phieuMuonBus = new PhieuMuonBUS();
-        PhieuMuonDTO pm = new PhieuMuonDTO();
-        
-        if(phieuMuonBus.dsPhieuMuon == null ) phieuMuonBus.getAll();
+        if(listPn == null ) phieuNhapBus.getAll();
         Vector header = new Vector();
-        header.add("Mã Phiếu Mượn");
-        header.add("Mã Độc Giả");
+        header.add("Mã Phiếu Nhập");
         header.add("Mã Nhân Viên");
-        header.add("Ngày Mượn");
-        header.add("Ngày Trả");
-        header.add("Ngày trả thực tế");
-        header.add("Trạng thái");
+        header.add("Nhà Cung Cấp");
+        header.add("Ngày Nhập");
+        header.add("Tổng Tiền");
         
         DefaultTableModel modelPm = new DefaultTableModel(header,0);
         modelPm.setRowCount(0);
         
-        for(PhieuMuonDTO phieumuon : list){
+        for(PhieuNhapHangDTO phieunhap : pnList){
             Vector now = new Vector();
-            now.add(phieumuon.getMaPM());
-            now.add(phieumuon.getMaDG());
-            now.add(phieumuon.getMaNV());
-            now.add(phieumuon.getNgayMuon());
-            now.add(phieumuon.getHanTra());
-            now.add(phieumuon.getNgayTraThucTe());
-            now.add(phieumuon.getTrangThaiString());
+            now.add(phieunhap.getMaPNH());
+            now.add(phieunhap.getMaNV());
+            now.add(phieunhap.getMaNCC());
+            now.add(phieunhap.getNgayNhap());
+            now.add(phieunhap.getTongTien());
+
             modelPm.addRow(now);
                       
         }
-            phieuMuonTable.setModel(modelPm);
+            phieuNhapTable.setModel(modelPm);
         
     }
-
-    
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
@@ -424,13 +365,12 @@ public class phieuMuonForm extends javax.swing.JPanel {
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cbxLoaiNgay;
     private javax.swing.JComboBox<String> cbxTrangThai;
-    private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable phieuMuonTable;
+    private javax.swing.JTable phieuNhapTable;
     private javax.swing.JPanel pnTimkiem4;
     private com.toedter.calendar.JDateChooser txtDenNgay;
     private javax.swing.JTextField txtSearch;
