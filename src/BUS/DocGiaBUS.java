@@ -14,20 +14,34 @@ import java.util.ArrayList;
  */
 public class DocGiaBUS {
     public static ArrayList<DocGiaDTO> dsdg;
-    private DocGiaDAO dao = new DocGiaDAO();
-    public ArrayList<DocGiaDTO> getAll(){
+    private DocGiaDAO docgiadao = new DocGiaDAO();
+    public ArrayList<DocGiaDTO> getALL(){
         if(dsdg == null ) dsdg = new ArrayList<DocGiaDTO>();
-        dsdg =  dao.getAll();
+        dsdg =  docgiadao.selectAll();
         return dsdg;
     }
     
     public ArrayList<DocGiaDTO> searchList(String keyWord){
         ArrayList<DocGiaDTO> result = new ArrayList<>();
         for(DocGiaDTO dg : dsdg){
-            if ((dg.getHoDG() + " " + dg.getTenDG()).toLowerCase()
-                    .contains(keyWord.toLowerCase()))
+            if ((dg.getHoDG()+ " " + dg.getTenDG() + " " + dg.getDiaChi() + " " + dg.getSDT()).toLowerCase().contains(keyWord.toLowerCase()))
                 result.add(dg);
         }
         return result;
+    }
+    
+    public String generateMADG()
+    {
+        getALL();
+        DocGiaDTO lastDG = dsdg.get(dsdg.size() -1);
+        int nextMADG = Integer.parseInt(lastDG.getMaDG().substring(2)) + 1;
+        if (nextMADG >9)
+        {
+            return "DG" + String.format("%02d", nextMADG);
+        }
+        else
+        {
+            return "DG" + String.format("%02d", nextMADG);
+        }
     }
 }

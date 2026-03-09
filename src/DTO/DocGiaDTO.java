@@ -15,19 +15,19 @@ public class DocGiaDTO {
     private String hoDG;
     private String tenDG;
     private String SDT;
-    private Date namSinh;
+    private String diaChi;
     private int trangThai;
     private String matKhau;
     
     public DocGiaDTO(){}
 
-    public DocGiaDTO(String maDG, String hoDG, String tenDG, String SDT, Date namSinh, String matKhau) {
+    public DocGiaDTO(String maDG, String hoDG, String tenDG, String SDT, String diaChi, int trangThai) {
         this.maDG = maDG;
         this.hoDG = hoDG;
         this.tenDG = tenDG;
         this.SDT = SDT;
-        this.namSinh = namSinh;
-        this.matKhau = matKhau;
+        this.diaChi=diaChi;
+        this.trangThai = trangThai;
     }
 
     public String getMaDG() {
@@ -62,14 +62,6 @@ public class DocGiaDTO {
         this.SDT = SDT;
     }
 
-    public Date getNamSinh() {
-        return namSinh;
-    }
-
-    public void setNamSinh(Date namSinh) {
-        this.namSinh = namSinh;
-    }
-
     public int getTrangThai() {
         return trangThai;
     }
@@ -85,7 +77,14 @@ public class DocGiaDTO {
     public void setMatKhau(String matKhau) {
         this.matKhau = matKhau;
     }
-    
+    public void setDiaChi(String diaChi)
+    {
+        this.diaChi=diaChi;
+    }
+    public String getDiaChi()
+    {
+        return diaChi;
+    }
     public String getTrangThaiString(){
         switch(this.trangThai){
             case 0: return "Mở khóa";
