@@ -299,8 +299,8 @@ public class CT_PhieuMuon extends javax.swing.JFrame {
         txtMaPm.setText(dto.getMaPM());
         txtDocGia.setText(dto.getMaDG());
         txtNhanVien.setText(dto.getMaNV());
-        txtNgayMuon.setText(dto.getNgayMuon());
-        txtHanTra.setText(dto.getHanTra());
+//        txtNgayMuon.setText(dto.getNgayMuon());
+//        txtHanTra.setText(dto.getHanTra());
         txtTrangThai.setText(dto.getTrangThaiString());
     }
     

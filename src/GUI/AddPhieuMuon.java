@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -40,10 +41,7 @@ public class AddPhieuMuon extends javax.swing.JPanel {
     public AddPhieuMuon(MainPage main) {
         this.mainPage = main;
         initComponents();  
-        cbTrangThai.removeAllItems();
-        cbTrangThai.addItem("Đang mượn");
-        cbTrangThai.addItem("Đã Trả");
-        cbTrangThai.addItem("Quá Hạn");
+        loadTrangThai();
         modelCt = (DefaultTableModel) CTPMTable.getModel();
         xoaDong();
         
@@ -58,6 +56,28 @@ public class AddPhieuMuon extends javax.swing.JPanel {
     private String generateMaPm(){
         PhieuMuonBUS bus = new PhieuMuonBUS();
         return bus.generateMaPM();
+    }
+    
+    private void loadTrangThai(){
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("Đang mượn");
+        model.addElement("Đã Trả");
+        
+//        cbTrangThai.setModel(model);
+//                
+//        if(currentMaPM == null) return;
+//               
+//        PhieuMuonBUS bus = new PhieuMuonBUS();
+//        PhieuMuonDTO dto = bus.getByMaPM(currentMaPM);
+        
+//        System.out.print(currentMaPM);
+//        
+//        Date today = new Date();
+//        Date hanTra = dto.getHanTra();
+//        System.out.print(hanTra);
+//        if(today.after(hanTra)) 
+        model.addElement("Quá Hạn");
+        cbTrangThai.setModel(model);
     }
     
     @SuppressWarnings("unchecked")
@@ -400,9 +420,10 @@ public class AddPhieuMuon extends javax.swing.JPanel {
                 // Quá hạn
                 btnPhieuphat.setVisible(true);
                 btnSave.setEnabled(true);
+                btnSave.setText("Quá Hạn");
             }else{
                 // Chưa quá hạn
-                btnTraSach.setVisible(true);
+                btnTraSach.setVisible(true);                
             }
 
         }
@@ -489,6 +510,9 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         pm.setNgayMuon(txtNgayMuon.getDate());
         pm.setHanTra(txtHanTra.getDate());
         
+        Date today = new Date();
+        Date hanTra = pm.getHanTra();
+        
         PhieuMuonBUS bus = new PhieuMuonBUS();
         if(!isEdit){
         //Thêm
@@ -497,9 +521,14 @@ public class AddPhieuMuon extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công");
                 resetform();                
             }
-        }else{
+        }else if(today.after(hanTra)){
         //Cập nhật===========
             boolean update = bus.updateQuaHan(pm);
+            if(update){
+                JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
+            }
+        }else {
+            boolean update = bus.updatePM(pm);
             if(update){
                 JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
             }

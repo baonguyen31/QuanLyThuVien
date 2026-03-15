@@ -12,6 +12,7 @@ import BUS.SachBUS;
 import DTO.CTPhieuNhapHangDTO;
 import DTO.CTPhieuNhapHangDTO;
 import DTO.DocGiaDTO;
+import DTO.NhaCungCapDTO;
 import DTO.PhieuMuonDTO;
 import DTO.PhieuNhapHangDTO;
 import DTO.SachDTO;
@@ -90,7 +91,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         btnDocGiaList = new javax.swing.JButton();
         btnSachList = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtDonGia = new javax.swing.JTextField();
 
         setName("Chi tiết phiếu mượn"); // NOI18N
         setPreferredSize(new java.awt.Dimension(833, 861));
@@ -211,7 +212,11 @@ public class AddPhieuNhap extends javax.swing.JPanel {
 
         jLabel9.setText("Đơn giá");
 
-        jTextField1.setText("jTextField1");
+        txtDonGia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDonGiaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -220,7 +225,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
             .addComponent(jSeparator1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel8)
@@ -228,17 +233,16 @@ public class AddPhieuNhap extends javax.swing.JPanel {
                         .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSachList, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(70, 70, 70)
+                        .addGap(76, 76, 76)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
                         .addComponent(jLabel7)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButton1)
-                        .addGap(132, 132, 132)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
@@ -273,7 +277,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
                         .addComponent(btnTraSach)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPhieuphat)))
-                .addContainerGap(420, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,14 +303,14 @@ public class AddPhieuNhap extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
                     .addComponent(jLabel8)
                     .addComponent(jButton1)
-                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSachList)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -348,17 +352,19 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     
         
     private void resetform(){
-        PhieuMuonDTO dto = new PhieuMuonDTO();
+        PhieuNhapHangDTO dto = new PhieuNhapHangDTO();
         
-        txtNhaCungCap.setText("");
+        txtMaPn.setText("");
 //        txtNhanVien.setText("");
-        txtNgayNhap.setDate(null);
+        txtNhaCungCap.setText(null);
 //        DefaultTableModel model = (DefaultTableModel) CTPMTable.getModel();
 //        modelCt = CTPMTable.getModel();
 //        modelCt.setRowCount(0);       
-        
-        txtMaSach.setText("");
-        txtSoLuong.setText("");       
+        txtMaSach.setText(null);
+        txtDonGia.setText("");
+        txtSoLuong.setText(null);
+        txtNhanVien.setText("");
+        txtNgayNhap.setDate(null);
         
         dsCTPN.clear();
         modelCt.setRowCount(0);
@@ -366,9 +372,9 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     //Hàm tạo form add 
     public void initAddMode() {
         isEdit = false;
-//        loadTableCt();
+        loadTableCt();
 //        if (modelCt == null) dsCTPM = new ArrayList();
-//        resetform();
+        resetform();
 //        txtNhaCungCap.setEditable(true);
         txtNgayNhap.setDate(new Date());
 //        txtMaPn.setText(generateMaPm());
@@ -411,27 +417,27 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        PhieuMuonDTO pm = new PhieuMuonDTO();       
-        pm.setMaPM(txtMaPn.getText());
-        pm.setMaDG(txtNhaCungCap.getText());
-        pm.setMaNV(txtNhanVien.getText());
-        pm.setNgayMuon(txtNgayNhap.getDate());
-        
-        PhieuMuonBUS bus = new PhieuMuonBUS();
-        if(!isEdit){
-        //Thêm
-            boolean ok = bus.insert(pm, dsCTPN);
-            if (ok){
-                JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công");
-                resetform();                
-            }
-        }else{
-        //Cập nhật===========
-            boolean update = bus.updateQuaHan(pm);
-            if(update){
-                JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
-            }
-        }
+//        PhieuMuonDTO pm = new PhieuMuonDTO();       
+//        pm.setMaPM(txtMaPn.getText());
+//        pm.setMaDG(txtNhaCungCap.getText());
+//        pm.setMaNV(txtNhanVien.getText());
+//        pm.setNgayMuon(txtNgayNhap.getDate());
+//        
+//        PhieuMuonBUS bus = new PhieuMuonBUS();
+//        if(!isEdit){
+//        //Thêm
+////            boolean ok = bus.insert(pm, dsCTPN);
+//            if (ok){
+//                JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công");
+//                resetform();                
+//            }
+//        }else{
+//        //Cập nhật===========
+//            boolean update = bus.updateQuaHan(pm);
+//            if(update){
+//                JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
+//            }
+//        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -501,13 +507,13 @@ public class AddPhieuNhap extends javax.swing.JPanel {
 
     private void btnDocGiaListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocGiaListActionPerformed
         Frame parent = (Frame) SwingUtilities.getWindowAncestor(this);
-        DocGiaDialog docGia = new DocGiaDialog(parent, true);
-        docGia.setLocationRelativeTo(this);
-        docGia.setVisible(true);
+        NhaCungCapDialog NhaCungCap = new NhaCungCapDialog(parent, true);
+        NhaCungCap.setLocationRelativeTo(this);
+        NhaCungCap.setVisible(true);
         
-        DocGiaDTO dg = docGia.getSelectedDocGia();
+        NhaCungCapDTO dg = NhaCungCap.getSelectedNhaCungCap();
         if (dg != null){
-            txtNhaCungCap.setText(dg.getMaDG());
+            txtNhaCungCap.setText(dg.getMaNCC());
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDocGiaListActionPerformed
@@ -522,6 +528,10 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         SachDTO sach = sachDia.getSelectedSach();
         if(sach != null) txtMaSach.setText(sach.getMaSach());
     }//GEN-LAST:event_btnSachListActionPerformed
+
+    private void txtDonGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDonGiaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDonGiaActionPerformed
      private void loadPMByMaPm(String MaPN){
         PhieuNhapBUS pn = new PhieuNhapBUS();
         PhieuNhapHangDTO dto = pn.getPNByMa(MaPN);
@@ -592,7 +602,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtDonGia;
     private javax.swing.JTextField txtMaPn;
     private javax.swing.JTextField txtMaSach;
     private com.toedter.calendar.JDateChooser txtNgayNhap;

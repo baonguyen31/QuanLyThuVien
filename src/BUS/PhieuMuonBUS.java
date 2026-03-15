@@ -91,6 +91,10 @@ public class PhieuMuonBUS {
        return true;
    }
    
+   public boolean updatePM(PhieuMuonDTO dto){ 
+       return phieuMuonDao.updatePM(dto);
+   }
+   
    public boolean updateQuaHan(PhieuMuonDTO pm){
        return phieuMuonDao.updateQuaHan(pm);
    }

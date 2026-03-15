@@ -140,7 +140,7 @@ public class header extends javax.swing.JFrame {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-        openMenuBar();
+//        openMenuBar();
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void lblClose1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClose1MouseClicked
@@ -150,7 +150,7 @@ public class header extends javax.swing.JFrame {
 
     private void lblClose1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblClose1MouseEntered
         // TODO add your handling code here:
-        pnClose.setBackground(Color.RED);
+//        pnClose.setBackground(Color.RED);
     }//GEN-LAST:event_lblClose1MouseEntered
 
     private void pnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCloseMouseClicked
@@ -160,12 +160,12 @@ public class header extends javax.swing.JFrame {
 
     private void pnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCloseMouseEntered
         // TODO add your handling code here:
-        pnClose.setBackground(Color.RED);
+//        pnClose.setBackground(Color.RED);
     }//GEN-LAST:event_pnCloseMouseEntered
 
     private void pnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCloseMouseExited
         // TODO add your handling code here:
-        pnClose.setBackground(new Color(46,92,138));
+//        pnClose.setBackground(new Color(46,92,138));
     }//GEN-LAST:event_pnCloseMouseExited
 
     /**

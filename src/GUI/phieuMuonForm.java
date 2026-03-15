@@ -39,6 +39,8 @@ public class phieuMuonForm extends javax.swing.JPanel {
         loadList();
         initAdd();
         initEdit();
+        phieuMuonTable.setDefaultEditor(Object.class, null);
+
         
     }
 
@@ -330,7 +332,8 @@ public class phieuMuonForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAdd1MouseClicked
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        currentList = new ArrayList<>(listPm);
+        PhieuMuonBUS pmBus = new PhieuMuonBUS();
+        currentList = pmBus.getAll();
         loadData(currentList);
     }//GEN-LAST:event_btnAdd1ActionPerformed
 

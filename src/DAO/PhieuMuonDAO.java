@@ -146,6 +146,28 @@ public class PhieuMuonDAO {
 }
         return false;
 }
+    
+    public boolean updatePM(PhieuMuonDTO pmDto){    
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "Update phieumuon ";
+            qry += " Set MaDG = " + "'" + pmDto.getMaDG() + "'";
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            
+            qry += " , HanTra = " + "'" + sdf.format(pmDto.getHanTra() )+ "'" ;
+            qry += " where MaPM = " + "'" + pmDto.getMaPM() + "'";
+            st = conn.createStatement();
+            st.executeUpdate(qry);  
+            System.out.print(qry);
+            JDBCUtil.closeConnection(conn);
+            return true;
+        }
+        catch(SQLException e){
+          e.printStackTrace();
+        }
+        return false;
+    }
      public ArrayList<PhieuMuonDTO> filter(String loaiNgay, int trangThai, Date tuNgay, Date denNgay){
         ArrayList<PhieuMuonDTO> phieumuonDs = new ArrayList<>();
        try{

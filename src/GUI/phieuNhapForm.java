@@ -356,6 +356,8 @@ public class phieuNhapForm extends javax.swing.JPanel {
             phieuNhapTable.setModel(modelPm);
         
     }
+    
+     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;

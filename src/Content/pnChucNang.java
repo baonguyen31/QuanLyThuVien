@@ -888,14 +888,14 @@ public class pnChucNang extends javax.swing.JFrame {
 
     private void addBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBookActionPerformed
         // TODO add your handling code here:
-        AddBookForm bookForm = new AddBookForm();
-        bookForm.setVisible(true);
+//        AddBookForm bookForm = new AddBookForm();
+//        bookForm.setVisible(true);
     }//GEN-LAST:event_addBookActionPerformed
 
     private void editBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBookActionPerformed
         // TODO add your handling code here:
-        AddBookForm bookForm = new AddBookForm();
-        bookForm.setVisible(true);
+//        AddBookForm bookForm = new AddBookForm();
+//        bookForm.setVisible(true/
     }//GEN-LAST:event_editBookActionPerformed
 
     private void deleteBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookActionPerformed

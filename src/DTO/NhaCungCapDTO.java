@@ -11,14 +11,12 @@ package DTO;
 public class NhaCungCapDTO {
     public String maNCC;
     public String tenNCC;
-    public String maSach;
     
     public NhaCungCapDTO(){}
 
-    public NhaCungCapDTO(String maNCC, String tenNCC, String maSach) {
+    public NhaCungCapDTO(String maNCC, String tenNCC) {
         this.maNCC = maNCC;
         this.tenNCC = tenNCC;
-        this.maSach = maSach;
     }
 
     public String getMaNCC() {
@@ -37,12 +35,5 @@ public class NhaCungCapDTO {
         this.tenNCC = tenNCC;
     }
 
-    public String getMaSach() {
-        return maSach;
-    }
-
-    public void setMaSach(String maSach) {
-        this.maSach = maSach;
-    }
     
 }
