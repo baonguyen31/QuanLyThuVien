@@ -29,12 +29,16 @@ public class SachDialog extends javax.swing.JDialog {
     private SachBUS bus = new SachBUS();
     private ArrayList<SachDTO> list  = new ArrayList<>();
     public SachDialog(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);   
+        super(parent, modal);  
+        try{
         setUndecorated(true);
         initComponents();
         loadAll();
         loadList();
         tblSach.setDefaultEditor(Object.class, null);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

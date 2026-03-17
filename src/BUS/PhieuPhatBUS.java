@@ -4,7 +4,13 @@
  */
 package BUS;
 
+import DAO.CTPhieuNhapDAO;
+import DAO.PhieuNhapDAO;
 import DAO.PhieuPhatDAO;
+import DAO.SachDAO;
+import DTO.CTPhieuNhapHangDTO;
+import DTO.PhieuNhapHangDTO;
+import java.util.ArrayList;
 
 
 /**
@@ -12,8 +18,7 @@ import DAO.PhieuPhatDAO;
  * @author noname
  */
 public class PhieuPhatBUS {
-    
-    public String generateMaPM() {
+    public String generateMaPN() {
     PhieuPhatDAO dao = new PhieuPhatDAO();
     String lastMaPM = dao.getLastMaPM();
 
@@ -31,6 +36,8 @@ public class PhieuPhatBUS {
     }else{
       return "PP" + number;
             }
-    
+    }
+   
 }
-}
+  
+

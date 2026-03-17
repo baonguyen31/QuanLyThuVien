@@ -58,7 +58,7 @@ public class CTPhieuNhapHangDTO {
     }
 
     public double getThanhTien() {
-        return thanhTien;
+        return this.donGia * this.sl;
     }
 
     public void setThanhTien(double thanhTien) {

@@ -296,7 +296,8 @@ public class phieuNhapForm extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAdd1MouseClicked
 
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
-        currentList = new ArrayList<>(listPn);
+        PhieuNhapBUS bus = new PhieuNhapBUS();
+        currentList = bus.getAll();
         loadData(currentList);
     }//GEN-LAST:event_btnAdd1ActionPerformed
 

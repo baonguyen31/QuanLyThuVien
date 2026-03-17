@@ -375,7 +375,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 
     private String generateMaPP(){
         PhieuPhatBUS bus= new PhieuPhatBUS();
-        return bus.generateMaPM();
+        return bus.generateMaPN();
     }
     private void btnBackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBackMouseClicked
         // TODO add your handling code here:

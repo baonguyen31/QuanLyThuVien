@@ -26,6 +26,10 @@ public class SachBUS {
         return dsSach;
     }
     
+    public SachDTO getSachByMa(String maSach){
+        return sachDao.getSachByMa(maSach);
+    }
+    
     public boolean insertSach(SachDTO sach){
         //Kiểm tra data hợp lệ
         sach.setDonGia(0);

@@ -53,6 +53,31 @@ public class SachDAO {
         return result;    
     }
     
+      public SachDTO getSachByMa(String maSach){
+        SachDTO sach = new SachDTO();
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select * from sach where MaSach = '" + maSach + "'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            if (rs.next()){
+                sach.setMaSach(rs.getString("MaSach"));
+                sach.setTenSach(rs.getString("TenSach"));
+                sach.setMaTL(rs.getString("MaTL"));
+                sach.setMaNXB(rs.getString("MaNXB"));
+                sach.setNgayXB(rs.getDate("NgayXuatBan"));
+                sach.setSoLuong(rs.getInt("SoLuong"));
+                sach.setDonGia(rs.getInt("DonGia"));
+                return sach;
+            } 
+            JDBCUtil.closeConnection(conn);
+        }catch(java.sql.SQLException e)
+            {
+                    JOptionPane.showMessageDialog(null, "Không thể lấy dữ liệu sách!","Lỗi",JOptionPane.ERROR_MESSAGE);
+        }
+        return sach;
+    }
+    
     
     public boolean insertSach(SachDTO sach){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

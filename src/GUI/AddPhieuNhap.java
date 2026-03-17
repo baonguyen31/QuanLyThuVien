@@ -47,7 +47,6 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         initComponents();  
         modelCt = (DefaultTableModel) CTPNTable.getModel();
         xoaDong();
-        
     }
 
     /**
@@ -377,19 +376,29 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         resetform();
 //        txtNhaCungCap.setEditable(true);
         txtNgayNhap.setDate(new Date());
-//        txtMaPn.setText(generateMaPm());
-//        txtMaPn.setEnabled(false);
+//        setMaSach(txtMaSach.getText());
+        
         txtNhanVien.setEditable(false);
         txtNhanVien.setText(Auth.user.getMaNV());
-//        btnSave.setText("Thêm phiếu");
-//        btnTraSach.setVisible(false);
-//        btnPhieuphat.setVisible(false);
-//        btnXoa.setEnabled(true);
-//        CTPhieuMuonBUS.dsCTPM.clear();
+        btnSave.setText("Thêm phiếu");
         revalidate();
         repaint();
 
 }        
+//    private void loadDonGia(){
+//         String ma = txtMaSach.getText().trim();
+//         if(ma.isEmpty()) return;
+//         
+//        SachBUS sachBus = new SachBUS();
+//        SachDTO sachDto = sachBus.getSachByMa(ma);
+//        if(sachDto != null){
+//        txtDonGia.setText(String.valueOf(sachDto.getDonGia()));
+//        }
+//    }
+//    public void setMaSach(String maSach){
+//        txtMaSach.setText(maSach);
+//        loadDonGia();
+//    }
     
     private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
         // TODO add your handling code here:
@@ -417,27 +426,29 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-//        PhieuMuonDTO pm = new PhieuMuonDTO();       
-//        pm.setMaPM(txtMaPn.getText());
-//        pm.setMaDG(txtNhaCungCap.getText());
-//        pm.setMaNV(txtNhanVien.getText());
-//        pm.setNgayMuon(txtNgayNhap.getDate());
-//        
-//        PhieuMuonBUS bus = new PhieuMuonBUS();
-//        if(!isEdit){
-//        //Thêm
-////            boolean ok = bus.insert(pm, dsCTPN);
-//            if (ok){
-//                JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công");
-//                resetform();                
-//            }
+        PhieuNhapHangDTO pm = new PhieuNhapHangDTO();       
+        pm.setMaPNH(txtMaPn.getText());
+        pm.setMaNCC(txtNhaCungCap.getText());
+        pm.setMaNV(txtNhanVien.getText());
+        pm.setNgayNhap(txtNgayNhap.getDate());
+        
+        PhieuNhapBUS bus = new PhieuNhapBUS();
+        if(!isEdit){
+        //Thêm
+            boolean ok = bus.insert(pm, dsCTPN);
+            if (ok){
+                JOptionPane.showMessageDialog(this, "Thêm phiếu nhập thành công");
+                resetform();               
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm phiếu nhập không thành công");
+            }
 //        }else{
 //        //Cập nhật===========
 //            boolean update = bus.updateQuaHan(pm);
 //            if(update){
 //                JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
 //            }
-//        }
+        }
     }//GEN-LAST:event_btnSaveActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -449,46 +460,50 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         if (dsCTPN == null){
              dsCTPN = new ArrayList();
         }
-      
+
+        SachBUS sachBus = new SachBUS();
+        String ma = txtMaSach.getText();
+        SachDTO sachDto = sachBus.getSachByMa(ma);
+        int soluong = Integer.parseInt(txtSoLuong.getText());
+        double donGia = sachDto.getDonGia();
+        String tenSach = sachBus.getTenByMaSach(ma);
+        boolean trungSach = false;
         
-//        for (int i = 0; i <= modelCt.getRowCount(); i++){
-////        CTPhieuNhapHangDTO ctpm  = new CTPhieuNhapHangDTO();
-//        SachBUS sachBus = new SachBUS();
-//        String ma = txtMaSach.getText();
-//        int soluong = Integer.parseInt(txtSoLuong.getText());
-//        String tenSach = sachBus.getTenByMaSach(ma);
-//        boolean trungSach = false;
-//        
-//        for (int i = 0; i < CTPNTable.getRowCount(); i++){
-//            
-//            String maSachTable = modelCt.getValueAt(i, 0).toString();
-//            
-//            if(maSachTable.equals(ma)){
-//                int slCu = Integer.parseInt(modelCt.getValueAt(i, 2).toString());
-//                int slMoi = slCu + soluong;
-//                modelCt.setValueAt(slMoi, i, 2);
-//            
-//                //============================//4
-//                for (CTPhieuNhapHangDTO ct : dsCTPN){
-//                    if(ct.getMaSach().equals(ma)){
-//                        ct.setSoLuong(slMoi);
-//                    }
-//                   }
-//                trungSach = true;
-//                }
-//            }
-//        if (!trungSach){
-//         CTPhieuNhapHangDTO ctpm  = new CTPhieuNhapHangDTO();
-//         ctpm.setMaPM(txtMaPn.getText());
-//         ctpm.setMaSach(ma);
-//         ctpm.setSoLuong(soluong);
-//         dsCTPN.add(ctpm);   
-//         modelCt.addRow(new Object[]{
-//            ma,
-//            tenSach,
-//            soluong,
-//        });
-//        }     
+        for (int i = 0; i < CTPNTable.getRowCount(); i++){
+            
+            String maSachTable = modelCt.getValueAt(i, 0).toString();
+            
+            if(maSachTable.equals(ma)){
+                int slCu = Integer.parseInt(modelCt.getValueAt(i, 2).toString());
+                int slMoi = slCu + soluong;
+                modelCt.setValueAt(slMoi, i, 2);
+            
+                //============================//4
+                for (CTPhieuNhapHangDTO ct : dsCTPN){
+                    if(ct.getMaSach().equals(ma)){
+                        ct.setSl(slMoi);
+                    }
+                   }
+                trungSach = true;
+                }
+            }
+        if (!trungSach){
+         CTPhieuNhapHangDTO ctpn  = new CTPhieuNhapHangDTO();
+         double thanhTien = soluong * donGia;
+         ctpn.setMaPn(txtMaPn.getText());
+         ctpn.setMaSach(ma);
+         ctpn.setSl(soluong);
+         ctpn.setDonGia(donGia);
+         ctpn.setThanhTien(thanhTien);
+         dsCTPN.add(ctpn);   
+         modelCt.addRow(new Object[]{
+            ma,
+            tenSach,
+            soluong,
+            donGia,
+            thanhTien
+        });
+        }     
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnTraSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraSachActionPerformed

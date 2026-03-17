@@ -8,8 +8,10 @@ import DTO.CTPhieuNhapHangDTO;
 import Util.JDBCUtil;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -41,5 +43,25 @@ public class CTPhieuNhapDAO {
             e.printStackTrace();
         }
         return dsCTPhieuNhapHang;
+    }
+      
+        public boolean insert(CTPhieuNhapHangDTO ctpn){
+        try {
+        conn = JDBCUtil.getConnect();
+        String qry = "Insert into ct_phieunhap values(";
+        qry += "'" + ctpn.getMaPn()+ "'";
+        qry += ","+ "'" + ctpn.getMaSach()+ "', ";
+        qry +=  ctpn.getSl()+ ", ";
+        qry +=  ctpn.getDonGia()+ ", ";
+        qry +=  ctpn.getThanhTien()+ ")";
+        System.out.print(qry);
+        st = conn.createStatement();
+        st.executeUpdate(qry); 
+        JDBCUtil.closeConnection(conn);
+        return true;
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Thêm ct phiếu nhập không thành công");
+        }
+        return false;
     }
 }
