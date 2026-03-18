@@ -336,6 +336,9 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         btnDocGiaList.setEnabled(true);
         txtNhanVien.setEditable(false);
         btnXoa.setEnabled(false);
+        txtMaSach.setText(null);
+        txtDonGia.setText("");
+        txtSoLuong.setText(null);
 //        txtNgayMuon.setEditable(false);
 //        txtHanTra.setEditable(false);
         btnSave.setText("Cập nhật");
@@ -359,7 +362,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
 //        DefaultTableModel model = (DefaultTableModel) CTPMTable.getModel();
 //        modelCt = CTPMTable.getModel();
 //        modelCt.setRowCount(0);       
-        txtMaSach.setText(null);
+        txtMaSach.setText("");
         txtDonGia.setText("");
         txtSoLuong.setText(null);
         txtNhanVien.setText("");
@@ -375,6 +378,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
 //        if (modelCt == null) dsCTPM = new ArrayList();
         resetform();
 //        txtNhaCungCap.setEditable(true);
+        txtMaPn.setEditable(true);
         txtNgayNhap.setDate(new Date());
 //        setMaSach(txtMaSach.getText());
         
@@ -385,6 +389,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         repaint();
 
 }        
+//    ===========Tạo hiển thị đơn giá khi chọn sách     
 //    private void loadDonGia(){
 //         String ma = txtMaSach.getText().trim();
 //         if(ma.isEmpty()) return;

@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -87,4 +90,30 @@ public class PhieuNhapDAO {
         }
         return false;
     }
+      
+      public ArrayList<PhieuNhapHangDTO> filter(Date tuNgay, Date denNgay){
+        ArrayList<PhieuNhapHangDTO> result  = new ArrayList<>();
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select * from phieunhap where 1 = 1";
+            if(tuNgay != null ) qry += " and NgayNhap >= '" + sdf.format(tuNgay) + "'";
+            if(denNgay != null ) qry += " and NgayNhap <= '" + sdf.format(denNgay) + "'";
+            System.out.println(qry);
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            while(rs.next()){
+                PhieuNhapHangDTO pn = new PhieuNhapHangDTO();
+                pn.setMaPNH(rs.getString("MaPN"));
+                pn.setMaNCC(rs.getString("MaNCC"));
+                pn.setMaNV(rs.getString("MaNV"));
+                pn.setNgayNhap(rs.getDate("NgayNhap"));
+                pn.setTongTien(rs.getDouble("TongTien"));
+                result.add(pn);
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieuNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+      }
 }

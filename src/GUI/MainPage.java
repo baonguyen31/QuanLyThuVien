@@ -28,6 +28,7 @@ public class MainPage extends javax.swing.JFrame {
     phieuMuonForm phieumuon = new phieuMuonForm(this);
     phieuNhapForm phieunhap = new phieuNhapForm(this);
     ThongKeForm thongke = new ThongKeForm();
+    thongKeDashBoard dashboard = new thongKeDashBoard();
     AddPhieuMuon addPM = new AddPhieuMuon(this);
     AddPhieuPhat addPP = new AddPhieuPhat(this);
     AddPhieuNhap addPN = new AddPhieuNhap(this);
@@ -65,6 +66,7 @@ public class MainPage extends javax.swing.JFrame {
         phieumuon.setVisible(false);
         phieunhap.setVisible(false);
         thongke.setVisible(false);
+        dashboard.setVisible(false);
         
     }
 

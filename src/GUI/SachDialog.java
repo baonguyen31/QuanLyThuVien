@@ -145,17 +145,17 @@ public class SachDialog extends javax.swing.JDialog {
         if (evt.getClickCount() == 2) {
 
             int row = tblSach.getSelectedRow();
-
+            
             if (row >= 0) {
 
                 String maSach = tblSach.getValueAt(row, 0).toString();
                 //        String tenDG = tb Sach.getValueAt(row, 1).toString();
-
+                
                 SachDTO dto = new   SachDTO();
                 dto.setMaSach(maSach);
 
                 selectedSach = dto;
-
+                
                 dispose();
             }
         }

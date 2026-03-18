@@ -11,6 +11,7 @@ import DTO.CTPhieuNhapHangDTO;
 import DTO.PhieuNhapHangDTO;
 import DTO.SachDTO;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -70,5 +71,8 @@ public class PhieuNhapBUS {
                  }
              return true;
          }
+      public ArrayList<PhieuNhapHangDTO> filter(Date tuNgay, Date denNgay){
+          return dao.filter(tuNgay, denNgay);
+      }
      }
 
