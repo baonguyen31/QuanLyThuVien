@@ -11,7 +11,11 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +26,7 @@ public class CTPhieuMuonDAO {
     Statement st = null;
     ResultSet rs = null;
     Connection conn = null;
-       
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public ArrayList<CTPhieuMuonDTO> getCTPMByMaPM(String MaPM){
         ArrayList<CTPhieuMuonDTO> dsCTPhieuMuon =  new ArrayList<CTPhieuMuonDTO>();
         try{
@@ -62,5 +66,34 @@ public class CTPhieuMuonDAO {
         return false;
     }
     
+        public ArrayList<CTPhieuMuonDTO> top10Sach(Date tuNgay, Date denNgay){
+        ArrayList<CTPhieuMuonDTO> result = new ArrayList<>();
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select s.MaSach, SUM(ct.SoLuong) as SoLuongMuon";
+            qry += " from ct_phieumuon ct";
+            qry += " join sach s on s.MaSach = ct.MaSach";
+            qry += " join phieumuon pm on pm.MaPM = ct.MaPM";
+            if(tuNgay != null) qry += " and pm.NgayMuon >= '" + sdf.format(tuNgay) + "'";
+            if(denNgay != null) qry += " and pm.NgayMuon <= '" + sdf.format(denNgay) + "'";
+            qry += " group by s.MaSach ";
+            qry += " order by SoLuongMuon desc";
+            qry += " limit 10";
+            System.out.println(qry);
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);           
+         
+            while(rs.next()){
+                CTPhieuMuonDTO ctpm = new CTPhieuMuonDTO();
+                ctpm.setMaSach(rs.getString("MaSach"));
+                ctpm.setTongSoLuong(rs.getInt("SoLuongMuon"));
+                result.add(ctpm);
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieuMuonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
     
 }

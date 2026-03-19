@@ -136,4 +136,18 @@ public class SachBUS {
         }
         return result;
     }
+    public int countSach(){
+         int tong = 0;
+         dsSach = new ArrayList<SachDTO>();
+         dsSach = sachDao.selectAll();
+             for(SachDTO dto : dsSach){
+                tong += dto.getSoLuong();
+                System.out.println("số lượng là: "+  dto.getSoLuong());
+    
+         }
+         
+          System.out.println("số lượng sách là: "+dsSach.size());
+         System.out.println("số lượng sách là: "+tong);
+         return tong;
+    }
 }

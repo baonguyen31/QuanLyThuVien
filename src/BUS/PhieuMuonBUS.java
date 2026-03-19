@@ -122,4 +122,19 @@ public class PhieuMuonBUS {
        }
        return null;
    }
+   
+    public int countDangMuon(){
+         int tong = 0;
+         dsPhieuMuon = new ArrayList<PhieuMuonDTO>();
+         dsPhieuMuon = phieuMuonDao.selectAll();
+             for(PhieuMuonDTO dto : dsPhieuMuon){
+                if(dto.getTrangThai() == 0)
+                tong += 1;
+    
+         }
+         
+          System.out.println("số lượng phieu muon là: "+ dsPhieuMuon.size());
+         System.out.println("số lượng sách là: " + tong);
+         return tong;
+    }
 }

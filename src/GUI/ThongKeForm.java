@@ -3,20 +3,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI;
+import BUS.CTPhieuMuonBUS;
+import BUS.PhieuMuonBUS;
+import BUS.PhieuPhatBUS;
+import BUS.SachBUS;
+import DTO.CTPhieuMuonDTO;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.table.JTableHeader;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 /**
@@ -28,11 +38,34 @@ public class ThongKeForm extends javax.swing.JPanel {
     /**
      * Creates new form ThongKeForm
      */
+    private SachBUS sachBus = new SachBUS();
+    private PhieuMuonBUS pmBus = new PhieuMuonBUS();
+    private PhieuPhatBUS phatBus = new PhieuPhatBUS();
+
+    Color PRIMARY = new Color(25, 118, 210);     // xanh chính
+    Color PRIMARY_LIGHT = new Color(144, 202, 249);
+    Color BACKGROUND = new Color(245, 247, 250);
+    Color CARD_BG = Color.WHITE;
+    Color TEXT_DARK = new Color(33, 33, 33);
+        
     public ThongKeForm() {
         initComponents();
+        setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
+        styleFilterPanel();
+        styleTable();
 //        loadBarChart();
+
+     //==============làm đẹp background===============// 
+        setBackground(BACKGROUND);
+        pnlFilter.setBackground(CARD_BG);
+        pnTop.setBackground(BACKGROUND);
+        pnChart.setBackground(CARD_BG);
+        jTable1.setBackground(Color.WHITE);
+ //==============làm đẹp background===============// 
+ 
         initTopPanel();
         initChartPanel();
+        loadThongKe();
         
     }
 
@@ -48,10 +81,11 @@ public class ThongKeForm extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         pnlFilter = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txtTuNgay = new com.toedter.calendar.JDateChooser();
         jLabel3 = new javax.swing.JLabel();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
-        jButton2 = new javax.swing.JButton();
+        txtDenNgay = new com.toedter.calendar.JDateChooser();
+        btnThongKe = new javax.swing.JButton();
+        btnReset = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         pnTop = new javax.swing.JPanel();
@@ -65,9 +99,26 @@ public class ThongKeForm extends javax.swing.JPanel {
 
         jLabel2.setText("Từ Ngày:");
 
+        txtTuNgay.setDateFormatString("yyyy-MM-dd");
+        txtTuNgay.setPreferredSize(new java.awt.Dimension(106, 22));
+
         jLabel3.setText("Đến Ngày:");
 
-        jButton2.setText("jButton2");
+        txtDenNgay.setDateFormatString("yyyy-MM-dd\n");
+
+        btnThongKe.setText("Thống kê");
+        btnThongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThongKeActionPerformed(evt);
+            }
+        });
+
+        btnReset.setText("Làm mới");
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlFilterLayout = new javax.swing.GroupLayout(pnlFilter);
         pnlFilter.setLayout(pnlFilterLayout);
@@ -77,14 +128,16 @@ public class ThongKeForm extends javax.swing.JPanel {
                 .addGap(12, 12, 12)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnReset)
+                .addGap(14, 14, 14))
         );
         pnlFilterLayout.setVerticalGroup(
             pnlFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,10 +145,12 @@ public class ThongKeForm extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addGroup(pnlFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnThongKe)
+                        .addComponent(btnReset))
+                    .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10))
         );
 
@@ -177,6 +232,39 @@ public class ThongKeForm extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+//==============làm đẹp filter===============//
+    private void styleFilterPanel() {
+    pnlFilter.setBorder(BorderFactory.createCompoundBorder(
+        BorderFactory.createEmptyBorder(10, 15, 10, 15),
+        BorderFactory.createLineBorder(new Color(220, 220, 220))
+    ));
+
+    btnThongKe.setBackground(PRIMARY);
+    btnThongKe.setForeground(Color.WHITE);
+    btnThongKe.setFocusPainted(false);
+
+    btnReset.setBackground(Color.WHITE);
+    btnReset.setForeground(PRIMARY);
+}
+  //==============làm đẹp filter===============//  
+    private void btnThongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongKeActionPerformed
+        // TODO add your handling code here:
+        Date tuNgay = txtTuNgay.getDate();
+        Date denNgay = txtDenNgay.getDate();
+        
+        createBarChart(pnChart,tuNgay, denNgay);
+        
+    }//GEN-LAST:event_btnThongKeActionPerformed
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+        // TODO add your handling code here:
+        txtTuNgay.setDate(null);
+        txtDenNgay.setDate(null);
+        
+        initChartPanel();
+        initTopPanel();
+        loadThongKe();
+    }//GEN-LAST:event_btnResetActionPerformed
 
     private void initTopPanel(){
     pnTop.removeAll(); // xóa layout cũ của NetBeans
@@ -191,46 +279,68 @@ public class ThongKeForm extends javax.swing.JPanel {
     pnTop.repaint();
 }
     private JPanel createItem(String title, String value){
-    JPanel panel = new JPanel();
-    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-    panel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(Color.WHITE);
 
-    JLabel lblTitle = new JLabel(title);
-    JLabel lblValue = new JLabel(value);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(220,220,220)),
+            BorderFactory.createEmptyBorder(15, 10, 15, 10)
+        ));
 
-    lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-    lblValue.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel lblTitle = new JLabel(title);
+        JLabel lblValue = new JLabel(value);
 
-    lblValue.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblValue.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-    panel.add(Box.createVerticalStrut(10));
-    panel.add(lblTitle);
-    panel.add(Box.createVerticalStrut(5));
-    panel.add(lblValue);
+        lblTitle.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblTitle.setForeground(Color.GRAY);
 
-    return panel;
-}
+        lblValue.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        lblValue.setForeground(PRIMARY);
+
+        panel.add(lblTitle);
+        panel.add(Box.createVerticalStrut(10));
+        panel.add(lblValue);
+
+        return panel;
+    }
     private void initChartPanel(){
     pnChart.removeAll();
     pnChart.setLayout(new BorderLayout());
-
-    JPanel chartPanel = createBarChart(); // 👈 hàm bạn đã làm
+    
+    Date tuNgay = null;
+    Date denNgay = null;
+    
+    
+    
+    JPanel chartPanel = createBarChart(pnChart, tuNgay, denNgay); // 👈 hàm bạn đã làm
 
     pnChart.add(chartPanel, BorderLayout.CENTER);
 
     pnChart.revalidate();
     pnChart.repaint();
 }
-    private JPanel createBarChart(){
+    
+    
+    private JPanel createBarChart(JPanel panel, Date tuNgay, Date denNgay){
     // Tạo dataset
+    CTPhieuMuonBUS bus = new  CTPhieuMuonBUS();
+    ArrayList<CTPhieuMuonDTO> list = bus.top10sach(tuNgay, denNgay);
+    SachBUS sachBus = new SachBUS();
      DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-
-        dataset.addValue(20, "Số lượt mượn", "Lão Hạc");
-        dataset.addValue(15, "Số lượt mượn", "Doraemon");
-        dataset.addValue(10, "Số lượt mượn", "Rừng Na Uy");
-        dataset.addValue(8, "Số lượt mượn", "Nhà giả kim");
-        dataset.addValue(5, "Số lượt mượn", "Đắc nhân tâm");
-        dataset.addValue(2, "Số lượt mượn", "Giáo trình Java cơ bản");
+     for (CTPhieuMuonDTO dto : list){
+         String tenSach = sachBus.timTenSachTheoMa(dto.getMaSach());
+         dataset.addValue(dto.getTongSoLuong(), "Số lượt mượn", tenSach);
+     }
+     
+//        dataset.addValue(20, "", "Lão Hạc");
+//        dataset.addValue(15, "Số lượt mượn", "Doraemon");
+//        dataset.addValue(10, "Số lượt mượn", "Rừng Na Uy");
+//        dataset.addValue(8, "Số lượt mượn", "Nhà giả kim");
+//        dataset.addValue(5, "Số lượt mượn", "Đắc nhân tâm");
+//        dataset.addValue(2, "Số lượt mượn", "Giáo trình Java cơ bản");
 
         JFreeChart barChart = ChartFactory.createBarChart(
                 "Top sách mượn nhiều",
@@ -238,34 +348,62 @@ public class ThongKeForm extends javax.swing.JPanel {
                 "Số lượt mượn",
                 dataset
         );
+//===================làm đẹp chart================//
+    CategoryPlot plot = barChart.getCategoryPlot();
 
+    plot.setBackgroundPaint(Color.WHITE);
+    plot.setRangeGridlinePaint(new Color(220,220,220));
+
+    BarRenderer renderer = (BarRenderer) plot.getRenderer();
+    renderer.setSeriesPaint(0, PRIMARY);
+
+    barChart.getTitle().setPaint(TEXT_DARK);
+//===================làm đẹp chart================//
 
     // Đưa vào panel
     ChartPanel chartPanel = new ChartPanel(barChart);
     chartPanel.setPreferredSize(new Dimension(800, 300));
-
+    
+    panel.removeAll();
+    panel.setLayout(new BorderLayout());
+    panel.add(chartPanel, BorderLayout.CENTER);
+    panel.validate();
     return chartPanel;
 }
-//    private void loadThongKe(){
-//    int tongSach = sachBus.countSach();
-//    int dangMuon = pmBus.countDangMuon();
+    private void loadThongKe(){
+    int tongSach = sachBus.countSach();
+    int dangMuon = pmBus.countDangMuon();
 //    int chuaXuLy = phatBus.countChuaXuLy();
-//
-//    pnTop.removeAll();
-//    pnTop.setLayout(new GridLayout(1, 3, 10, 0));
-//
-//    pnTop.add(createItem("Tổng sách", String.valueOf(tongSach)));
-//    pnTop.add(createItem("Đang mượn", String.valueOf(dangMuon)));
-//    pnTop.add(createItem("Chưa xử lý", String.valueOf(chuaXuLy)));
-//
-//    pnTop.revalidate();
-//    pnTop.repaint();
-//}
+
+    int chuaXuLy = 0;
+
+    pnTop.removeAll();
+    pnTop.setLayout(new GridLayout(1, 3, 10, 0));
+
+    pnTop.add(createItem("Tổng sách", String.valueOf(tongSach)));
+    pnTop.add(createItem("Đang mượn", String.valueOf(dangMuon)));
+    pnTop.add(createItem("Chưa xử lý", String.valueOf(chuaXuLy)));
+
+    pnTop.revalidate();
+    pnTop.repaint();
+}
+    
+    private void styleTable() {
+    jTable1.setRowHeight(28);
+    jTable1.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+
+    JTableHeader header = jTable1.getTableHeader();
+    header.setFont(new Font("Segoe UI", Font.BOLD, 13));
+    header.setBackground(PRIMARY);
+    header.setForeground(Color.WHITE);
+
+    jTable1.setSelectionBackground(PRIMARY_LIGHT);
+    jTable1.setGridColor(new Color(230,230,230));
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnThongKe;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -275,5 +413,7 @@ public class ThongKeForm extends javax.swing.JPanel {
     private javax.swing.JPanel pnChart;
     private javax.swing.JPanel pnTop;
     private javax.swing.JPanel pnlFilter;
+    private com.toedter.calendar.JDateChooser txtDenNgay;
+    private com.toedter.calendar.JDateChooser txtTuNgay;
     // End of variables declaration//GEN-END:variables
 }
