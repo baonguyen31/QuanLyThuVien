@@ -104,7 +104,7 @@ public class ThongKeForm extends javax.swing.JPanel {
 
         jLabel3.setText("Đến Ngày:");
 
-        txtDenNgay.setDateFormatString("yyyy-MM-dd\n");
+        txtDenNgay.setDateFormatString("yyyy-MM-dd");
 
         btnThongKe.setText("Thống kê");
         btnThongKe.addActionListener(new java.awt.event.ActionListener() {
