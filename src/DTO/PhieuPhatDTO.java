@@ -4,26 +4,30 @@
  */
 package DTO;
 
+import java.util.Date;
+
 /**
  *
  * @author noname
  */
 public class PhieuPhatDTO {
-    public String maPP;
-    public String maPM;
-    public String maDG;
-    public int tongTien;
-    public String lyDo;
-    public int trangThai;
+    private String maPP;
+    private String maPM;
+    private String maDG;
+    private String maNV;
+    private Date ngayLap;
+    private double tongTien;
+    private int trangThai;
     
     public PhieuPhatDTO(){}
 
-    public PhieuPhatDTO(String maPP, String maPM, String maDG, int tongTien, String lyDo, int trangThai) {
+    public PhieuPhatDTO(String maPP, String maPM, String maDG, String maNV, Date ngayLap, double tongTien, int trangThai) {
         this.maPP = maPP;
         this.maPM = maPM;
         this.maDG = maDG;
+        this.maNV = maNV;
+        this.ngayLap = ngayLap;
         this.tongTien = tongTien;
-        this.lyDo = lyDo;
         this.trangThai = trangThai;
     }
 
@@ -51,20 +55,28 @@ public class PhieuPhatDTO {
         this.maDG = maDG;
     }
 
-    public int getTongTien() {
+    public String getMaNV() {
+        return maNV;
+    }
+
+    public void setMaNV(String maNV) {
+        this.maNV = maNV;
+    }
+
+    public Date getNgayLap() {
+        return ngayLap;
+    }
+
+    public void setNgayLap(Date ngayLap) {
+        this.ngayLap = ngayLap;
+    }
+
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(int tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
-    }
-
-    public String getLyDo() {
-        return lyDo;
-    }
-
-    public void setLyDo(String lyDo) {
-        this.lyDo = lyDo;
     }
 
     public int getTrangThai() {
@@ -74,11 +86,13 @@ public class PhieuPhatDTO {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
+
     
+
     public String getTrangThaiString(){
         switch(this.trangThai){
-            case 0: return "Đã trả tiền";
-            case 1: return "Chưa trả tiền";
+            case 0: return "Chưa trả tiền";
+            case 1: return "Đã trả tiền";
             case 2: return "Quá hạn trả tiền";
             default: return "";
         }

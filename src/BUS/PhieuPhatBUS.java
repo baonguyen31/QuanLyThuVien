@@ -10,6 +10,7 @@ import DAO.PhieuPhatDAO;
 import DAO.SachDAO;
 import DTO.CTPhieuNhapHangDTO;
 import DTO.PhieuNhapHangDTO;
+import DTO.PhieuPhatDTO;
 import java.util.ArrayList;
 
 
@@ -18,26 +19,34 @@ import java.util.ArrayList;
  * @author noname
  */
 public class PhieuPhatBUS {
-    public String generateMaPN() {
+    static ArrayList<PhieuPhatDTO> list;
+    private PhieuPhatDAO dao = new PhieuPhatDAO();
+//    private CTPhieuPhatDAO ctpnDao =new CTPhieuPhatDAO();
+
+    public ArrayList<PhieuPhatDTO> getAll(){
+        dao = new PhieuPhatDAO();
+        if(list == null) list = new ArrayList<>();
+        list = dao.getAll();
+        return list;
+        
+    }
+    public String generateMaPP() {
     PhieuPhatDAO dao = new PhieuPhatDAO();
-    String lastMaPM = dao.getLastMaPM();
+    String lastMaPM = dao.getLastMaPP();
 
     if (lastMaPM == null) {
-        return "PP001";
+        return "PP1";
     }
 
     int number = Integer.parseInt(lastMaPM.substring(2));
     number++;
 
-    if (number < 10) {
-        return "PP00" + number;
-    }else if (number < 100){
-         return "PP0" + number;
-    }else{
-      return "PP" + number;
-            }
+    return "PP" + number;
+  }
+    public PhieuPhatDTO getPPByMa(String MaPp){
+        dao = new PhieuPhatDAO();
+        return dao.getByMaPP(MaPp);
     }
-   
 }
   
 

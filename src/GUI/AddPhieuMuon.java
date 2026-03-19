@@ -412,7 +412,7 @@ public class AddPhieuMuon extends javax.swing.JPanel {
 
            if (today.isAfter(hanTra)) {
                 // Thực sự quá hạn
-                btnTraSach.setVisible(true);
+                btnTraSach.setVisible(false);
                 btnPhieuphat.setVisible(true);
             } else {
                 // Còn hạn hoặc đúng ngày hạn

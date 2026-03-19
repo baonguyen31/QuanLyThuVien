@@ -4,7 +4,12 @@
  */
 package GUI;
 
+import BUS.PhieuPhatBUS;
+import DTO.PhieuPhatDTO;
+import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,9 +21,15 @@ public class phieuPhatForm extends javax.swing.JPanel {
      * Creates new form phieuPhatForm
      */
     private MainPage mainPage;
+    private PhieuPhatBUS phieuPhatBus = new PhieuPhatBUS();
+    private ArrayList<PhieuPhatDTO> listPp  = new ArrayList<>();
+    private ArrayList<PhieuPhatDTO> currentList;
+
     public phieuPhatForm(MainPage main) {
         this.mainPage = main;
         initComponents();
+        loadList();
+        initEdit();
     }
 
     /**
@@ -152,19 +163,70 @@ public class phieuPhatForm extends javax.swing.JPanel {
 //        AddBookForm bookForm = new AddBookForm();
 //        bookForm.setVisible(true);
     }//GEN-LAST:event_btnEditActionPerformed
+    
+    public void loadList(){
+        phieuPhatBus = new PhieuPhatBUS();
+        listPp = phieuPhatBus.getAll();
+        currentList = new ArrayList<>(listPp);
+        loadData(currentList);
+    }
+    
+     public void loadData(ArrayList<PhieuPhatDTO> pnList){
+        PhieuPhatBUS PhieuPhatBus = new PhieuPhatBUS();
+        PhieuPhatDTO pm = new PhieuPhatDTO();
+        
+        if(listPp == null ) phieuPhatBus.getAll();
+        Vector header = new Vector();
+        header.add("Mã Phiếu Phạt");
+        header.add("Mã Phiếu Mượn");
+        header.add("Mã độc giả");
+        header.add("Ngày Lập");
+        header.add("Tổng Tiền");
+        header.add("Trạng thái");
+        
+        DefaultTableModel modelPp= new DefaultTableModel(header,0);
+        modelPp.setRowCount(0);
+        
+        for(PhieuPhatDTO pp : pnList){
+            Vector row = new Vector();
+            row.add(pp.getMaPP());
+            row.add(pp.getMaPM());
+            row.add(pp.getMaDG());
+            row.add(pp.getNgayLap());
+            row.add(pp.getTongTien());
+            row.add(pp.getTrangThaiString());
 
+            modelPp.addRow(row);
+                      
+        }
+            tblPhieuPhat.setModel(modelPp);
+        
+    }
+    
+     
     private void deleteBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBook3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteBook3ActionPerformed
     private void initEdit(){
         btnEdit.addActionListener(e -> {
             int row = tblPhieuPhat.getSelectedRow();
+            System.out.println("Row: " + row);
+            
+            if (row >= 0) {
+            for (int i = 0; i < tblPhieuPhat.getColumnCount(); i++) {
+                System.out.println("Col " + i + ": " + tblPhieuPhat.getValueAt(row, i));
+            }
+            }
             if(row == -1){
                 JOptionPane.showMessageDialog(this, "Vui long chon 1 phieu phat");
-                
+                return;
             }
             String maPP = tblPhieuPhat.getValueAt(row, 0).toString();
-            mainPage.showEditPhieuPhat(maPP);                    
+            System.out.println("Mã pp: " + maPP);
+            if(maPP != null) mainPage.showEditPhieuPhat(maPP);   
+            else{
+                 JOptionPane.showMessageDialog(this, "Không tìm thấy phiếu phạt");
+        }
         });
         
     }

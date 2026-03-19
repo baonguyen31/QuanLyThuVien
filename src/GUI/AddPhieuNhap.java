@@ -342,8 +342,8 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         txtDonGia.setText("");
         txtSoLuong.setText(null);
         btnSave.setText("Cập nhật");
-        PhieuNhapBUS phieuNhapBus = new PhieuNhapBUS();
-        PhieuNhapHangDTO pm = phieuNhapBus.getPNByMa(maPN);
+//        PhieuNhapBUS phieuNhapBus = new PhieuNhapBUS();
+//        PhieuNhapHangDTO pm = phieuNhapBus.getPNByMa(maPN);
 
 
 //        System.out.println("MaPM nhận được: " + maP);

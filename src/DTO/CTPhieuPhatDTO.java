@@ -9,18 +9,32 @@ package DTO;
  * @author PC
  */
 public class CTPhieuPhatDTO {
-    public String maPP;
-    public String maSach;
-    public QuyDinhPhatDTO qdPhat;
-    public int giaTien;
+    private int maCtpp;
+    private String maPP;
+    private String maSach;
+    private String qdPhat;
+    private int soNgayTre;
+    private String lyDo;
+    private double thanhTien;
     
     public CTPhieuPhatDTO(){}
 
-    public CTPhieuPhatDTO(String maPP, String maSach, QuyDinhPhatDTO qdPhat, int giaTien) {
+    public CTPhieuPhatDTO(int maCtpp, String maPP, String maSach, String qdPhat, int soNgayTre, String lyDo, double thanhTien) {
+        this.maCtpp = maCtpp;
         this.maPP = maPP;
         this.maSach = maSach;
         this.qdPhat = qdPhat;
-        this.giaTien = giaTien;
+        this.soNgayTre = soNgayTre;
+        this.lyDo = lyDo;
+        this.thanhTien = thanhTien;
+    }
+
+    public int getMaCtpp() {
+        return maCtpp;
+    }
+
+    public void setMaCtpp(int maCtpp) {
+        this.maCtpp = maCtpp;
     }
 
     public String getMaPP() {
@@ -39,21 +53,39 @@ public class CTPhieuPhatDTO {
         this.maSach = maSach;
     }
 
-    public QuyDinhPhatDTO getQdPhat() {
+    public String getQdPhat() {
         return qdPhat;
     }
 
-    public void setQdPhat(QuyDinhPhatDTO qdPhat) {
+    public void setQdPhat(String qdPhat) {
         this.qdPhat = qdPhat;
     }
 
-    public int getGiaTien() {
-        return giaTien;
+    public int getSoNgayTre() {
+        return soNgayTre;
     }
 
-    public void setGiaTien(int giaTien) {
-        this.giaTien = giaTien;
+    public void setSoNgayTre(int soNgayTre) {
+        this.soNgayTre = soNgayTre;
     }
+
+    public String getLyDo() {
+        return lyDo;
+    }
+
+    public void setLyDo(String lyDo) {
+        this.lyDo = lyDo;
+    }
+
+    public double getThanhTien() {
+        return thanhTien;
+    }
+
+    public void setThanhTien(double thanhTien) {
+        this.thanhTien = thanhTien;
+    }
+
+    
     
     
 }

@@ -11,7 +11,7 @@ package DTO;
 public class QuyDinhPhatDTO {
     public String maQDP;
     public String quyDinh;
-    public int soTienPhat = phatTien();
+    public int soTienPhat;
     
     public QuyDinhPhatDTO(){}
 
@@ -45,13 +45,13 @@ public class QuyDinhPhatDTO {
         this.soTienPhat = soTienPhat;
     }
     
-    public int phatTien(){
-        switch(quyDinh){
-            case "Trả sách trễ hạn": return 20000; 
-            case "Làm hư/mất sách": return 100000;
-            case "Vi phạm nội quy thư viện": return 10000;
-            case "Vi phạm quy định sử dụng sách": return 50000;
-            default: return 0;
-        }
-    }
+//    public int phatTien(){
+//        switch(quyDinh){
+//            case "Trả sách trễ hạn": return 20000; 
+//            case "Làm hư/mất sách": return 100000;
+//            case "Vi phạm nội quy thư viện": return 10000;
+//            case "Vi phạm quy định sử dụng sách": return 50000;
+//            default: return 0;
+//        }
+//    }
 }
