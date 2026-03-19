@@ -63,7 +63,7 @@ public class ThongKeForm extends javax.swing.JPanel {
         jTable1.setBackground(Color.WHITE);
  //==============làm đẹp background===============// 
  
-        initTopPanel();
+//        initTopPanel();
         initChartPanel();
         loadThongKe();
         
@@ -104,7 +104,7 @@ public class ThongKeForm extends javax.swing.JPanel {
 
         jLabel3.setText("Đến Ngày:");
 
-        txtDenNgay.setDateFormatString("yyyy-MM-dd\n");
+        txtDenNgay.setDateFormatString("yyyy-MM-dd");
 
         btnThongKe.setText("Thống kê");
         btnThongKe.addActionListener(new java.awt.event.ActionListener() {
@@ -251,6 +251,7 @@ public class ThongKeForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         Date tuNgay = txtTuNgay.getDate();
         Date denNgay = txtDenNgay.getDate();
+        System.out.println(denNgay);
         
         createBarChart(pnChart,tuNgay, denNgay);
         
@@ -262,22 +263,21 @@ public class ThongKeForm extends javax.swing.JPanel {
         txtDenNgay.setDate(null);
         
         initChartPanel();
-        initTopPanel();
         loadThongKe();
     }//GEN-LAST:event_btnResetActionPerformed
 
-    private void initTopPanel(){
-    pnTop.removeAll(); // xóa layout cũ của NetBeans
-
-    pnTop.setLayout(new GridLayout(1, 3, 10, 0));
-
-    pnTop.add(createItem("Tổng sách", "0"));
-    pnTop.add(createItem("Đang mượn", "0"));
-    pnTop.add(createItem("Chưa xử lý", "0"));
-
-    pnTop.revalidate();
-    pnTop.repaint();
-}
+//    private void initTopPanel(){
+//    pnTop.removeAll(); // xóa layout cũ của NetBeans
+//
+//    pnTop.setLayout(new GridLayout(1, 3, 10, 0));
+//
+//    pnTop.add(createItem("Tổng sách", "0"));
+//    pnTop.add(createItem("Số phiếu mượn", "0"));
+//    pnTop.add(createItem("Chưa xử lý phạt", "0"));
+//
+//    pnTop.revalidate();
+//    pnTop.repaint();
+//}
     private JPanel createItem(String title, String value){
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -312,10 +312,8 @@ public class ThongKeForm extends javax.swing.JPanel {
     
     Date tuNgay = null;
     Date denNgay = null;
-    
-    
-    
-    JPanel chartPanel = createBarChart(pnChart, tuNgay, denNgay); // 👈 hàm bạn đã làm
+      
+    JPanel chartPanel = createBarChart(pnChart, tuNgay, denNgay); //hàm tạo chart
 
     pnChart.add(chartPanel, BorderLayout.CENTER);
 
@@ -381,7 +379,7 @@ public class ThongKeForm extends javax.swing.JPanel {
     pnTop.setLayout(new GridLayout(1, 3, 10, 0));
 
     pnTop.add(createItem("Tổng sách", String.valueOf(tongSach)));
-    pnTop.add(createItem("Đang mượn", String.valueOf(dangMuon)));
+    pnTop.add(createItem("Số phiếu mượn", String.valueOf(dangMuon)));
     pnTop.add(createItem("Chưa xử lý", String.valueOf(chuaXuLy)));
 
     pnTop.revalidate();
