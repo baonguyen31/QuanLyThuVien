@@ -227,7 +227,7 @@ public class SachDAO {
             conn = JDBCUtil.getConnect();
             String qry = "Update sach set SoLuong = SoLuong - ";
             qry += soLuong + " where MaSach = "+ "'" + maSach  + "'";
-            System.out.print(qry);
+//            System.out.print(qry);
             st = conn.createStatement();
             st.executeUpdate(qry);
             JDBCUtil.closeConnection(conn);

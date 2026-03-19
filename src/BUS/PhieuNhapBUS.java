@@ -28,6 +28,19 @@ public class PhieuNhapBUS {
         return list;
         
     }
+    
+    public String generateMaPN() {
+    String lastMaPM = dao.getLastMaPN();
+
+    if (lastMaPM == null) {
+        return "PM1";
+    }
+
+    int number = Integer.parseInt(lastMaPM.substring(2));
+    number++;
+
+    return "PM" + number;
+}
     public PhieuNhapHangDTO getPNByMa(String MaPn){
         dao = new PhieuNhapDAO();
         return dao.getByMaPM(MaPn);

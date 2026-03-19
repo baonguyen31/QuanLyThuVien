@@ -24,7 +24,7 @@ public class SachDialog extends javax.swing.JDialog {
     /**
      * Creates new form SachDialog
      */
-    private SachDTO selectedSach;
+    public static SachDTO selectedSach;
     private ArrayList<CTPhieuMuonDTO> ctpm = new ArrayList<>();
     private SachBUS bus = new SachBUS();
     private ArrayList<SachDTO> list  = new ArrayList<>();
@@ -153,8 +153,9 @@ public class SachDialog extends javax.swing.JDialog {
                 
                 SachDTO dto = new   SachDTO();
                 dto.setMaSach(maSach);
+                
 
-                selectedSach = dto;
+                SachDialog.selectedSach = dto;
                 
                 dispose();
             }
@@ -209,9 +210,9 @@ public class SachDialog extends javax.swing.JDialog {
         }
             tblSach.setModel(model);
     }
-    public SachDTO getSelectedSach(){
-        return selectedSach;
-    }
+//    public SachDTO getSelectedSach(){
+//        return selectedSach;
+//    }
     /**
     /**
      * @param args the command line arguments

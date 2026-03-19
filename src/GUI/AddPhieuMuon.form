@@ -38,7 +38,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="txtSoLuong" min="-2" pref="41" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnThem" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -151,7 +151,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnThem" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtSoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtMaSach" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSachList" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -346,12 +346,12 @@
         <Property name="text" type="java.lang.String" value="M&#xe3; s&#xe1;ch"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btnThem">
       <Properties>
         <Property name="text" type="java.lang.String" value="Th&#xea;m s&#xe1;ch"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSoLuong">
@@ -374,7 +374,7 @@
     </Component>
     <Component class="com.toedter.calendar.JDateChooser" name="txtNgaytrathucte">
       <Properties>
-        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd&#xa;"/>
+        <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="traSach">

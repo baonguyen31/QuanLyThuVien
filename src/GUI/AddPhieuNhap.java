@@ -41,6 +41,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     private MainPage mainPage;
     DefaultTableModel modelCt;
     ArrayList<CTPhieuNhapHangDTO> dsCTPN = new ArrayList<>();
+    private PhieuNhapBUS bus = new PhieuNhapBUS();
     public static String currentMaPM;
     public AddPhieuNhap(MainPage main) {
         this.mainPage = main;
@@ -301,15 +302,16 @@ public class AddPhieuNhap extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jButton1)
-                    .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSachList)
-                    .addComponent(jLabel9)
-                    .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtSoLuong, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel8)
+                        .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSachList)
+                        .addComponent(jLabel9)
+                        .addComponent(txtDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -339,8 +341,6 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         txtMaSach.setText(null);
         txtDonGia.setText("");
         txtSoLuong.setText(null);
-//        txtNgayMuon.setEditable(false);
-//        txtHanTra.setEditable(false);
         btnSave.setText("Cập nhật");
         PhieuNhapBUS phieuNhapBus = new PhieuNhapBUS();
         PhieuNhapHangDTO pm = phieuNhapBus.getPNByMa(maPN);
@@ -357,11 +357,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         PhieuNhapHangDTO dto = new PhieuNhapHangDTO();
         
         txtMaPn.setText("");
-//        txtNhanVien.setText("");
-        txtNhaCungCap.setText(null);
-//        DefaultTableModel model = (DefaultTableModel) CTPMTable.getModel();
-//        modelCt = CTPMTable.getModel();
-//        modelCt.setRowCount(0);       
+        txtNhaCungCap.setText(null);      
         txtMaSach.setText("");
         txtDonGia.setText("");
         txtSoLuong.setText(null);
@@ -378,8 +374,10 @@ public class AddPhieuNhap extends javax.swing.JPanel {
 //        if (modelCt == null) dsCTPM = new ArrayList();
         resetform();
 //        txtNhaCungCap.setEditable(true);
-        txtMaPn.setEditable(true);
+        txtMaPn.setText(bus.generateMaPN());
+        txtMaPn.setEnabled(false);
         txtNgayNhap.setDate(new Date());
+        btnXoa.setEnabled(true);
 //        setMaSach(txtMaSach.getText());
         
         txtNhanVien.setEditable(false);
@@ -437,15 +435,14 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         pm.setMaNV(txtNhanVien.getText());
         pm.setNgayNhap(txtNgayNhap.getDate());
         
-        PhieuNhapBUS bus = new PhieuNhapBUS();
+//        PhieuNhapBUS bus = new PhieuNhapBUS();
+        validateForm();
         if(!isEdit){
         //Thêm
             boolean ok = bus.insert(pm, dsCTPN);
             if (ok){
                 JOptionPane.showMessageDialog(this, "Thêm phiếu nhập thành công");
                 resetform();               
-            } else {
-                JOptionPane.showMessageDialog(this, "Thêm phiếu nhập không thành công");
             }
 //        }else{
 //        //Cập nhật===========
@@ -458,6 +455,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnXoaActionPerformed
     
     
@@ -470,7 +468,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         String ma = txtMaSach.getText();
         SachDTO sachDto = sachBus.getSachByMa(ma);
         int soluong = Integer.parseInt(txtSoLuong.getText());
-        double donGia = sachDto.getDonGia();
+        double donGia = Double.parseDouble(txtDonGia.getText());
         String tenSach = sachBus.getTenByMaSach(ma);
         boolean trungSach = false;
         
@@ -541,11 +539,14 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     private void btnSachListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSachListActionPerformed
         // TODO add your handling code here:
         Frame parent = (Frame) SwingUtilities.getWindowAncestor(this);
+        
+        SachDialog.selectedSach = null;
+        
         SachDialog sachDia = new SachDialog(parent, true);
         sachDia.setLocationRelativeTo(this);
         sachDia.setVisible(true);
         
-        SachDTO sach = sachDia.getSelectedSach();
+        SachDTO sach = SachDialog.selectedSach;
         if(sach != null) txtMaSach.setText(sach.getMaSach());
     }//GEN-LAST:event_btnSachListActionPerformed
 
@@ -598,6 +599,29 @@ public class AddPhieuNhap extends javax.swing.JPanel {
             
     }
         CTPNTable.setModel(modelCt);
+  }
+    
+     private void validateForm(){
+        if (txtMaPn.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Chưa nhập mã phiếu nhập");
+        return;
+    }
+        
+        if (txtNhaCungCap.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Chưa chọn nhà cung cấp");
+        return;
+    }
+
+    if (txtNgayNhap.getDate() == null) {
+        JOptionPane.showMessageDialog(this, "Chưa chọn ngày mượn");
+        return;
+    }
+
+
+    if (dsCTPN.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Chưa có sách nào");
+        return;
+    }
   }
     
 

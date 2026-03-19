@@ -334,6 +334,7 @@ public class phieuMuonForm extends javax.swing.JPanel {
     private void btnAdd1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdd1ActionPerformed
         PhieuMuonBUS pmBus = new PhieuMuonBUS();
         currentList = pmBus.getAll();
+        pmBus.updateQuaHan();
         loadData(currentList);
     }//GEN-LAST:event_btnAdd1ActionPerformed
 
@@ -362,6 +363,7 @@ public class phieuMuonForm extends javax.swing.JPanel {
         phieuMuonBus = new PhieuMuonBUS();
         listPm = phieuMuonBus.getAll();
         currentList = new ArrayList<>(listPm);
+        phieuMuonBus.updateQuaHan();
         loadData(currentList);
     }
     private void loaiNgay(){

@@ -79,7 +79,7 @@ public class CTPhieuMuonDAO {
             qry += " group by s.MaSach ";
             qry += " order by SoLuongMuon desc";
             qry += " limit 10";
-            System.out.println(qry);
+//            System.out.println(qry);
             st = conn.createStatement();
             rs = st.executeQuery(qry);           
          

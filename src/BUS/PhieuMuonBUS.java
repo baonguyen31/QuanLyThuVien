@@ -49,8 +49,7 @@ public class PhieuMuonBUS {
          return "PM0" + number;
     }else{
       return "PM" + number;
-            }
-    
+            }    
 }
    public boolean insert(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){
 //     public void insert(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){
@@ -95,9 +94,13 @@ public class PhieuMuonBUS {
        return phieuMuonDao.updatePM(dto);
    }
    
-   public boolean updateQuaHan(PhieuMuonDTO pm){
-       return phieuMuonDao.updateQuaHan(pm);
+//   public boolean updateQuaHan(PhieuMuonDTO pm){
+//       return phieuMuonDao.updateQuaHan(pm);
+//   }
+      public void updateQuaHan(){
+       phieuMuonDao.updateQuaHan();
    }
+   
    public boolean returnSach(String MaPm){
        PhieuMuonDTO pm = phieuMuonDao.getByMaPM(MaPm);   
        ArrayList<CTPhieuMuonDTO> ctpmList = ctpmDao.getCTPMByMaPM(MaPm);

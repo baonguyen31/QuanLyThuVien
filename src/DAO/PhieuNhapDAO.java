@@ -116,4 +116,19 @@ public class PhieuNhapDAO {
         }
         return result;
       }
+      
+    public String getLastMaPN() {
+    String sql = "SELECT MaPN FROM phieunhap ORDER BY MaPN DESC LIMIT 1";
+    try {
+        conn = JDBCUtil.getConnect();
+        st = conn.createStatement();
+        rs = st.executeQuery(sql);
+        if (rs.next()) {
+            return rs.getString("MaPN");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
 }

@@ -102,7 +102,7 @@ public class PhieuMuonDAO {
         qry += "," +"'" + new java.sql.Date(pm.getHanTra().getTime()) + "'";
         qry += ","  + pm.getNgayTraThucTe();
         qry += "," + pm.getTrangThai()+")";
-        System.out.print(qry);
+//        System.out.print(qry);
         st = conn.createStatement();
         st.executeUpdate(qry); 
         JDBCUtil.closeConnection(conn);
@@ -113,31 +113,47 @@ public class PhieuMuonDAO {
         }
         return false;
     }
-    public boolean updateQuaHan(PhieuMuonDTO pm){
-        try{
-            conn = JDBCUtil.getConnect();
-            String qry = "Update phieumuon ";
-            qry += "Set NgayTraThucTe = CURDATE() ";
-            qry += "," + "TrangThai = 2" ;
-            qry += " where MaPM = '" + pm.getMaPM() +"'";
-        System.out.print(qry);
+    
+    
+    public void updateQuaHan() {
+    try {
+        conn = JDBCUtil.getConnect();
+        String sql = "UPDATE phieumuon " +
+                     "SET TrangThai = 2 " +
+                     "WHERE TrangThai = 0 AND HanTra < CURDATE()";
+
         st = conn.createStatement();
-        st.executeUpdate(qry); 
+        st.executeUpdate(sql);
         JDBCUtil.closeConnection(conn);
-        return true;
-        }catch(SQLException e){
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Sửa phiếu mượn không thành công");
-        }
-        return false;
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+}
+//    public boolean updateQuaHan(PhieuMuonDTO pm){
+//        try{
+//            conn = JDBCUtil.getConnect();
+//            String qry = "Update phieumuon ";
+//            qry += "Set NgayTraThucTe = CURDATE() ";
+//            qry += "," + "TrangThai = 2" ;
+////            qry += " where MaPM = '" + pm.getMaPM() +"'";
+//        System.out.print(qry);
+//        st = conn.createStatement();
+//        st.executeUpdate(qry); 
+//        JDBCUtil.closeConnection(conn);
+//        return true;
+//        }catch(SQLException e){
+//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(null, "Sửa phiếu mượn không thành công");
+//        }
+//        return false;
+//    }
     public boolean traSach(String maPm){
         try  {
             conn = JDBCUtil.getConnect();
             String qry = "Update phieumuon set TrangThai = 1";
             qry += " , NgayTraThucTe = CURDATE()";
             qry += " where MaPM = " + "'" + maPm  + "'";
-            System.out.print(qry);
+//            System.out.print(qry);
             st = conn.createStatement();
             st.executeUpdate(qry);
             JDBCUtil.closeConnection(conn);

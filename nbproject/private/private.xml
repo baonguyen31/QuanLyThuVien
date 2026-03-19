@@ -3,10 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/AddBookForm.java</file>
-            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/BUS/SachBUS.java</file>
-            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/phieuNhapForm.java</file>
-            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/Util/FormatDate.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/phieuNhapForm.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/AddPhieuNhap.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/SachDAO.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/AddPhieuMuon.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/PhieuNhapBUS.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DTO/CTPhieuMuonDTO.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/PhieuMuonBUS.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/ThongKeForm.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/CTPhieuMuonDAO.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/phieuMuonForm.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/SachDialog.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/CTPhieuMuonBUS.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/CTPhieuNhapBUS.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/PhieuMuonDAO.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/SachBUS.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/CTPhieuNhapDAO.java</file>
+            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/PhieuNhapDAO.java</file>
         </group>
     </open-files>
 </project-private>
