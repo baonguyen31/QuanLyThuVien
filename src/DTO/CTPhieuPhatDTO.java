@@ -13,16 +13,18 @@ public class CTPhieuPhatDTO {
     private String maPP;
     private String maSach;
     private String qdPhat;
+    private int soLuong;
     private int soNgayTre;
     private String lyDo;
     private double thanhTien;
     
     public CTPhieuPhatDTO(){}
 
-    public CTPhieuPhatDTO(int maCtpp, String maPP, String maSach, String qdPhat, int soNgayTre, String lyDo, double thanhTien) {
+    public CTPhieuPhatDTO(int maCtpp, String maPP, String maSach, String qdPhat,int soLuong, int soNgayTre, String lyDo, double thanhTien) {
         this.maCtpp = maCtpp;
         this.maPP = maPP;
         this.maSach = maSach;
+        this.soLuong = soLuong;
         this.qdPhat = qdPhat;
         this.soNgayTre = soNgayTre;
         this.lyDo = lyDo;
@@ -61,6 +63,15 @@ public class CTPhieuPhatDTO {
         this.qdPhat = qdPhat;
     }
 
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    
     public int getSoNgayTre() {
         return soNgayTre;
     }

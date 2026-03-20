@@ -28,10 +28,11 @@ public class CTPhieuPhatDAO {
             rs = st.executeQuery(qry);
             while(rs.next()){
                 CTPhieuPhatDTO ctpp = new CTPhieuPhatDTO();
-                ctpp.setMaCtpp(rs.getInt("MaCTPP"));
+//                ctpp.setMaCtpp(rs.getInt("MaCTPP"));
                 ctpp.setMaPP(rs.getString("MaPP"));
                 ctpp.setQdPhat(rs.getString("MaQDP"));
                 ctpp.setMaSach(rs.getString("MaSach"));
+                ctpp.setSoLuong(rs.getInt("SoLuong"));
                 ctpp.setSoNgayTre(rs.getInt("SoNgayTre"));
                 ctpp.setLyDo(rs.getString("LyDo"));
                 ctpp.setThanhTien(rs.getDouble("ThanhTien"));
