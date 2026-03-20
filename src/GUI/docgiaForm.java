@@ -9,6 +9,7 @@ import DAO.DocGiaDAO;
 import DTO.DocGiaDTO;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -20,9 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class docgiaForm extends javax.swing.JPanel {
 
-    /**
-     * Creates new form docgiaForm
-     */
+    
     public docgiaForm() {
         initComponents();
         loadData();
@@ -35,12 +34,12 @@ public class docgiaForm extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
 
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         pnTimkiemdocgia = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        timkiemtext = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
         addDocGia3 = new javax.swing.JButton();
         editDocGia3 = new javax.swing.JButton();
@@ -56,9 +55,9 @@ public class docgiaForm extends javax.swing.JPanel {
 
         jLabel16.setText("Tìm kiếm theo tên ");
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        timkiemtext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                timkiemtextActionPerformed(evt);
             }
         });
 
@@ -126,7 +125,7 @@ public class docgiaForm extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 416, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(timkiemtext, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -141,7 +140,7 @@ public class docgiaForm extends javax.swing.JPanel {
                     .addComponent(jButton8)
                     .addGroup(pnTimkiemdocgiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel16)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(timkiemtext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(pnTimkiemdocgiaLayout.createSequentialGroup()
                 .addContainerGap()
@@ -181,27 +180,33 @@ public class docgiaForm extends javax.swing.JPanel {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void timkiemtextActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }                                           
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        DocGiaBUS dgbus = new DocGiaBUS();
+        if (DocGiaBUS.dsdg == null)
+        {
+            dgbus.getALL();
+        }
+        String ten = timkiemtext.getText();
+        loadDataSearch(dgbus.searchList(ten));
+    }                                        
+
+    private void addDocGia3MouseClicked(java.awt.event.MouseEvent evt) {                                        
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    }                                       
 
-    private void addDocGia3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addDocGia3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addDocGia3MouseClicked
-
-    private void addDocGia3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDocGia3ActionPerformed
+    private void addDocGia3ActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
         AddDocGiaForm docGiaForm = new AddDocGiaForm();
         docGiaForm.setVisible(true);
-    }//GEN-LAST:event_addDocGia3ActionPerformed
+    }                                          
 
-    private void editDocGia3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editDocGia3ActionPerformed
+    private void editDocGia3ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
         int selectedRow = docGiaTable.getSelectedRow();
         if (selectedRow == -1) {
@@ -222,9 +227,9 @@ public class docgiaForm extends javax.swing.JPanel {
 
         AddDocGiaForm bookForm = new AddDocGiaForm(dto);
         bookForm.setVisible(true);
-    }//GEN-LAST:event_editDocGia3ActionPerformed
+    }                                           
 
-    private void deleteDocGia3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteDocGia3ActionPerformed
+    private void deleteDocGia3ActionPerformed(java.awt.event.ActionEvent evt) {                                              
         // TODO add your handling code here:
         int selectedRow = docGiaTable.getSelectedRow();
 
@@ -238,18 +243,18 @@ public class docgiaForm extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "xóa thành công");
         }
 
-    }//GEN-LAST:event_deleteDocGia3ActionPerformed
+    }                                             
 
-    private void btnLamMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLamMoiMouseClicked
+    private void btnLamMoiMouseClicked(java.awt.event.MouseEvent evt) {                                       
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnLamMoiMouseClicked
+    }                                      
 
-    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {                                          
         // TODO add your handling code here:
         DocGiaBUS docGiaBUS = new DocGiaBUS();
         docGiaBUS.getALL();
         loadData();
-    }//GEN-LAST:event_btnLamMoiActionPerformed
+    }                                         
 
     private void customizeTable() {
         docGiaTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // cho phép chỉnh tay
@@ -272,6 +277,31 @@ public class docgiaForm extends javax.swing.JPanel {
         );
     }
 
+    private void loadDataSearch(ArrayList<DocGiaDTO> dsdgSearch)
+    {
+        Vector header = new Vector();
+        header.add("Mã độc giả");
+        header.add("Họ độc giả");
+        header.add("Tên độc giả");
+        header.add("SDT");
+        header.add("Địa chỉ");
+        header.add("Trạng thái");
+
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        for (DocGiaDTO docgia : dsdgSearch) {
+            Vector now = new Vector();
+            now.add(docgia.getMaDG());
+            now.add(docgia.getHoDG());
+            now.add(docgia.getTenDG());
+            now.add(docgia.getSDT());
+            now.add(docgia.getDiaChi());
+            now.add(docgia.getTrangThai());
+            model.addRow(now);
+
+        }
+        docGiaTable.setModel(model);
+        customizeTable();
+    }
     private void loadData() {
         DocGiaBUS docGiaBus = new DocGiaBUS();
         if (DocGiaBUS.dsdg == null) {
@@ -301,7 +331,7 @@ public class docgiaForm extends javax.swing.JPanel {
         customizeTable();
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton addDocGia3;
     private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton deleteDocGia3;
@@ -310,7 +340,7 @@ public class docgiaForm extends javax.swing.JPanel {
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JPanel pnTimkiemdocgia;
-    // End of variables declaration//GEN-END:variables
+    private javax.swing.JTextField timkiemtext;
+    // End of variables declaration                   
 }
