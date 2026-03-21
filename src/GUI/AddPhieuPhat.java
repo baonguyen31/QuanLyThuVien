@@ -7,10 +7,12 @@ package GUI;
 import BUS.CTPhieuMuonBUS;
 import BUS.PhieuMuonBUS;
 import BUS.PhieuPhatBUS;
+import BUS.QuyDinhPhatBUS;
 import BUS.SachBUS;
 import DTO.CTPhieuMuonDTO;
 import DTO.PhieuMuonDTO;
 import DTO.PhieuPhatDTO;
+import DTO.QuyDinhPhatDTO;
 import DTO.SachDTO;
 import Util.Auth;
 import java.awt.Frame;
@@ -35,12 +37,14 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private MainPage mainPage;
     DefaultTableModel modelCt;
     private CTPhieuMuonBUS pmBus;
+    private ArrayList<QuyDinhPhatDTO> qdpDto = new ArrayList<>();
     ArrayList<CTPhieuMuonDTO> dsCTPP = new ArrayList<>();
     ArrayList<CTPhieuMuonDTO> dsCTPM = new ArrayList<>();
     public AddPhieuPhat(MainPage main) {
         this.mainPage = main;
 //        modelCt = (DefaultTableModel) CTPPTable.getModel();
         initComponents();
+        loadComboPhat();
     }
 
     /**
@@ -216,7 +220,6 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 
         jLabel12.setText("Lý do");
 
-        cbxLyDo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbxLyDo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxLyDoActionPerformed(evt);
@@ -379,6 +382,13 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadComboPhat(){
+        QuyDinhPhatBUS bus= new QuyDinhPhatBUS();
+        qdpDto = bus.getAll();
+        for( QuyDinhPhatDTO dto : qdpDto){
+            cbxLyDo.addItem(dto.getMaQDP() +"-"+dto.getQuyDinh());
+        }
+    }
     private String generateMaPP(){
         PhieuPhatBUS bus= new PhieuPhatBUS();
         return bus.generateMaPP();
@@ -429,6 +439,15 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtHanTra.setDate(pmDto.getHanTra());
         txtNgayLap.setDate(new Date());
         txtNgaytrathucte.setDate(pmDto.getNgayTraThucTe());
+        Date hanTra = pmDto.getHanTra();
+        Date ngayTra =  pmDto.getNgayTraThucTe();
+        
+        PhieuPhatBUS bus = new PhieuPhatBUS();
+        int soNgayTre = bus.tinhSoNgayTre(hanTra, ngayTra);
+        
+        txtSoNgayTre.setText(String.valueOf(soNgayTre));
+        
+        
 //        Date today = new Date();
 //        Date hanTra = pmDto.getHanTra();
 //        txtSoNgayTre.setText();

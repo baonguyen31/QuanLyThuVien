@@ -7,11 +7,14 @@ package BUS;
 import DAO.CTPhieuNhapDAO;
 import DAO.PhieuNhapDAO;
 import DAO.PhieuPhatDAO;
+import DAO.QuyDinhPhatDAO;
 import DAO.SachDAO;
 import DTO.CTPhieuNhapHangDTO;
 import DTO.PhieuNhapHangDTO;
 import DTO.PhieuPhatDTO;
+import DTO.QuyDinhPhatDTO;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 /**
@@ -35,17 +38,47 @@ public class PhieuPhatBUS {
     String lastMaPM = dao.getLastMaPP();
 
     if (lastMaPM == null) {
-        return "PP1";
+        return "PP01";
     }
 
     int number = Integer.parseInt(lastMaPM.substring(2));
     number++;
 
-    return "PP" + number;
+    if(number < 9){
+    return "PP0" + number;
+    }
+    else{
+        return "PP" + number;
+    }
   }
     public PhieuPhatDTO getPPByMa(String MaPp){
         dao = new PhieuPhatDAO();
         return dao.getByMaPP(MaPp);
+    }
+    //==================tính tiền phạt====================//
+    
+    public int tinhSoNgayTre(Date hanTra, Date ngayTra){
+    if(hanTra == null || ngayTra == null) return 0;
+
+    long diff = ngayTra.getTime() - hanTra.getTime();
+
+    int days = (int)(diff / (1000 * 60 * 60 * 24));
+
+    return Math.max(days, 0); // không âm
+}
+    
+    public double tinhTien(String maQDP, int soNgayTre){
+        QuyDinhPhatDAO qdp =  new QuyDinhPhatDAO();
+        QuyDinhPhatDTO qdpDto = qdp.getByMaQDP(maQDP);
+        
+        if(qdpDto == null) return 0;
+        
+        if(qdpDto.getLoaiphat().equals("trehan")){
+            return soNgayTre * qdpDto.getSoTienPhat();
+        }
+        else {
+            return qdpDto.getSoTienPhat();
+        }       
     }
 }
   

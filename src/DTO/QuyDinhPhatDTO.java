@@ -9,16 +9,18 @@ package DTO;
  * @author PC
  */
 public class QuyDinhPhatDTO {
-    public String maQDP;
-    public String quyDinh;
-    public int soTienPhat;
+    private String maQDP;
+    private String quyDinh;
+    private int soTienPhat;
+    private String loaiphat;
     
     public QuyDinhPhatDTO(){}
 
-    public QuyDinhPhatDTO(String maQDP, String quyDinh, int soTienPhat) {
+    public QuyDinhPhatDTO(String maQDP, String quyDinh, int soTienPhat, String loaiphat) {
         this.maQDP = maQDP;
         this.quyDinh = quyDinh;
         this.soTienPhat = soTienPhat;
+        this.loaiphat = loaiphat;
     }
 
     public String getMaQDP() {
@@ -45,6 +47,8 @@ public class QuyDinhPhatDTO {
         this.soTienPhat = soTienPhat;
     }
     
+    
+    
 //    public int phatTien(){
 //        switch(quyDinh){
 //            case "Trả sách trễ hạn": return 20000; 
@@ -54,4 +58,12 @@ public class QuyDinhPhatDTO {
 //            default: return 0;
 //        }
 //    }
+
+    public String getLoaiphat() {
+        return loaiphat;
+    }
+
+    public void setLoaiphat(String loaiphat) {
+        this.loaiphat = loaiphat;
+    }
 }
