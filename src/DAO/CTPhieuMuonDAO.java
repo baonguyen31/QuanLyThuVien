@@ -95,5 +95,17 @@ public class CTPhieuMuonDAO {
         }
         return result;
     }
+        
+    public void deleteCtpm(String maPm){
+        
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = " delete from ct_phieumuon where MaPM = '" +maPm + "'";
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+        } catch (SQLException ex) {
+            Logger.getLogger(CTPhieuMuonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }

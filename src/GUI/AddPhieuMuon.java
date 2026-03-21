@@ -373,7 +373,6 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         txtDocGia.setEditable(false);
         btnDocGiaList.setEnabled(true);
         txtNhanVien.setEditable(false);
-        btnXoa.setEnabled(false);
 //        txtNgayMuon.setEditable(false);
 //        txtHanTra.setEditable(false);
         btnSave.setText("Cập nhật");
@@ -509,23 +508,22 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         validateForm();
         if(!isEdit){
         //Thêm
-            
             boolean ok = bus.insert(pm, dsCTPM);
             if (ok){
                 JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công");
                 resetform();                
             }
-        }else if(today.after(hanTra)){
-        //Cập nhật===========//
-            boolean update = bus.updateNgayTra(pm.getMaPM());
-            if(update){
-                JOptionPane.showMessageDialog(this, "Xác nhận ngày trả thành công");
-            }
-        }else {
-            boolean update = bus.updatePM(pm);
-            if(update){
-                JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
-            }
+                }else if(today.after(hanTra)){
+                //Cập nhật===========//
+                    boolean update = bus.updateNgayTra(pm.getMaPM());
+                    if(update){
+                        JOptionPane.showMessageDialog(this, "Xác nhận ngày trả thành công");
+                    }
+            }else {
+                boolean update = bus.updatePM(pm, dsCTPM);
+                if(update){
+                    JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
+                }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
