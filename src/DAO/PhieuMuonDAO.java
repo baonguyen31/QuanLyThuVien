@@ -129,24 +129,25 @@ public class PhieuMuonDAO {
         e.printStackTrace();
     }
 }
-//    public boolean updateQuaHan(PhieuMuonDTO pm){
-//        try{
-//            conn = JDBCUtil.getConnect();
-//            String qry = "Update phieumuon ";
-//            qry += "Set NgayTraThucTe = CURDATE() ";
-//            qry += "," + "TrangThai = 2" ;
-////            qry += " where MaPM = '" + pm.getMaPM() +"'";
-//        System.out.print(qry);
-//        st = conn.createStatement();
-//        st.executeUpdate(qry); 
-//        JDBCUtil.closeConnection(conn);
-//        return true;
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//            JOptionPane.showMessageDialog(null, "Sửa phiếu mượn không thành công");
-//        }
-//        return false;
-//    }
+    public boolean updateNgayTra(String maPm){
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "Update phieumuon ";
+            qry += "Set NgayTraThucTe = CURDATE() ";
+            qry += " where MaPM = '" +maPm + "'" ;
+//            qry += " where MaPM = '" + pm.getMaPM() +"'";
+        System.out.print(qry);
+        st = conn.createStatement();
+        st.executeUpdate(qry); 
+        
+        JDBCUtil.closeConnection(conn);
+        return true;
+        }catch(SQLException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Sửa phiếu mượn không thành công");
+        }
+        return false;
+    }
     public boolean traSach(String maPm){
         try  {
             conn = JDBCUtil.getConnect();

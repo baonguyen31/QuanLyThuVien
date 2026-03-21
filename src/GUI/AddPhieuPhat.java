@@ -428,6 +428,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtNgayMuon.setDate(pmDto.getNgayMuon());
         txtHanTra.setDate(pmDto.getHanTra());
         txtNgayLap.setDate(new Date());
+        txtNgaytrathucte.setDate(pmDto.getNgayTraThucTe());
 //        Date today = new Date();
 //        Date hanTra = pmDto.getHanTra();
 //        txtSoNgayTre.setText();

@@ -403,7 +403,8 @@ public class AddPhieuMuon extends javax.swing.JPanel {
 
         else if(pm.getTrangThai() == 2){
             // Đã tạo phiếu phạt
-            btnSave.setEnabled(false);
+            btnSave.setEnabled(true);
+            btnSave.setText("Xác nhận ngày trả");
             cbTrangThai.setEnabled(false);
             btnPhieuphat.setVisible(true);
         }
@@ -514,12 +515,12 @@ public class AddPhieuMuon extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công");
                 resetform();                
             }
-//        }else if(today.after(hanTra)){
-        //Cập nhật===========
-//            boolean update = bus.updateQuaHan(pm);
-//            if(update){
-//                JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
-//            }
+        }else if(today.after(hanTra)){
+        //Cập nhật===========//
+            boolean update = bus.updateNgayTra(pm.getMaPM());
+            if(update){
+                JOptionPane.showMessageDialog(this, "Xác nhận ngày trả thành công");
+            }
         }else {
             boolean update = bus.updatePM(pm);
             if(update){
@@ -595,7 +596,12 @@ public class AddPhieuMuon extends javax.swing.JPanel {
     private void btnPhieuphatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuphatActionPerformed
         // TODO add your handling code here:
         currentMaPM = txtMaPm.getText();
+        PhieuMuonBUS pmBus = new PhieuMuonBUS();
+        if(pmBus.getByMaPM(MaPM).getNgayTraThucTe() == null){
+            JOptionPane.showMessageDialog(this, "Hãy xác nhận ngày trả sách");
+        } else {
         mainPage.showAddPhieuPhat(currentMaPM);
+        }
     }//GEN-LAST:event_btnPhieuphatActionPerformed
 
     private void btnDocGiaListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocGiaListActionPerformed

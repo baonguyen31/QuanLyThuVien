@@ -140,4 +140,16 @@ public class PhieuMuonBUS {
          System.out.println("số lượng sách là: " + tong);
          return tong;
     }
+    public boolean updateNgayTra(String maPm){
+        PhieuMuonDTO dto = phieuMuonDao.getByMaPM(maPm);       
+        if(maPm != null && dto.getTrangThai() == 2)
+        {
+            phieuMuonDao.updateNgayTra(maPm);
+            return true;
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Phiếu mượn không hợp lệ");
+        }
+        return false;
+    }
 }
