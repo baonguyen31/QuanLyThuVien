@@ -1,26 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DTO;
 
 import java.util.Date;
 
-/**
- *
- * @author noname
- */
 public class NhanVienDTO {
     private String MaNV;
     private String Ho;
     private String Ten;
-    private  String SDT;
+    private String SDT;
     private Date NgaySinh;
     private String ChucVu;
     private String MatKhau;
 
-    public NhanVienDTO() {
-    }
+    public NhanVienDTO() {}
 
     public NhanVienDTO(String MaNV, String Ho, String Ten, String SDT, Date NgaySinh, String ChucVu, String MatKhau) {
         this.MaNV = MaNV;
@@ -87,8 +78,4 @@ public class NhanVienDTO {
     public void setMatKhau(String MatKhau) {
         this.MatKhau = MatKhau;
     }
-
-   
-            
-    
 }

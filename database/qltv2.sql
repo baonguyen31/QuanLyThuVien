@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1:3307
--- Thời gian đã tạo: Th3 09, 2026 lúc 01:17 PM
+-- Thời gian đã tạo: Th3 20, 2026 lúc 03:36 PM
 -- Phiên bản máy phục vụ: 10.4.27-MariaDB
 -- Phiên bản PHP: 8.2.0
 
@@ -94,11 +94,21 @@ INSERT INTO `ct_phieunhap` (`MaPN`, `MaSach`, `SoLuong`, `DonGia`, `ThanhTien`) 
 
 CREATE TABLE `ct_phieuphat` (
   `MaPP` varchar(10) NOT NULL,
+  `MaSach` varchar(10) NOT NULL,
   `MaQDP` varchar(10) NOT NULL,
+  `SoLuong` int(10) NOT NULL,
   `SoNgayTre` int(11) NOT NULL,
   `LyDo` varchar(256) DEFAULT NULL,
   `ThanhTien` decimal(12,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `ct_phieuphat`
+--
+
+INSERT INTO `ct_phieuphat` (`MaPP`, `MaSach`, `MaQDP`, `SoLuong`, `SoNgayTre`, `LyDo`, `ThanhTien`) VALUES
+('PP001', 'S001', 'QDP01', 2, 2, 'Trễ hạn', '50000.00'),
+('PP001', 'S007', 'QDP01', 1, 2, 'Trễ hạn', '50000.00');
 
 -- --------------------------------------------------------
 
@@ -168,11 +178,11 @@ CREATE TABLE `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`MaNV`, `Ho`, `Ten`, `SDT`, `NgaySinh`, `ChucVu`, `MatKhau`) VALUES
-('NV01', 'Nguyễn', 'An', '0901234567', '1995-04-12', 'Nhân viên', '123456'),
-('NV02', 'Trần', 'Bình', '0912345678', '1992-08-25', 'Nhân viên', '310503'),
-('NV03', 'Lê', 'Hà', '0987654321', '1998-01-15', 'Nhân viên', ''),
-('NV04', 'Phạm', 'Minh', '0978123456', '1996-11-30', 'Nhân viên', ''),
-('NV05', 'Võ', 'Lan', '0934567890', '1994-06-20', 'Nhân viên', '');
+('NV01', 'Nguyễn Bình ', 'An', '0901234567', '1995-04-12', 'Nhân viên', '123456'),
+('NV02', 'Trần Thái', 'Bình', '0912345678', '1992-08-25', 'Nhân viên', '310503'),
+('NV03', 'Lê Thị', 'Hà', '0987654321', '1998-01-15', 'Quản lý', '112233'),
+('NV04', 'Phạm Vũ', 'Minh', '0978123456', '1996-11-30', 'Nhân viên', '112233'),
+('NV05', 'Võ Thị', 'Lan', '0934567890', '1994-06-20', 'Nhân viên', '112233');
 
 -- --------------------------------------------------------
 
@@ -219,11 +229,11 @@ CREATE TABLE `phieumuon` (
 INSERT INTO `phieumuon` (`MaPM`, `MaDG`, `MaNV`, `NgayMuon`, `HanTra`, `NgayTraThucTe`, `TrangThai`) VALUES
 ('PM001', 'DG01', 'NV01', '2024-10-01', '2024-10-10', NULL, 2),
 ('PM002', 'DG02', 'NV01', '2024-10-02', '2024-10-12', '2024-10-09', 1),
-('PM003', 'DG03', 'NV02', '2024-10-03', '2024-10-13', NULL, 0),
+('PM003', 'DG03', 'NV02', '2024-10-03', '2024-10-13', NULL, 2),
 ('PM004', 'DG01', 'NV02', '2024-10-05', '2024-10-15', '2026-03-04', 2),
 ('PM005', 'DG03', 'NV01', '2026-02-19', '2026-02-28', '2026-02-13', 1),
 ('PM006', 'DG04', 'NV01', '2026-02-02', '2026-02-15', '2026-02-13', 1),
-('PM007', 'DG01', 'NV01', '2026-02-01', '2026-02-21', NULL, 0),
+('PM007', 'DG01', 'NV01', '2026-02-01', '2026-02-21', NULL, 2),
 ('PM008', 'DG01', 'NV01', '2026-02-18', '2026-02-28', '2026-03-04', 2),
 ('PM009', 'DG03', 'NV01', '2026-02-18', '2026-02-28', '2026-03-04', 2),
 ('PM010', 'DG03', 'NV01', '2026-02-18', '2026-02-28', '2026-02-19', 1),
@@ -271,15 +281,16 @@ CREATE TABLE `phieuphat` (
   `MaDG` varchar(10) DEFAULT NULL,
   `NgayLap` date NOT NULL,
   `TongTien` decimal(12,2) DEFAULT NULL,
-  `TrangThai` varchar(30) DEFAULT NULL
+  `TrangThai` varchar(30) DEFAULT NULL,
+  `MaNV` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `phieuphat`
 --
 
-INSERT INTO `phieuphat` (`MaPP`, `MaPM`, `MaDG`, `NgayLap`, `TongTien`, `TrangThai`) VALUES
-('PP001', 'PM001', 'DG01', '2026-02-23', '100000.00', '0');
+INSERT INTO `phieuphat` (`MaPP`, `MaPM`, `MaDG`, `NgayLap`, `TongTien`, `TrangThai`, `MaNV`) VALUES
+('PP001', 'PM001', 'DG01', '2026-02-23', '100000.00', '0', 'NV01');
 
 -- --------------------------------------------------------
 
@@ -292,6 +303,15 @@ CREATE TABLE `quydinhphat` (
   `QuyDinh` varchar(255) DEFAULT NULL,
   `DonGia` decimal(12,2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `quydinhphat`
+--
+
+INSERT INTO `quydinhphat` (`MaQDP`, `QuyDinh`, `DonGia`) VALUES
+('QDP01', 'Làm rách sách', '30000.00'),
+('QDP02', 'Trễ hạn', '20000.00'),
+('QDP03', 'Không trả sách', '150000.00');
 
 -- --------------------------------------------------------
 
@@ -414,8 +434,9 @@ ALTER TABLE `ct_phieunhap`
 -- Chỉ mục cho bảng `ct_phieuphat`
 --
 ALTER TABLE `ct_phieuphat`
-  ADD PRIMARY KEY (`MaPP`,`MaQDP`),
-  ADD KEY `MaQDP` (`MaQDP`);
+  ADD PRIMARY KEY (`MaPP`,`MaSach`,`MaQDP`),
+  ADD KEY `MaQDP` (`MaQDP`),
+  ADD KEY `fk_ctpp_sach` (`MaSach`);
 
 --
 -- Chỉ mục cho bảng `docgia`
@@ -463,7 +484,8 @@ ALTER TABLE `phieunhap`
 ALTER TABLE `phieuphat`
   ADD PRIMARY KEY (`MaPP`),
   ADD KEY `MaPM` (`MaPM`),
-  ADD KEY `MaDG` (`MaDG`);
+  ADD KEY `MaDG` (`MaDG`),
+  ADD KEY `fk_pp_nhanvien` (`MaNV`);
 
 --
 -- Chỉ mục cho bảng `quydinhphat`
@@ -521,7 +543,8 @@ ALTER TABLE `ct_phieunhap`
 --
 ALTER TABLE `ct_phieuphat`
   ADD CONSTRAINT `ct_phieuphat_ibfk_1` FOREIGN KEY (`MaPP`) REFERENCES `phieuphat` (`MaPP`) ON DELETE CASCADE,
-  ADD CONSTRAINT `ct_phieuphat_ibfk_2` FOREIGN KEY (`MaQDP`) REFERENCES `quydinhphat` (`MaQDP`);
+  ADD CONSTRAINT `ct_phieuphat_ibfk_2` FOREIGN KEY (`MaQDP`) REFERENCES `quydinhphat` (`MaQDP`),
+  ADD CONSTRAINT `fk_ctpp_sach` FOREIGN KEY (`MaSach`) REFERENCES `sach` (`MaSach`);
 
 --
 -- Các ràng buộc cho bảng `phieumuon`
@@ -541,6 +564,7 @@ ALTER TABLE `phieunhap`
 -- Các ràng buộc cho bảng `phieuphat`
 --
 ALTER TABLE `phieuphat`
+  ADD CONSTRAINT `fk_pp_nhanvien` FOREIGN KEY (`MaNV`) REFERENCES `nhanvien` (`MaNV`),
   ADD CONSTRAINT `phieuphat_ibfk_1` FOREIGN KEY (`MaPM`) REFERENCES `phieumuon` (`MaPM`),
   ADD CONSTRAINT `phieuphat_ibfk_2` FOREIGN KEY (`MaDG`) REFERENCES `docgia` (`MaDG`);
 
