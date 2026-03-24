@@ -9,7 +9,6 @@ package DTO;
  * @author PC
  */
 public class CTPhieuPhatDTO {
-    private int maCtpp;
     private String maPP;
     private String maSach;
     private String qdPhat;
@@ -20,8 +19,8 @@ public class CTPhieuPhatDTO {
     
     public CTPhieuPhatDTO(){}
 
-    public CTPhieuPhatDTO(int maCtpp, String maPP, String maSach, String qdPhat,int soLuong, int soNgayTre, String lyDo, double thanhTien) {
-        this.maCtpp = maCtpp;
+    public CTPhieuPhatDTO(String maPP, String maSach, String qdPhat,int soLuong, int soNgayTre, String lyDo, double thanhTien) {
+//        this.maCtpp = maCtpp;
         this.maPP = maPP;
         this.maSach = maSach;
         this.soLuong = soLuong;
@@ -31,13 +30,6 @@ public class CTPhieuPhatDTO {
         this.thanhTien = thanhTien;
     }
 
-    public int getMaCtpp() {
-        return maCtpp;
-    }
-
-    public void setMaCtpp(int maCtpp) {
-        this.maCtpp = maCtpp;
-    }
 
     public String getMaPP() {
         return maPP;

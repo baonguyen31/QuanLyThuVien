@@ -3,17 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/AddPhieuPhat.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/AddPhieuNhap.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/phieuPhatForm.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/PhieuPhatDAO.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/PhieuMuonDAO.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/AddPhieuMuon.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/PhieuNhapBUS.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/BUS/PhieuPhatBUS.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DTO/PhieuPhatDTO.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/GUI/MainPage.java</file>
-            <file>file:/D:/Netbeans%20Projects/QuanLyThuVien/src/DAO/PhieuNhapDAO.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/phieuPhatForm.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/DAO/PhieuPhatDAO.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/BUS/PhieuPhatBUS.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/DTO/PhieuPhatDTO.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/AddPhieuPhat.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/AddPhieuMuon.java</file>
         </group>
     </open-files>
 </project-private>

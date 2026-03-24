@@ -10,7 +10,9 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -84,4 +86,62 @@ public class PhieuPhatDAO {
         }
         return PhieuPhatDto;
     }
+    //============Thêm, sửa==============//
+    public boolean insertPP(PhieuPhatDTO pp){
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "INSERT INTO phieuphat(maPP, maPM, maDG, maNV, ngayLap, tongTien, trangThai) VALUES (";
+            qry +=  "'" + pp.getMaPP() + "', ";
+            qry += "'" + pp.getMaPM() + "', ";
+            qry += "'" + pp.getMaDG() + "', ";
+            qry += "'" + pp.getMaNV() + "', ";
+            qry += "'" + new java.sql.Date(pp.getNgayLap().getTime()) + "', ";
+            qry += pp.getTongTien() + ", ";
+            qry += pp.getTrangThai() + ")";
+            
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            return true;
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Lỗi thêm phiếu phạt trong DB");
+            return false;
+        }
+    }
+    
+    public boolean updatePP(PhieuPhatDTO pp) {
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "UPDATE phieuphat SET ";
+            qry += "maPM='" + pp.getMaPM() + "', ";
+            qry += "maDG='" + pp.getMaDG() + "', ";
+            qry += "maNV='" + pp.getMaNV() + "', ";
+            qry += "ngayLap='" + new java.sql.Date(pp.getNgayLap().getTime()) + "', ";
+            qry += "tongTien=" + pp.getTongTien() + ", ";
+            qry += "trangThai=" + pp.getTrangThai();
+            qry += " WHERE maPP='" + pp.getMaPP() + "'";
+            
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi sửa phiếu phạt trong DB");
+            return false;
+        }
+    }
+    
+    public boolean deletePP(String ma){
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "DELETE FROM phieuphat WHERE MaPP = '" + ma + "'";
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi xóa phiếu phạt trong DB");
+            return false;
+        }
+    }
+    
+    
 }

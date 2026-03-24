@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -46,24 +47,39 @@ public class CTPhieuPhatDAO {
         return dsCTPhieuPhat;
     }
       
-//    public boolean insert(CTPhieuPhatDTO ctpn){
-//        try {
-//        conn = JDBCUtil.getConnect();
-//        String qry = "Insert into ct_phieunhap values(";
-//        qry += "'" + ctpn.getMaPn()+ "'";
-//        qry += ","+ "'" + ctpn.getMaSach()+ "', ";
-//        qry +=  ctpn.getSl()+ ", ";
-//        qry +=  ctpn.getDonGia()+ ", ";
-//        qry +=  ctpn.getThanhTien()+ ")";
-//        System.out.print(qry);
-//        st = conn.createStatement();
-//        st.executeUpdate(qry); 
-//        JDBCUtil.closeConnection(conn);
-//        return true;
-//        } catch(SQLException e){
-//            JOptionPane.showMessageDialog(null, "Thêm ct phiếu nhập không thành công");
-//        }
-//        return false;
-//    }
+    public boolean insertCTPP(CTPhieuPhatDTO ctpn){
+        try {
+        conn = JDBCUtil.getConnect();
+        String qry = "INSERT INTO ct_phieuphat VALUES(";
+        qry += "'" + ctpn.getMaPP() + "', ";
+        qry += "'" + ctpn.getMaSach() + "', ";
+        qry += "'" + ctpn.getQdPhat()+ "', ";
+        qry += "'" + ctpn.getSoLuong() + "', ";
+        qry += "'" + ctpn.getSoNgayTre()+ "', ";
+        qry += "'" + ctpn.getLyDo() + "', ";
+        qry += "'" + ctpn.getThanhTien() + "')";
+        
+        st = conn.createStatement();
+        st.executeUpdate(qry); 
+        JDBCUtil.closeConnection(conn);
+        return true;
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Lỗi thêm ct phiếu phạt trong DB");
+            return false;
+        }
+    }
+    
+    public boolean deleteByMaPP(String ma) {
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "DELETE FROM ct_phieuphat WHERE maPP ='" + ma + "'";
+            st = conn.createStatement();
+            st.executeUpdate(qry); 
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi xóa ct phiếu phạt trong DB");
+            return false;
+        }
+    }
 }
 

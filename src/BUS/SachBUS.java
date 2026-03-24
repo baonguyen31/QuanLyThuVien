@@ -29,25 +29,18 @@ public class SachBUS {
     public SachDTO getSachByMa(String maSach){
         return sachDao.getSachByMa(maSach);
     }
-    
+    //Thêm
     public boolean insertSach(SachDTO sach){
         //Kiểm tra data hợp lệ
-        sach.setDonGia(0);
         sach.setSoLuong(0);
         
-        if(sach.getMaSach() == null || sach.getMaSach().trim().isEmpty() || sach.getMaSach() == null  || sach.getTenSach().trim().isEmpty()){
-            JOptionPane.showMessageDialog(null, "Không được để trống Tên sách/Mã sách");
+        if(sach.getTenSach() == null){
+            JOptionPane.showMessageDialog(null, "Không được để trống Tên sách");
             return false;
         }
-        if(sach.getMaTL() == null){
-            JOptionPane.showMessageDialog(null, "Không được để trống thể loại");
+        if(sach.getDonGia() < 0){
+            JOptionPane.showMessageDialog(null, "Đơn giá không hợp lệ");
             return false;
-        }
-        for(SachDTO s : dsSach){
-            if(s.getMaSach().equalsIgnoreCase(sach.getMaSach())){
-                JOptionPane.showMessageDialog(null, "Mã sách đã tồn tại");
-                return false;
-            }
         }
         for(SachDTO s : dsSach){
             if(s.getTenSach().trim().equalsIgnoreCase(sach.getTenSach().trim())){
@@ -55,26 +48,14 @@ public class SachBUS {
                 return false;
             }
         }
-        
-        if(sachDao.insertSach(sach)){
-            dsSach.add(sach);
-            return true;
-        }
-        return false;
+        dsSach.add(sach);
+        return sachDao.insertSach(sach);
     }
     
-    
+    //Sửa
     public boolean editSach(SachDTO sach){
         if(sach.getTenSach() == null  || sach.getTenSach().trim().isEmpty()){
             JOptionPane.showMessageDialog(null, "Không được để trống tên sách");
-            return false;
-        }
-        if(sach.getSoLuong() < 0){
-            JOptionPane.showMessageDialog(null, "Số lượng không hợp lệ");
-            return false;
-        }
-        if(sach.getMaTL() == null){
-            JOptionPane.showMessageDialog(null, "Không được để trống thể loại");
             return false;
         }
         if(sach.getDonGia() < 0){
@@ -90,9 +71,10 @@ public class SachBUS {
                 break;
             }
         }
-        
+        if(!found) return false;
         return sachDao.editSach(sach);
     }
+    //Xóa
     public boolean deleteSach(String ma){
         if(ma == null) return false;
         
@@ -101,12 +83,10 @@ public class SachBUS {
             if(dsSach.get(i).getMaSach().equalsIgnoreCase(ma)){
                 dsSach.remove(i);
                 found = true;
+                break;
             }
         }
-        if(!found){
-            JOptionPane.showMessageDialog(null, "Không tìm thấy sách để xóa");
-            return false;
-        }
+        if(!found) return false;
         return sachDao.deleteSach(ma);
     }
     
@@ -120,10 +100,14 @@ public class SachBUS {
         }
         return sachDao.getTenSachByMa(id);
     }
+    //lấy tên sách cho thống kê
     public String getTenByMaSach(String MaSach){
         return sachDao.getTenSachByMa(MaSach);
     } 
-
+    //tìm kiếm sách
+    public ArrayList<SachDTO> searchSach(String keyword){
+        return sachDao.searchSach(keyword);
+    }
     
     public ArrayList<SachDTO> searchByTenSach(String keyWord){
         ArrayList<SachDTO> result = new ArrayList<>();
@@ -136,6 +120,7 @@ public class SachBUS {
         }
         return result;
     }
+    
     public int countSach(){
          int tong = 0;
          dsSach = new ArrayList<SachDTO>();
@@ -149,5 +134,17 @@ public class SachBUS {
           System.out.println("số lượng sách là: "+dsSach.size());
          System.out.println("số lượng sách là: "+tong);
          return tong;
+    }
+    
+    public String taoMaSach(){
+        dsSach = sachDao.selectAll();
+        //nếu ds rỗng
+        if(dsSach.isEmpty()){
+            return "S001";
+        }
+        String lastMa = dsSach.get(dsSach.size() - 1).getMaSach();
+        int num = Integer.parseInt(lastMa.substring(1)); //cắt số cuối ra
+        num++;
+        return String.format("S%03d", num);
     }
 }

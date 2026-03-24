@@ -194,13 +194,23 @@ public class sachForm extends javax.swing.JPanel {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // tìm kiếm theo tên
         String keyword = jTextField5.getText();
-        SachBUS sachBus = new SachBUS();
-        String kq = sachBus.timTenSachTheoMa(keyword);
+        SachBUS bus = new SachBUS();
         
-        DefaultTableModel model = new DefaultTableModel();
+        ArrayList<SachDTO> list = bus.searchSach(keyword);
+        DefaultTableModel model = (DefaultTableModel) sachTable.getModel();
+        model.setRowCount(0);
+        for(SachDTO sach : list){
+            model.addRow(new Object[]{
+                sach.getMaSach(),
+                sach.getTenSach(),
+                sach.getMaTL(),
+                sach.getMaNXB(),
+                sach.getNgayXB(),
+                sach.getDonGia(),
+                sach.getSoLuong()
+            });
+        }
         
-        sachTable.setModel(model);
-                
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void addBook3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBook3MouseClicked
@@ -239,7 +249,7 @@ public class sachForm extends javax.swing.JPanel {
     private void deleteBook3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBook3ActionPerformed
         // Xóa
         int selectedRow = sachTable.getSelectedRow();
-        String maSach = dsSach.get(selectedRow).getMaSach();
+        String maSach = sachTable.getValueAt(selectedRow, 0).toString();
         
         SachBUS bus = new SachBUS();
         boolean ok = bus.deleteSach(maSach);

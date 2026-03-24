@@ -52,13 +52,11 @@ public class PhieuMuonBUS {
             }    
 }
    public boolean insert(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){
-//     public void insert(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){
        int soLuongmuon = 0; 
        int soLuongcon = 0;
        
        SachDAO sachDao = new SachDAO();
        if (ctpm == null || ctpm.isEmpty()) {
-//          System.out.println("ctpm insert null");
           return false;
         }
        for (CTPhieuMuonDTO ct : ctpm){
@@ -70,7 +68,6 @@ public class PhieuMuonBUS {
            }
        }
        boolean check = phieuMuonDao.insert(pm);
-//       System.out.println("Insert PM: " + check);
         if (!check) {
           System.out.println("PM insert fail");
           return false;

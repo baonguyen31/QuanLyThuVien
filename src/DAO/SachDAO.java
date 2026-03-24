@@ -78,7 +78,7 @@ public class SachDAO {
         return sach;
     }
     
-    
+    //thêm
     public boolean insertSach(SachDTO sach){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String ngayXB = sdf.format(sach.getNgayXB());
@@ -96,7 +96,6 @@ public class SachDAO {
             qry += ")";
             
             st = conn.createStatement();
-//            System.out.println("\nQRY: " + qry);
             st.executeUpdate(qry);
             
             conn.close();
@@ -106,10 +105,11 @@ public class SachDAO {
             return false;
         }
     }
-    
+    //sửa
     public boolean editSach(SachDTO sach){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String ngayXB = sdf.format(sach.getNgayXB());
+        
         try{
             conn = JDBCUtil.getConnect();
             String qry = "UPDATE sach SET ";
@@ -122,7 +122,6 @@ public class SachDAO {
             qry += "WHERE MaSach = '" + sach.getMaSach() + "'";
             
             st = conn.createStatement();
-//            System.out.println("\nQRY: " + qry);
             st.executeUpdate(qry);
             return true;
         } catch(java.sql.SQLException e){
@@ -141,25 +140,6 @@ public class SachDAO {
             return true;
         } catch(java.sql.SQLException e){
             JOptionPane.showMessageDialog(null, "Lỗi xóa sách trong DB");
-            return false;
-        }
-    }
-    
-    public boolean suaSach(SachDTO sach){
-        try{
-            conn = JDBCUtil.getConnect();
-            String qry = "Update sach SET ";
-            qry += "TenSach = '" + sach.getTenSach() + "', ";
-            qry += "MaTL = '" + sach.getMaTL() + "', ";
-            qry += "MaNXB = '" + sach.getMaNXB() + "', ";
-            qry += "MaNgayXB = '" + sach.getNgayXB() + "', ";
-            qry += " Where MaSach = '" + sach.getMaSach() + "'";
-            
-            st = conn.createStatement();
-            st.executeUpdate(qry);
-            return true;
-        } catch(java.sql.SQLException e){
-            JOptionPane.showMessageDialog(null, "Lỗi");
             return false;
         }
     }
@@ -183,7 +163,31 @@ public class SachDAO {
         }
         return tenSach;
     }
-    
+    //tìm kiếm sách
+    public ArrayList<SachDTO> searchSach(String keyword){
+        ArrayList<SachDTO> list = new ArrayList<>();
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "SELECT * FROM sach WHERE MaSach LIKE '%" + keyword + "%' OR TenSach LIKE '%" + keyword + "%'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            while(rs.next()){
+                SachDTO sach = new SachDTO();
+                sach.setMaSach(rs.getString("MaSach"));
+                sach.setTenSach(rs.getString("TenSach"));
+                sach.setMaTL(rs.getString("MaTL"));
+                sach.setMaNXB(rs.getString("MaNXB"));
+                sach.setNgayXB(rs.getDate("NgayXuatBan"));
+                sach.setDonGia(rs.getInt("DonGia"));
+                sach.setSoLuong(rs.getInt("SoLuong"));
+                list.add(sach);
+            }
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Không tìm thấy sách");
+        }
+        return list;
+    }
+    //đổ data vào combobox
     public ArrayList<TheLoaiDTO> getTenTLByMaTL(){
            ArrayList<TheLoaiDTO> dsTL = new ArrayList<>();
            try{
@@ -199,10 +203,10 @@ public class SachDAO {
                     dsTL.add(tl);
                }
                conn.close();
-           } catch(SQLException e){e.printStackTrace();}
+           } catch(SQLException e){}
            return dsTL;
     }
-    
+    //đổ data vào combobox
     public ArrayList<NhaXuatBanDTO> getTenNXBByMaNXB(){
            ArrayList<NhaXuatBanDTO> dsNXB = new ArrayList<>();
            try{
@@ -218,7 +222,7 @@ public class SachDAO {
                     dsNXB.add(nxb);
                }
                conn.close();
-           } catch(SQLException e){e.printStackTrace();}
+           } catch(SQLException e){}
            return dsNXB;
     }
     

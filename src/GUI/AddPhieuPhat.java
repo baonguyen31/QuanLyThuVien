@@ -9,7 +9,9 @@ import BUS.PhieuMuonBUS;
 import BUS.PhieuPhatBUS;
 import BUS.QuyDinhPhatBUS;
 import BUS.SachBUS;
+import DAO.SachDAO;
 import DTO.CTPhieuMuonDTO;
+import DTO.CTPhieuPhatDTO;
 import DTO.PhieuMuonDTO;
 import DTO.PhieuPhatDTO;
 import DTO.QuyDinhPhatDTO;
@@ -38,8 +40,9 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     DefaultTableModel modelCt;
     private CTPhieuMuonBUS pmBus;
     private ArrayList<QuyDinhPhatDTO> qdpDto = new ArrayList<>();
-    ArrayList<CTPhieuMuonDTO> dsCTPP = new ArrayList<>();
+    ArrayList<CTPhieuPhatDTO> dsCTPP = new ArrayList<>();
     ArrayList<CTPhieuMuonDTO> dsCTPM = new ArrayList<>();
+    
     public AddPhieuPhat(MainPage main) {
         this.mainPage = main;
 //        modelCt = (DefaultTableModel) CTPPTable.getModel();
@@ -86,7 +89,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtMaPm1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTongTien = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtSoNgayTre = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -207,7 +210,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 
         jLabel11.setText("Tổng Tiền");
 
-        jTextField1.setText("jTextField1");
+        txtTongTien.setText("jTextField1");
 
         jLabel6.setText("Số Ngày Trễ");
 
@@ -284,7 +287,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addGap(29, 29, 29)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(btnSave)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
@@ -364,7 +367,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(183, Short.MAX_VALUE))
@@ -407,10 +410,13 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtNhanVien.setEditable(false);
         btnXoa.setEnabled(false);
         txtMaSach.setText(null);
+//        txtNgayMuon.setEditable(false);
+//        txtHanTra.setEditable(false);
         
 //        txtDonGia.setText("");
         txtSoLuong.setText(null);
         btnSave.setText("Cập nhật");
+        btnSave.setEnabled(true);
 //        PhieuPhatBUS phieuPhat = new PhieuPhatBUS();
 //        PhieuPhatDTO pp = phieuPhat.getPPByMa(maPP);
 
@@ -426,35 +432,69 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         isEdit = false;
         loadTableCt();
         if (modelCt == null) dsCTPP = new ArrayList();
+//        resetForm();
         
+        PhieuPhatBUS ppBus = new PhieuPhatBUS();
         PhieuMuonBUS pmBus = new PhieuMuonBUS();
-        PhieuMuonDTO pmDto = pmBus.getByMaPM(AddPhieuMuon.currentMaPM);
+        PhieuMuonDTO pmDto = pmBus.getByMaPM(maPm);
+        SachDAO sachDao = new SachDAO();
+        
         txtMaPP.setText(generateMaPP());
-        txtMaPm1.setText(AddPhieuMuon.currentMaPM);
-        txtDocGia.setText(pmDto.getMaDG());
         txtMaPP.setEnabled(false);
-        txtNhanVien.setEditable(false);
+        txtMaPm1.setText(pmDto.getMaPM());
+        txtMaPm1.setEnabled(false);
+        
+        txtDocGia.setText(pmDto.getMaDG());
+        txtDocGia.setEnabled(false);
         txtNhanVien.setText(pmDto.getMaNV());
+        txtNhanVien.setEditable(false);
+        
         txtNgayMuon.setDate(pmDto.getNgayMuon());
         txtHanTra.setDate(pmDto.getHanTra());
         txtNgayLap.setDate(new Date());
         txtNgaytrathucte.setDate(pmDto.getNgayTraThucTe());
+        
         Date hanTra = pmDto.getHanTra();
         Date ngayTra =  pmDto.getNgayTraThucTe();
-        
         PhieuPhatBUS bus = new PhieuPhatBUS();
         int soNgayTre = bus.tinhSoNgayTre(hanTra, ngayTra);
-        
         txtSoNgayTre.setText(String.valueOf(soNgayTre));
         
-        
-//        Date today = new Date();
-//        Date hanTra = pmDto.getHanTra();
-//        txtSoNgayTre.setText();
-        
-        
-        
+         txtTongTien.setText("0");
+         
+         // Lấy chi tiết phiếu mượn và đưa vào bảng phiếu phạt
+        CTPhieuMuonBUS ctBus = new CTPhieuMuonBUS();
+        ArrayList<CTPhieuMuonDTO> dsCTPM = ctBus.getCTPMByMaPm(maPm);
+
+        DefaultTableModel model = (DefaultTableModel) CTPPTable.getModel();
+
+        for (CTPhieuMuonDTO ctpm : dsCTPM) {
+            model.addRow(new Object[]{
+                ctpm.getMaSach(),
+                sachDao.getTenSachByMa(ctpm.getMaSach()),
+                ctpm.getSoLuong(),
+                "", // lý do phạt sẽ chọn sau
+                0   // thành tiền sẽ tính sau
+            });
+        }
     }
+    
+//    private void resetform(){
+//        PhieuPhatDTO dto = new PhieuPhatDTO();
+//        
+//        txtDocGia.setText("");
+//        txtNhanVien.setText("");
+//        txtNgayMuon.setDate(null);
+//        txtHanTra.setDate(null);       
+//        
+//        txtMaSach.setText("");
+//        txtSoLuong.setText("");       
+//        txtNgaytrathucte.setDate(null);
+//        
+//        dsCTPP.clear();
+//        modelCt.setRowCount(0);
+//    }
+    
     private void loadTableCt(){
 //        CTPhieuMuonBUS bus = new CTPhieuMuonBUS();       
 //        bus.getCTPMByMaPm(MaPM);
@@ -512,7 +552,6 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 //        if (dsCTPM == null){
 //            dsCTPM = new ArrayList();
 //        }
-//
 //        //        for (int i = 0; i <= modelCt.getRowCount(); i++){
 //            //        CTPhieuMuonDTO ctpm  = new CTPhieuMuonDTO();
 //            SachBUS sachBus = new SachBUS();
@@ -520,16 +559,12 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 //            int soluong = Integer.parseInt(txtSoLuong.getText());
 //            String tenSach = sachBus.getTenByMaSach(ma);
 //            boolean trungSach = false;
-//
 //            for (int i = 0; i < CTPMTable.getRowCount(); i++){
-//
 //                String maSachTable = modelCt.getValueAt(i, 0).toString();
-//
 //                if(maSachTable.equals(ma)){
 //                    int slCu = Integer.parseInt(modelCt.getValueAt(i, 2).toString());
 //                    int slMoi = slCu + soluong;
 //                    modelCt.setValueAt(slMoi, i, 2);
-//
 //                    //============================//4
 //                    for (CTPhieuMuonDTO ct : dsCTPM){
 //                        if(ct.getMaSach().equals(ma)){
@@ -558,21 +593,49 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     }//GEN-LAST:event_txtSoLuongActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-//        PhieuMuonDTO pm = new PhieuMuonDTO();
-//        pm.setMaPM(txtMaPm.getText());
-//        pm.setMaDG(txtDocGia.getText());
-//        pm.setMaNV(txtNhanVien.getText());
-//        pm.setNgayMuon(txtNgayMuon.getDate());
-//        pm.setHanTra(txtHanTra.getDate());
-//
-//        PhieuMuonBUS bus = new PhieuMuonBUS();
-//        //Thêm
-//        boolean ok = bus.insert(pm, dsCTPM);
-//        if (ok){
-//            JOptionPane.showMessageDialog(this, "Thêm phiếu mượn thành công");
-//            resetform();
+        PhieuPhatDTO pp = new PhieuPhatDTO();
+        pp.setMaPP(txtMaPP.getText());
+        pp.setMaPM(txtMaPm1.getText());
+        pp.setMaDG(txtDocGia.getText());
+        pp.setMaNV(txtNhanVien.getText());
+        pp.setNgayLap(txtNgayLap.getDate());
+        pp.setTongTien(Double.parseDouble(txtTongTien.getText()));
+        pp.setTrangThai(cbxLyDo.getSelectedIndex()); // 0,1,2
+        
+//        ArrayList<CTPhieuPhatDTO> dsCTPP = new ArrayList<>();
+//        for (int i = 0; i < tableCTPP.getRowCount(); i++) {
+//            CTPhieuPhatDTO ct = new CTPhieuPhatDTO();
+//            ct.setMaPP(pp.getMaPP());
+//            ct.setMaSach(tableCTPP.getValueAt(i, 0).toString());
+//            ct.setQdPhat(tableCTPP.getValueAt(i, 1).toString());
+//            ct.setSoLuong(Integer.parseInt(tableCTPP.getValueAt(i, 2).toString()));
+//            ct.setSoNgayTre(Integer.parseInt(tableCTPP.getValueAt(i, 3).toString()));
+//            ct.setLyDo(tableCTPP.getValueAt(i, 4).toString());
+//            ct.setThanhTien(Double.parseDouble(tableCTPP.getValueAt(i, 5).toString()));
+//            dsCTPP.add(ct);
 //        }
+
+        PhieuPhatBUS bus = new PhieuPhatBUS();
+        //Thêm
+        if(!isEdit){
+            boolean ok = bus.insertPP(pp, dsCTPP);
+            if (ok){
+                JOptionPane.showMessageDialog(this, "Thêm phiếu phạt thành công");
+    //            resetform();
+            }
+            else JOptionPane.showMessageDialog(this, "Thêm phiếu phạt không thành công");
+        }
         //Sửa===========
+        else if(isEdit){
+            boolean ok = bus.updatePP(pp, dsCTPP);
+            if (ok){
+                JOptionPane.showMessageDialog(this, "Sửa phiếu phạt thành công");
+    //            resetform();
+            }
+            else JOptionPane.showMessageDialog(this, "Sửa phiếu phạt không thành công");
+        }
+        
+       
 
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -637,7 +700,6 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel traSach;
     private javax.swing.JTextField txtDocGia;
     private com.toedter.calendar.JDateChooser txtHanTra;
@@ -650,5 +712,6 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private javax.swing.JTextField txtNhanVien;
     private javax.swing.JTextField txtSoLuong;
     private javax.swing.JTextField txtSoNgayTre;
+    private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
 }
