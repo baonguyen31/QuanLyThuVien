@@ -353,6 +353,12 @@ public class phieuMuonForm extends javax.swing.JPanel {
         String loaiNgay = cbxLoaiNgay.getSelectedItem().toString();
         Date tuNgay = txtTuNgay.getDate();
         Date denNgay = txtDenNgay.getDate();
+        if (tuNgay.getTime()>denNgay.getTime())
+        {
+            JOptionPane.showMessageDialog(null, "Nhập sai ngày");
+            txtTuNgay.requestFocus();
+            return;
+        }
         
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         int trangThai = cbxTrangThai.getSelectedIndex() - 1;
