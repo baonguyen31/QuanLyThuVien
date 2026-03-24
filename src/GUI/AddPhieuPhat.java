@@ -21,6 +21,7 @@ import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -48,6 +49,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 //        modelCt = (DefaultTableModel) CTPPTable.getModel();
         initComponents();
         loadComboPhat();
+        xoaDong();
     }
 
     /**
@@ -77,7 +79,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         CTPPTable = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnThemSach = new javax.swing.JButton();
         txtSoLuong = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         btnSave = new javax.swing.JButton();
@@ -96,6 +98,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         cbxLyDo = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         txtNgayLap = new com.toedter.calendar.JDateChooser();
+        btnSave1 = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1250, 821));
 
@@ -160,10 +163,10 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 
         jLabel8.setText("Mã sách");
 
-        jButton1.setText("Thêm sách");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnThemSach.setText("Thêm sách");
+        btnThemSach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnThemSachActionPerformed(evt);
             }
         });
 
@@ -174,7 +177,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         });
 
         btnSave.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnSave.setText("Thanh Toán");
+        btnSave.setText("Thêm phiếu");
         btnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSaveActionPerformed(evt);
@@ -233,6 +236,14 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 
         txtNgayLap.setDateFormatString("yyyy-MM-dd");
 
+        btnSave1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnSave1.setText("Thanh Toán");
+        btnSave1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSave1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -288,7 +299,10 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                                 .addComponent(jLabel11)
                                 .addGap(29, 29, 29)
                                 .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnSave)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnSave)
+                                .addGap(66, 66, 66)
+                                .addComponent(btnSave1))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel8)
@@ -305,7 +319,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(btnThemSach)))
                 .addContainerGap(311, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -349,7 +363,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8)
-                    .addComponent(jButton1)
+                    .addComponent(btnThemSach)
                     .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMaSach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSachList)
@@ -369,7 +383,9 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                     .addComponent(jLabel11)
                     .addComponent(txtTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(183, Short.MAX_VALUE))
         );
 
@@ -386,11 +402,14 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loadComboPhat(){
-        QuyDinhPhatBUS bus= new QuyDinhPhatBUS();
+        DefaultComboBoxModel modelLoaiP = new DefaultComboBoxModel();
+        QuyDinhPhatBUS bus = new QuyDinhPhatBUS();
         qdpDto = bus.getAll();
         for( QuyDinhPhatDTO dto : qdpDto){
-            cbxLyDo.addItem(dto.getMaQDP() +"-"+dto.getQuyDinh());
+//            cbxLyDo.addItem(dto.getMaQDP() +"-"+dto.getQuyDinh());
+                modelLoaiP.addElement(dto);
         }
+        cbxLyDo.setModel(modelLoaiP);
     }
     private String generateMaPP(){
         PhieuPhatBUS bus= new PhieuPhatBUS();
@@ -410,13 +429,10 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtNhanVien.setEditable(false);
         btnXoa.setEnabled(false);
         txtMaSach.setText(null);
-//        txtNgayMuon.setEditable(false);
-//        txtHanTra.setEditable(false);
-        
-//        txtDonGia.setText("");
+
         txtSoLuong.setText(null);
-        btnSave.setText("Cập nhật");
-        btnSave.setEnabled(true);
+        btnSave.setVisible(false);
+//        btnSave.setEnabled(true
 //        PhieuPhatBUS phieuPhat = new PhieuPhatBUS();
 //        PhieuPhatDTO pp = phieuPhat.getPPByMa(maPP);
 
@@ -427,12 +443,28 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         loadData(maPP);
     }
     
+    private void resetform(){
+        PhieuMuonDTO dto = new PhieuMuonDTO();
+        
+//        txtDocGia.setText("");
+////        txtNhanVien.setText("");
+//        txtNgayMuon.setDate(null);
+//        txtHanTra.setDate(null);       
+//        cbTrangThai.setSelectedIndex(0);
+//        
+        txtMaSach.setText("");
+        txtSoLuong.setText("");       
+//        txtNgaytrathucte.setDate(null);
+        
+        dsCTPP.clear();
+        modelCt.setRowCount(0);
+    }
     
     public void initAddMode(String maPm){
         isEdit = false;
         loadTableCt();
         if (modelCt == null) dsCTPP = new ArrayList();
-//        resetForm();
+        resetform();
         
         PhieuPhatBUS ppBus = new PhieuPhatBUS();
         PhieuMuonBUS pmBus = new PhieuMuonBUS();
@@ -460,40 +492,11 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         int soNgayTre = bus.tinhSoNgayTre(hanTra, ngayTra);
         txtSoNgayTre.setText(String.valueOf(soNgayTre));
         
-         txtTongTien.setText("0");
-         
-         // Lấy chi tiết phiếu mượn và đưa vào bảng phiếu phạt
-        CTPhieuMuonBUS ctBus = new CTPhieuMuonBUS();
-        ArrayList<CTPhieuMuonDTO> dsCTPM = ctBus.getCTPMByMaPm(maPm);
-
-        DefaultTableModel model = (DefaultTableModel) CTPPTable.getModel();
-
-        for (CTPhieuMuonDTO ctpm : dsCTPM) {
-            model.addRow(new Object[]{
-                ctpm.getMaSach(),
-                sachDao.getTenSachByMa(ctpm.getMaSach()),
-                ctpm.getSoLuong(),
-                "", // lý do phạt sẽ chọn sau
-                0   // thành tiền sẽ tính sau
-            });
-        }
+//        txtTongTien.setText("0");
+        tinhTongTien();
+        txtTongTien.revalidate();
+        txtTongTien.repaint();
     }
-    
-//    private void resetform(){
-//        PhieuPhatDTO dto = new PhieuPhatDTO();
-//        
-//        txtDocGia.setText("");
-//        txtNhanVien.setText("");
-//        txtNgayMuon.setDate(null);
-//        txtHanTra.setDate(null);       
-//        
-//        txtMaSach.setText("");
-//        txtSoLuong.setText("");       
-//        txtNgaytrathucte.setDate(null);
-//        
-//        dsCTPP.clear();
-//        modelCt.setRowCount(0);
-//    }
     
     private void loadTableCt(){
 //        CTPhieuMuonBUS bus = new CTPhieuMuonBUS();       
@@ -501,7 +504,8 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         Vector header = new Vector();
         header.add("Mã Sách");
         header.add("Tên Sách");
-        header.add("Số lượng");  
+        header.add("Số lượng");
+        header.add("Mã QDP");
         header.add("Ly do");
         header.add("Thanh tien");
         
@@ -514,6 +518,8 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         PhieuPhatBUS pm = new PhieuPhatBUS();
         PhieuPhatDTO dto = pm.getPPByMa(MaPP);
         
+        String soNgayTre = String.valueOf(dto.getSoNgayTre());
+        String tongTien =  String.valueOf(dto.getTongTien());
         if(dto == null){
             JOptionPane.showMessageDialog(this, "Không tìm thấy phiếu phạt");
             return;
@@ -523,70 +529,126 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtNhanVien.setText(dto.getMaNV());
         txtNgayLap.setDate(dto.getNgayLap());
         txtMaPm1.setText(dto.getMaPM());
-        
+        txtSoNgayTre.setText(soNgayTre);
+        txtTongTien.setText(tongTien);
+         
         PhieuMuonBUS pmBus = new PhieuMuonBUS();
         PhieuMuonDTO pmDto = pmBus.getByMaPM(txtMaPm1.getText());
         
         txtNgayMuon.setDate(pmDto.getNgayMuon());
         txtHanTra.setDate(pmDto.getHanTra());
+       
 
        
     }
     private void loadData(String MaPP){
         loadTableCt();
-//        for(CTPhieuMuonDTO ctpm : CTPhieuMuonBUS.dsCTPM){
-//            SachBUS sachBus = new SachBUS();
-//            String tenSach = sachBus.getTenByMaSach(ctpm.getMaSach());
-//            System.out.print(tenSach);
-//            Vector row = new Vector();
-//            row.add(ctpm.getMaSach());
-//            row.add(tenSach);
-//            row.add(ctpm.getSoLuong());
-//            modelCt.addRow(row);
-//            
-//    }
+//        modelCt.setRowCount(0);
+        PhieuPhatBUS bus = new PhieuPhatBUS();
+        dsCTPP = bus.getCTByMaPP(MaPP);
+        for(CTPhieuPhatDTO ctpp : dsCTPP){
+            SachBUS sachBus = new SachBUS();
+            String tenSach = sachBus.getTenByMaSach(ctpp.getMaSach());
+            System.out.print(tenSach);
+            Vector row = new Vector();
+            row.add(ctpp.getMaSach());
+            row.add(tenSach);
+            row.add(ctpp.getSoLuong());
+            row.add(ctpp.getQdPhat());
+            row.add(ctpp.getLyDo());
+            row.add(ctpp.getThanhTien());
+            modelCt.addRow(row);
+            
+    }
         CTPPTable.setModel(modelCt);
+//        CTPPTable.getColumnModel().getColumn(3).setMinWidth(0);
+//        CTPPTable.getColumnModel().getColumn(3).setMaxWidth(0);
+//        CTPPTable.getColumnModel().getColumn(3).setWidth(0);
   }
+    private void tinhTongTien(){
+        int soNgayTre = Integer.parseInt(txtSoNgayTre.getText());
+        PhieuPhatBUS bus = new PhieuPhatBUS();
+        double tong = bus.tinhTongTien(dsCTPP, soNgayTre);
+        txtTongTien.setText(String.valueOf(tong));
+        System.out.println("Tổng Tiền:"  +tong);
+    }
     
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        if (dsCTPM == null){
-//            dsCTPM = new ArrayList();
-//        }
-//        //        for (int i = 0; i <= modelCt.getRowCount(); i++){
-//            //        CTPhieuMuonDTO ctpm  = new CTPhieuMuonDTO();
-//            SachBUS sachBus = new SachBUS();
-//            String ma = txtMaSach.getText();
-//            int soluong = Integer.parseInt(txtSoLuong.getText());
-//            String tenSach = sachBus.getTenByMaSach(ma);
-//            boolean trungSach = false;
-//            for (int i = 0; i < CTPMTable.getRowCount(); i++){
-//                String maSachTable = modelCt.getValueAt(i, 0).toString();
-//                if(maSachTable.equals(ma)){
-//                    int slCu = Integer.parseInt(modelCt.getValueAt(i, 2).toString());
-//                    int slMoi = slCu + soluong;
-//                    modelCt.setValueAt(slMoi, i, 2);
-//                    //============================//4
-//                    for (CTPhieuMuonDTO ct : dsCTPM){
-//                        if(ct.getMaSach().equals(ma)){
-//                            ct.setSoLuong(slMoi);
-//                        }
-//                    }
-//                    trungSach = true;
-//                }
-//            }
-//            if (!trungSach){
-//                CTPhieuMuonDTO ctpm  = new CTPhieuMuonDTO();
-//                ctpm.setMaPM(txtMaPm.getText());
-//                ctpm.setMaSach(ma);
-//                ctpm.setSoLuong(soluong);
-//                dsCTPM.add(ctpm);
-//                modelCt.addRow(new Object[]{
-//                    ma,
-//                    tenSach,
-//                    soluong,
-//                });
-//            }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void btnThemSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSachActionPerformed
+        if (dsCTPP == null){
+            dsCTPP = new ArrayList();
+        }
+            SachBUS sachBus = new SachBUS();
+            String ma = txtMaSach.getText();
+            int soluong = Integer.parseInt(txtSoLuong.getText());
+            String tenSach = sachBus.getTenByMaSach(ma);
+            
+            
+            int slCon = 0;
+            for (CTPhieuMuonDTO ct : dsCTPM){
+                if(ct.getMaSach().equals(ma)) slCon += ct.getSoLuong();
+            }
+            
+            for (CTPhieuPhatDTO ct : dsCTPP){
+                if(ct.getMaSach().equals(ma)) slCon -= ct.getSoLuong();
+            }
+            
+            if (soluong > slCon){
+                JOptionPane.showMessageDialog(this, "Số lượng không đủ");
+            } else {
+            //===================================//
+            QuyDinhPhatDTO selected =  (QuyDinhPhatDTO) cbxLyDo.getSelectedItem();
+            if (selected == null) return;
+            String maQdp = selected.getMaQDP();
+            int soTienPhat = selected.getSoTienPhat();
+            PhieuPhatBUS ppBus = new PhieuPhatBUS();
+//            int soNgayTre = Integer.parseInt(txtSoNgayTre.getText());
+            double thanhtien = ppBus.tinhTien(maQdp, soluong);
+            
+            
+//            System.out.println(maQdp + "-" + soTienPhat + "-"+ thanhtien);
+            
+            boolean trungSach = false;
+            for (int i = 0; i < CTPPTable.getRowCount(); i++){
+                String maSachTable = modelCt.getValueAt(i, 0).toString();
+                String maQdpTable = modelCt.getValueAt(i, 3).toString();
+                if(maSachTable.equals(ma) && selected.getMaQDP().equals(maQdpTable)){
+                    int slCu = Integer.parseInt(modelCt.getValueAt(i, 2).toString());
+                    int slMoi = slCu + soluong;
+                    double thanhTienMoi = ppBus.tinhTien(maQdp, slMoi);
+                    
+                    modelCt.setValueAt(slMoi, i, 2);
+                    modelCt.setValueAt(thanhTienMoi, i, 5);
+                    //============================//4
+                    for (CTPhieuPhatDTO ct : dsCTPP){
+                        if(ct.getMaSach().equals(ma)){
+                            ct.setSoLuong(slMoi);
+                            ct.setThanhTien(thanhTienMoi);
+                        }
+                    }
+                    trungSach = true;
+                }
+            }
+            if (!trungSach){
+                CTPhieuPhatDTO ctpp  = new CTPhieuPhatDTO();
+                ctpp.setMaPP(txtMaPP.getText());
+                ctpp.setMaSach(ma);
+                ctpp.setQdPhat(maQdp);
+                ctpp.setSoLuong(soluong);
+                ctpp.setThanhTien(thanhtien);
+                dsCTPP.add(ctpp);
+                modelCt.addRow(new Object[]{
+                    ma,
+                    tenSach,
+                    soluong,
+                    maQdp,
+                    selected.getQuyDinh(),
+                    thanhtien
+                });
+            }
+            tinhTongTien();
+        }
+    }//GEN-LAST:event_btnThemSachActionPerformed
 
     private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
         // TODO add your handling code here:
@@ -599,22 +661,11 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         pp.setMaDG(txtDocGia.getText());
         pp.setMaNV(txtNhanVien.getText());
         pp.setNgayLap(txtNgayLap.getDate());
+        int soNgaytre = Integer.parseInt(txtSoNgayTre.getText());
+        pp.setSoNgayTre(soNgaytre);
         pp.setTongTien(Double.parseDouble(txtTongTien.getText()));
         pp.setTrangThai(cbxLyDo.getSelectedIndex()); // 0,1,2
         
-//        ArrayList<CTPhieuPhatDTO> dsCTPP = new ArrayList<>();
-//        for (int i = 0; i < tableCTPP.getRowCount(); i++) {
-//            CTPhieuPhatDTO ct = new CTPhieuPhatDTO();
-//            ct.setMaPP(pp.getMaPP());
-//            ct.setMaSach(tableCTPP.getValueAt(i, 0).toString());
-//            ct.setQdPhat(tableCTPP.getValueAt(i, 1).toString());
-//            ct.setSoLuong(Integer.parseInt(tableCTPP.getValueAt(i, 2).toString()));
-//            ct.setSoNgayTre(Integer.parseInt(tableCTPP.getValueAt(i, 3).toString()));
-//            ct.setLyDo(tableCTPP.getValueAt(i, 4).toString());
-//            ct.setThanhTien(Double.parseDouble(tableCTPP.getValueAt(i, 5).toString()));
-//            dsCTPP.add(ct);
-//        }
-
         PhieuPhatBUS bus = new PhieuPhatBUS();
         //Thêm
         if(!isEdit){
@@ -642,18 +693,40 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXoaActionPerformed
-
+        private void xoaDong(){
+        btnXoa.addActionListener(e -> {
+        int row = CTPPTable.getSelectedRow();       
+        
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Vui lòng chọn dòng cần xóa");
+            return;
+        }
+        if(row >= 0) {
+            String maSachTable = modelCt.getValueAt(row, 0).toString();
+            String maQdpTable = modelCt.getValueAt(row, 3).toString();
+        DefaultTableModel model =(DefaultTableModel) CTPPTable.getModel();
+        dsCTPP.removeIf(ct -> ct.getMaSach().equals(maSachTable) && ct.getQdPhat().equals(maQdpTable));
+        model.removeRow(row);
+        tinhTongTien();
+        }
+    });
+    }
+    
     private void btnSachListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSachListActionPerformed
         // TODO add your handling code here:
         pmBus = new CTPhieuMuonBUS();
         dsCTPM = pmBus.getCTPMByMaPm(AddPhieuMuon.currentMaPM);     
         Frame parent = (Frame) SwingUtilities.getWindowAncestor(this);
-        SachMuonDialog sachDia = new SachMuonDialog(parent, true, dsCTPM);
+        SachMuonDialog sachDia = new SachMuonDialog(parent, true, dsCTPM, dsCTPP);
         sachDia.setLocationRelativeTo(this);
         sachDia.setVisible(true);
 
         CTPhieuMuonDTO ctpm = sachDia.getSelectedSach();
         if(ctpm != null) txtMaSach.setText(ctpm.getMaSach());
+        
+//        loadData(AddPhieuMuon.currentMaPM);
+//        tinhTongTien();
     }//GEN-LAST:event_btnSachListActionPerformed
 
     private void txtMaPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaPPActionPerformed
@@ -674,15 +747,20 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         
     }//GEN-LAST:event_cbxLyDoActionPerformed
 
+    private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSave1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable CTPPTable;
     private javax.swing.JPanel btnBack;
     private javax.swing.JButton btnSachList;
     private javax.swing.JButton btnSave;
+    private javax.swing.JButton btnSave1;
+    private javax.swing.JButton btnThemSach;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbxLyDo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

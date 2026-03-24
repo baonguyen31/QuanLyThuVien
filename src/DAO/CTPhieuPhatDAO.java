@@ -34,7 +34,7 @@ public class CTPhieuPhatDAO {
                 ctpp.setQdPhat(rs.getString("MaQDP"));
                 ctpp.setMaSach(rs.getString("MaSach"));
                 ctpp.setSoLuong(rs.getInt("SoLuong"));
-                ctpp.setSoNgayTre(rs.getInt("SoNgayTre"));
+//                ctpp.setSoNgayTre(rs.getInt("SoNgayTre"));
                 ctpp.setLyDo(rs.getString("LyDo"));
                 ctpp.setThanhTien(rs.getDouble("ThanhTien"));
                 dsCTPhieuPhat.add(ctpp);
@@ -55,7 +55,7 @@ public class CTPhieuPhatDAO {
         qry += "'" + ctpn.getMaSach() + "', ";
         qry += "'" + ctpn.getQdPhat()+ "', ";
         qry += "'" + ctpn.getSoLuong() + "', ";
-        qry += "'" + ctpn.getSoNgayTre()+ "', ";
+//        qry += "'" + ctpn.getSoNgayTre()+ "', ";
         qry += "'" + ctpn.getLyDo() + "', ";
         qry += "'" + ctpn.getThanhTien() + "')";
         

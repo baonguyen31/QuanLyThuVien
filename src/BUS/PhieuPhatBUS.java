@@ -47,7 +47,7 @@ public class PhieuPhatBUS {
     int number = Integer.parseInt(lastMaPM.substring(2));
     number++;
 
-    if(number < 9){
+    if(number <= 9){
     return "PP0" + number;
     }
     else{
@@ -57,6 +57,10 @@ public class PhieuPhatBUS {
     public PhieuPhatDTO getPPByMa(String MaPp){
         dao = new PhieuPhatDAO();
         return dao.getByMaPP(MaPp);
+    }
+    
+    public ArrayList<CTPhieuPhatDTO> getCTByMaPP(String MaPP){
+        return ctppDao.getCTPPByMaPP(MaPP);
     }
     //==================tính tiền phạt====================//
     
@@ -69,50 +73,63 @@ public class PhieuPhatBUS {
 
     return Math.max(days, 0); // không âm
 }
+    public double tinhTongTien(ArrayList<CTPhieuPhatDTO> list, int soNgayTre){
+//        QuyDinhPhatDAO qdp =  new QuyDinhPhatDAO();
+//        QuyDinhPhatDTO qdpDto = qdp.getByMaQDP(maQDP);
+        QuyDinhPhatDTO qdpDto = new QuyDinhPhatDTO();
+        double tong = 0;
+        
+        for(CTPhieuPhatDTO dto : list){
+            tong += dto.getThanhTien();
+        }
+        double tienTre = 0;
+        if(soNgayTre > 0) {
+             tienTre = soNgayTre *  20000;
+            System.out.println("Tiền trễ hạn:" + tienTre +"Số ngày trễ:" + soNgayTre + "-"+qdpDto.getSoTienPhat() );
+        }       
+       
+        return tong + tienTre;
+    }
+        
     
-    public double tinhTien(String maQDP, int soNgayTre, int soLuong){
+    public double tinhTien(String maQDP, int soLuong){
         QuyDinhPhatDAO qdp =  new QuyDinhPhatDAO();
         QuyDinhPhatDTO qdpDto = qdp.getByMaQDP(maQDP);
-        
         if(qdpDto == null) return 0;
-        
-//        if(qdpDto.getLoaiphat().equals("trehan")){
-//            return soNgayTre * qdpDto.getSoTienPhat();
-//        }
-//        else {
-//            return qdpDto.getSoTienPhat();
-//        }     
-        switch (qdpDto.getLoaiphat()) {
-            case "trehan":
-                return soNgayTre * qdpDto.getSoTienPhat();
-            case "matsach":
-                // phạt theo giá trị sách * số lượng
-                return qdpDto.getSoTienPhat() * soLuong;
-            case "hongsach":
-                // phạt cố định cho mỗi cuốn hỏng
-                return qdpDto.getSoTienPhat() * soLuong;
-            default:
-            // các loại phạt khác: trả về số tiền phạt cố định
-            return qdpDto.getSoTienPhat();
+           
+//        switch (qdpDto.getLoaiphat()) {
+////            case "trehan":
+////                return soNgayTre * qdpDto.getSoTienPhat();
+//            case "matsach":
+//                // phạt theo giá trị sách * số lượng
+//                return qdpDto.getSoTienPhat() * soLuong;
+//            case "huhong":
+//                // phạt cố định cho mỗi cuốn hỏng
+//                return qdpDto.getSoTienPhat() * soLuong;
+//            default:
+//            // các loại phạt khác: trả về số tiền phạt cố định
+            return qdpDto.getSoTienPhat() * soLuong;
         }
-    }
+    
     
     //===========Thêm sửa xóa===========//
     public boolean insertPP(PhieuPhatDTO pp, ArrayList<CTPhieuPhatDTO> ctpp){
-        if(ctpp == null || ctpp.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Danh sách CTPP rỗng");
-            return false;
-        }
-        boolean ok = dao.insertPP(pp);
-        if(!ok) return false;
-        
-        for(CTPhieuPhatDTO ct : ctpp){
-            ct.setMaPP(pp.getMaPP());
-            boolean checkCT = ctppDao.insertCTPP(ct);
-            if(!checkCT) return false;
-        }
-        return true;
-    }
+      int soNgaytre = pp.getSoNgayTre();
+      double tongTien = tinhTongTien(ctpp, soNgaytre);
+      pp.setTongTien(tongTien);
+      
+      boolean ok = dao.insertPP(pp);
+            if(!ok) return false;
+        if(ctpp != null || !ctpp.isEmpty()){
+            for(CTPhieuPhatDTO ct : ctpp){
+                ct.setMaPP(pp.getMaPP());
+                boolean checkCT = ctppDao.insertCTPP(ct);
+                if(!checkCT) return false;
+                }
+                return true;
+            }
+        return false;
+}
     
     public boolean updatePP(PhieuPhatDTO pp, ArrayList<CTPhieuPhatDTO> ctpp) {
         boolean ok = dao.updatePP(pp);

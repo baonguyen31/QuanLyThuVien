@@ -399,6 +399,7 @@ public class AddPhieuMuon extends javax.swing.JPanel {
             btnSave.setEnabled(false);
             btnDocGiaList.setEnabled(false);
             cbTrangThai.setEnabled(false);
+            btnPhieuphat.setVisible(true);
         }
 
         else if(pm.getTrangThai() == 2){

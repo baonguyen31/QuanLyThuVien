@@ -7,6 +7,7 @@ package GUI;
 import BUS.CTPhieuMuonBUS;
 import BUS.SachBUS;
 import DTO.CTPhieuMuonDTO;
+import DTO.CTPhieuPhatDTO;
 import DTO.SachDTO;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -22,12 +23,14 @@ public class SachMuonDialog extends javax.swing.JDialog {
      * Creates new form SachMuonDialog
      */
     private CTPhieuMuonDTO selectedSach;
-    private ArrayList<CTPhieuMuonDTO> list;
-    public SachMuonDialog(java.awt.Frame parent, boolean modal, ArrayList<CTPhieuMuonDTO> list) {
+    private ArrayList<CTPhieuMuonDTO> dsCTPM;
+    private  ArrayList<CTPhieuPhatDTO> dsCTPP;
+    public SachMuonDialog(java.awt.Frame parent, boolean modal, ArrayList<CTPhieuMuonDTO> dsCTPM, ArrayList<CTPhieuPhatDTO> dsCTPP) {
         super(parent, modal);
         initComponents();
-        this.list = list;
-        loadData();
+        this.dsCTPM = dsCTPM;
+        this.dsCTPP = dsCTPP;
+        loadData(dsCTPM);
         tblSach.setDefaultEditor(Object.class, null);
     }
 
@@ -106,7 +109,7 @@ public class SachMuonDialog extends javax.swing.JDialog {
 
                 CTPhieuMuonDTO dto = new CTPhieuMuonDTO();
                 dto.setMaSach(maSach);
-
+                
                 selectedSach = dto;
 
                 dispose();
@@ -115,7 +118,7 @@ public class SachMuonDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_tblSachMouseClicked
     
                  
-     public void loadData(){ 
+     public void loadData(ArrayList<CTPhieuMuonDTO> getlist){ 
         Vector header = new Vector();
         header.add("Mã Sach");
         header.add("Tên Sach");
@@ -124,13 +127,22 @@ public class SachMuonDialog extends javax.swing.JDialog {
         DefaultTableModel model = new DefaultTableModel(header,0);
         model.setRowCount(0); //reset model 
         SachBUS sach = new SachBUS();
-        for(CTPhieuMuonDTO dto : list){
-        if(dto.getSoLuong() > 0) {
+        for(CTPhieuMuonDTO dto : dsCTPM){
+            int slMuon = dto.getSoLuong();
+            
+            int slDaPhat = 0;
+            for (CTPhieuPhatDTO ctpp : dsCTPP){
+                if(ctpp.getMaSach().equals(dto.getMaSach())){
+                    slDaPhat += ctpp.getSoLuong();
+                }
+            }
+            int slCon = slMuon - slDaPhat;
+        if(slCon > 0) {
             Vector row = new Vector();
             row.add(dto.getMaSach());
             String tenSach = sach.getTenByMaSach(dto.getMaSach());
             row.add(tenSach);
-            row.add(dto.getSoLuong());
+            row.add(slCon);
             model.addRow(row);
         }
             

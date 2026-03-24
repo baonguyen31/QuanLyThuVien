@@ -44,11 +44,11 @@ public class QuyDinhPhatDAO {
     
     
     
-    public QuyDinhPhatDTO getByMaQDP(String MaPP){
+    public QuyDinhPhatDTO getByMaQDP(String MaQDP){
         QuyDinhPhatDTO QuyDinhPhatDto = null;
         try {
             conn = JDBCUtil.getConnect();
-            String qry = "Select * from QuyDinhPhat where MaPP = " + "'"+ MaPP +"'";
+            String qry = "Select * from QuyDinhPhat where MaQDP = " + "'"+ MaQDP +"'";
             st = conn.createStatement();
             rs = st.executeQuery(qry);
             if(rs.next()){

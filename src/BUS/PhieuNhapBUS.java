@@ -33,18 +33,24 @@ public class PhieuNhapBUS {
     String lastMaPM = dao.getLastMaPN();
 
     if (lastMaPM == null) {
-        return "PM1";
+        return "PN01";
     }
 
     int number = Integer.parseInt(lastMaPM.substring(2));
     number++;
-
-    return "PM" + number;
+    if(number <= 9)
+    return "PN0" + number;
+    
+    else{
+         return "PN" + number;
+            }
 }
     public PhieuNhapHangDTO getPNByMa(String MaPn){
         dao = new PhieuNhapDAO();
         return dao.getByMaPM(MaPn);
     }
+    
+    
     public double tinhTongTien(ArrayList<CTPhieuNhapHangDTO> ctpn){
         double tong = 0;
         for(CTPhieuNhapHangDTO ct : ctpn){
@@ -52,6 +58,10 @@ public class PhieuNhapBUS {
         }
         return tong;
     }
+    
+    
+    
+    
       public boolean insert(PhieuNhapHangDTO pn, ArrayList<CTPhieuNhapHangDTO> ctpn){
         SachDTO sachDTO = new SachDTO();
         try {

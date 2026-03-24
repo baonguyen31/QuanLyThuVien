@@ -26,7 +26,7 @@ public class PhieuMuonDAO {
     Statement st = null;
     ResultSet rs = null;
     Connection conn = null;
-    
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public ArrayList<PhieuMuonDTO> selectAll (){
         ArrayList<PhieuMuonDTO> phieumuonDs = new ArrayList<>();
         try {
@@ -172,7 +172,6 @@ public class PhieuMuonDAO {
             String qry = "Update phieumuon ";
             qry += " Set MaDG = " + "'" + pmDto.getMaDG() + "'";
             
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             
             qry += " , HanTra = " + "'" + sdf.format(pmDto.getHanTra() )+ "'" ;
             qry += " where MaPM = " + "'" + pmDto.getMaPM() + "'";

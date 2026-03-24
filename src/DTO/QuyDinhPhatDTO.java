@@ -66,4 +66,9 @@ public class QuyDinhPhatDTO {
     public void setLoaiphat(String loaiphat) {
         this.loaiphat = loaiphat;
     }
+    
+    @Override
+    public String toString(){
+        return quyDinh;
+    }
 }

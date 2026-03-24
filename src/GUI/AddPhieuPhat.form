@@ -104,7 +104,11 @@
                                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                                   <Component id="txtTongTien" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="btnSave" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="btnSave" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+                                  <Component id="btnSave1" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
@@ -123,7 +127,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="txtSoLuong" min="-2" pref="41" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnThemSach" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="311" max="32767" attributes="0"/>
@@ -180,7 +184,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnThemSach" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtSoLuong" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtMaSach" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btnSachList" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -205,7 +209,10 @@
                       <Component id="txtTongTien" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                  <Component id="btnSave" min="-2" pref="49" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="btnSave" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="btnSave1" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace pref="183" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -334,12 +341,12 @@
             <Property name="text" type="java.lang.String" value="M&#xe3; s&#xe1;ch"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnThemSach">
           <Properties>
             <Property name="text" type="java.lang.String" value="Th&#xea;m s&#xe1;ch"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemSachActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtSoLuong">
@@ -354,7 +361,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Thanh To&#xe1;n"/>
+            <Property name="text" type="java.lang.String" value="Th&#xea;m phi&#x1ebf;u"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSaveActionPerformed"/>
@@ -451,6 +458,17 @@
           <Properties>
             <Property name="dateFormatString" type="java.lang.String" value="yyyy-MM-dd"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="btnSave1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Thanh To&#xe1;n"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSave1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

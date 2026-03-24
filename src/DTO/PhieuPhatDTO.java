@@ -16,17 +16,19 @@ public class PhieuPhatDTO {
     private String maDG;
     private String maNV;
     private Date ngayLap;
+    private int soNgayTre;
     private double tongTien;
     private int trangThai;
     
     public PhieuPhatDTO(){}
 
-    public PhieuPhatDTO(String maPP, String maPM, String maDG, String maNV, Date ngayLap, double tongTien, int trangThai) {
+    public PhieuPhatDTO(String maPP, String maPM, String maDG, String maNV, Date ngayLap, double tongTien, int trangThai, int soNgayTre) {
         this.maPP = maPP;
         this.maPM = maPM;
         this.maDG = maDG;
         this.maNV = maNV;
         this.ngayLap = ngayLap;
+        this.soNgayTre = soNgayTre;
         this.tongTien = tongTien;
         this.trangThai = trangThai;
     }
@@ -87,13 +89,22 @@ public class PhieuPhatDTO {
         this.trangThai = trangThai;
     }
 
+    public int getSoNgayTre() {
+        return soNgayTre;
+    }
+
+    public void setSoNgayTre(int soNgayTre) {
+        this.soNgayTre = soNgayTre;
+    }
+
+    
     
 
     public String getTrangThaiString(){
         switch(this.trangThai){
             case 0: return "Chưa trả tiền";
             case 1: return "Đã trả tiền";
-            case 2: return "Quá hạn trả tiền";
+//            case 2: return "Quá hạn trả tiền";
             default: return "";
         }
     }

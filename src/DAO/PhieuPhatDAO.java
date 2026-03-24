@@ -36,6 +36,7 @@ public class PhieuPhatDAO {
                 pn.setMaPM(rs.getString("MaPM"));
                 pn.setMaDG(rs.getString("MaDG"));
                 pn.setNgayLap(rs.getDate("NgayLap"));
+                pn.setSoNgayTre(rs.getInt("SoNgayTre"));
                 pn.setTongTien(rs.getDouble("TongTien"));
                 pn.setTrangThai(rs.getInt("TrangThai"));
                 result.add(pn);
@@ -76,6 +77,7 @@ public class PhieuPhatDAO {
                 PhieuPhatDto.setMaDG(rs.getString("MaDG"));
                 PhieuPhatDto.setMaNV(rs.getString("MaNV"));
                 PhieuPhatDto.setNgayLap(rs.getDate("NgayLap"));
+                PhieuPhatDto.setSoNgayTre(rs.getInt("SoNgayTre"));
                 PhieuPhatDto.setTongTien(rs.getDouble("TongTien"));
                 PhieuPhatDto.setTrangThai(rs.getInt("TrangThai"));
                 System.out.println(qry);
@@ -90,12 +92,13 @@ public class PhieuPhatDAO {
     public boolean insertPP(PhieuPhatDTO pp){
         try{
             conn = JDBCUtil.getConnect();
-            String qry = "INSERT INTO phieuphat(maPP, maPM, maDG, maNV, ngayLap, tongTien, trangThai) VALUES (";
+            String qry = "INSERT INTO phieuphat(maPP, maPM, maDG, maNV, ngayLap, soNgayTre, tongTien, trangThai) VALUES (";
             qry +=  "'" + pp.getMaPP() + "', ";
             qry += "'" + pp.getMaPM() + "', ";
             qry += "'" + pp.getMaDG() + "', ";
             qry += "'" + pp.getMaNV() + "', ";
             qry += "'" + new java.sql.Date(pp.getNgayLap().getTime()) + "', ";
+            qry += pp.getSoNgayTre()+ ", ";
             qry += pp.getTongTien() + ", ";
             qry += pp.getTrangThai() + ")";
             
@@ -104,6 +107,7 @@ public class PhieuPhatDAO {
             return true;
             
         }catch(Exception e){
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi thêm phiếu phạt trong DB");
             return false;
         }
@@ -117,6 +121,7 @@ public class PhieuPhatDAO {
             qry += "maDG='" + pp.getMaDG() + "', ";
             qry += "maNV='" + pp.getMaNV() + "', ";
             qry += "ngayLap='" + new java.sql.Date(pp.getNgayLap().getTime()) + "', ";
+            qry += "soNgayTre=" + pp.getSoNgayTre()+ ", ";
             qry += "tongTien=" + pp.getTongTien() + ", ";
             qry += "trangThai=" + pp.getTrangThai();
             qry += " WHERE maPP='" + pp.getMaPP() + "'";
@@ -125,6 +130,7 @@ public class PhieuPhatDAO {
             st.executeUpdate(qry);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi sửa phiếu phạt trong DB");
             return false;
         }
@@ -138,6 +144,7 @@ public class PhieuPhatDAO {
             st.executeUpdate(qry);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi xóa phiếu phạt trong DB");
             return false;
         }

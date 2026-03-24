@@ -47,6 +47,7 @@ public class phieuPhatForm extends javax.swing.JPanel {
         jButton8 = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        btnLamMoi = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPhieuPhat = new javax.swing.JTable();
 
@@ -86,6 +87,19 @@ public class phieuPhatForm extends javax.swing.JPanel {
             }
         });
 
+        btnLamMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/add (1).png"))); // NOI18N
+        btnLamMoi.setText("Lam moi");
+        btnLamMoi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnLamMoiMouseClicked(evt);
+            }
+        });
+        btnLamMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnTimkiem4Layout = new javax.swing.GroupLayout(pnTimkiem4);
         pnTimkiem4.setLayout(pnTimkiem4Layout);
         pnTimkiem4Layout.setHorizontalGroup(
@@ -95,30 +109,35 @@ public class phieuPhatForm extends javax.swing.JPanel {
                 .addComponent(btnEdit)
                 .addGap(18, 18, 18)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addGap(159, 159, 159))
+                .addGap(149, 149, 149)
+                .addComponent(btnLamMoi)
+                .addGap(19, 19, 19))
         );
         pnTimkiem4Layout.setVerticalGroup(
             pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTimkiem4Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton8)
-                    .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel16)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
+                        .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                            .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel16)
+                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnTimkiem4Layout.createSequentialGroup()
+                                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(pnTimkiem4Layout.createSequentialGroup()
+                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(23, 23, 23))))
         );
 
         tblPhieuPhat.setModel(new javax.swing.table.DefaultTableModel(
@@ -208,6 +227,16 @@ public class phieuPhatForm extends javax.swing.JPanel {
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnLamMoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnLamMoiMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLamMoiMouseClicked
+
+    private void btnLamMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiActionPerformed
+        PhieuPhatBUS pmBus = new PhieuPhatBUS();
+        currentList = pmBus.getAll();
+        loadData(currentList);
+    }//GEN-LAST:event_btnLamMoiActionPerformed
     private void initEdit(){
         btnEdit.addActionListener(e -> {
             int row = tblPhieuPhat.getSelectedRow();
@@ -234,6 +263,7 @@ public class phieuPhatForm extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnLamMoi;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JScrollPane jScrollPane2;
