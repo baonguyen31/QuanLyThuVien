@@ -263,6 +263,12 @@ import org.jfree.data.general.DefaultPieDataset;
         Date tuNgay = txtTuNgay.getDate();
         Date denNgay = txtDenNgay.getDate();
         System.out.println(denNgay);
+        if (tuNgay.getTime()>denNgay.getTime() && tuNgay!=null && denNgay!=null)
+        {
+            JOptionPane.showMessageDialog(null, "Nhập sai ngày");
+            txtTuNgay.requestFocus();
+            return;
+        }
 
         createBarChart(pnChart, tuNgay, denNgay);
         loadlistDocGiaSach(tuNgay, denNgay);
