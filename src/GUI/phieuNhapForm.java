@@ -317,6 +317,13 @@ public class phieuNhapForm extends javax.swing.JPanel {
         phieuNhapBus = new PhieuNhapBUS();
         Date tuNgay = txtTuNgay.getDate();
         Date denNgay = txtDenNgay.getDate();
+
+        if (tuNgay.getTime()>denNgay.getTime() && tuNgay!=null && denNgay!=null)
+        {
+            JOptionPane.showMessageDialog(null, "Nhập sai ngày");
+            txtTuNgay.requestFocus();
+            return;
+        }
         
         currentList = phieuNhapBus.filter(tuNgay, denNgay);
         loadData(currentList);
