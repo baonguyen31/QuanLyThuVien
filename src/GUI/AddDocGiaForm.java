@@ -312,6 +312,12 @@ public class AddDocGiaForm extends javax.swing.JFrame {
         DocGiaBUS bus = new DocGiaBUS();
         DocGiaDAO dao = new DocGiaDAO();
         DocGiaDTO dg;
+         if (sdttext.getText().length()!=10)
+        {
+            JOptionPane.showMessageDialog(null, "Sai định dạng SDT");
+            sdttext.requestFocus();
+            return;
+        }
         if (titlelabel.getText().equals("Thêm độc giả"))
         {
         dg = new DocGiaDTO(bus.generateMADG(),hodocgiatext.getText(),tendocgiatext.getText(),sdttext.getText(),diachidocgiatext.getText(),1);
