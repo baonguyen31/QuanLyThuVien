@@ -494,6 +494,12 @@ public class AddPhieuMuon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+        if (txtNgayMuon.getDate().getTime()>txtHanTra.getDate().getTime())
+        {
+            JOptionPane.showMessageDialog(null, "Hạn trả phải sau ngày mượn");
+            txtNgayMuon.requestFocus();
+            return;
+        }
         PhieuMuonDTO pm = new PhieuMuonDTO();       
         pm.setMaPM(txtMaPm.getText());
         pm.setMaDG(txtDocGia.getText());
