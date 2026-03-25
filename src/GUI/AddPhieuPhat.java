@@ -406,7 +406,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         isEdit = true;
         txtMaPP.setEditable(false);
         txtMaPm1.setEditable(false);
-//        btnDocGiaList.setEnabled(true);
+        txtDocGia.setEnabled(false);
         txtNhanVien.setEditable(false);
         btnXoa.setEnabled(false);
         txtMaSach.setText(null);
@@ -460,23 +460,9 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         int soNgayTre = bus.tinhSoNgayTre(hanTra, ngayTra);
         txtSoNgayTre.setText(String.valueOf(soNgayTre));
         
-         txtTongTien.setText("0");
+        txtTongTien.setText("0");
          
-         // Lấy chi tiết phiếu mượn và đưa vào bảng phiếu phạt
-        CTPhieuMuonBUS ctBus = new CTPhieuMuonBUS();
-        ArrayList<CTPhieuMuonDTO> dsCTPM = ctBus.getCTPMByMaPm(maPm);
-
-        DefaultTableModel model = (DefaultTableModel) CTPPTable.getModel();
-
-        for (CTPhieuMuonDTO ctpm : dsCTPM) {
-            model.addRow(new Object[]{
-                ctpm.getMaSach(),
-                sachDao.getTenSachByMa(ctpm.getMaSach()),
-                ctpm.getSoLuong(),
-                "", // lý do phạt sẽ chọn sau
-                0   // thành tiền sẽ tính sau
-            });
-        }
+        
     }
     
 //    private void resetform(){
@@ -549,43 +535,60 @@ public class AddPhieuPhat extends javax.swing.JPanel {
   }
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-//        if (dsCTPM == null){
-//            dsCTPM = new ArrayList();
-//        }
-//        //        for (int i = 0; i <= modelCt.getRowCount(); i++){
-//            //        CTPhieuMuonDTO ctpm  = new CTPhieuMuonDTO();
-//            SachBUS sachBus = new SachBUS();
-//            String ma = txtMaSach.getText();
-//            int soluong = Integer.parseInt(txtSoLuong.getText());
-//            String tenSach = sachBus.getTenByMaSach(ma);
-//            boolean trungSach = false;
-//            for (int i = 0; i < CTPMTable.getRowCount(); i++){
-//                String maSachTable = modelCt.getValueAt(i, 0).toString();
-//                if(maSachTable.equals(ma)){
-//                    int slCu = Integer.parseInt(modelCt.getValueAt(i, 2).toString());
-//                    int slMoi = slCu + soluong;
-//                    modelCt.setValueAt(slMoi, i, 2);
-//                    //============================//4
-//                    for (CTPhieuMuonDTO ct : dsCTPM){
-//                        if(ct.getMaSach().equals(ma)){
-//                            ct.setSoLuong(slMoi);
-//                        }
-//                    }
-//                    trungSach = true;
-//                }
-//            }
-//            if (!trungSach){
-//                CTPhieuMuonDTO ctpm  = new CTPhieuMuonDTO();
-//                ctpm.setMaPM(txtMaPm.getText());
-//                ctpm.setMaSach(ma);
-//                ctpm.setSoLuong(soluong);
-//                dsCTPM.add(ctpm);
-//                modelCt.addRow(new Object[]{
-//                    ma,
-//                    tenSach,
-//                    soluong,
-//                });
-//            }
+        if (dsCTPM == null){
+            dsCTPM = new ArrayList();
+        }
+//        for (int i = 0; i <= modelCt.getRowCount(); i++){
+//        CTPhieuMuonDTO ctpm  = new CTPhieuMuonDTO();
+        PhieuPhatBUS bus = new PhieuPhatBUS();
+        SachBUS sachBus = new SachBUS();
+        String ma = txtMaSach.getText();
+        
+        int soluong = Integer.parseInt(txtSoLuong.getText());
+        String qdPhat = cbxLyDo.getSelectedItem().toString();
+        String selected = (String) cbxLyDo.getSelectedItem();
+        qdPhat = selected.split("-")[0];
+        System.out.println("QDP: " + qdPhat);
+        QuyDinhPhatBUS qdpBus = new QuyDinhPhatBUS();
+        int soNgayTre = Integer.parseInt(txtSoNgayTre.getText());
+        double thanhtien = qdpBus.tinhTien(qdPhat, soNgayTre, soluong);
+        
+        String tenSach = sachBus.getTenByMaSach(ma);
+        boolean trungSach = false;
+        for (int i = 0; i < CTPPTable.getRowCount(); i++){
+            String maSachTable = modelCt.getValueAt(i, 0).toString();
+            if(maSachTable.equals(ma)){
+                int slCu = Integer.parseInt(modelCt.getValueAt(i, 2).toString());
+                int slMoi = slCu + soluong;
+                modelCt.setValueAt(slMoi, i, 2);
+                
+                for (CTPhieuPhatDTO ct : dsCTPP){
+                    if(ct.getMaSach().equals(ma)){
+                        ct.setSoLuong(slMoi);
+                    }
+                }
+                trungSach = true;
+            }
+        }
+        if (!trungSach){
+            CTPhieuPhatDTO ctpp  = new CTPhieuPhatDTO();
+            ctpp.setMaPP(txtMaPm1.getText());
+            ctpp.setMaSach(ma);
+            ctpp.setSoLuong(soluong);
+            dsCTPP.add(ctpp);
+            modelCt.addRow(new Object[]{
+                ma,
+                tenSach,
+                soluong,
+                qdPhat,
+                thanhtien  
+            });
+        }
+        double tong = 0;
+        for (int i = 0; i < CTPPTable.getRowCount(); i++) {
+            tong += Double.parseDouble(CTPPTable.getValueAt(i, 4).toString());
+        }
+        txtTongTien.setText(String.valueOf(tong));
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
@@ -602,19 +605,19 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         pp.setTongTien(Double.parseDouble(txtTongTien.getText()));
         pp.setTrangThai(cbxLyDo.getSelectedIndex()); // 0,1,2
         
-//        ArrayList<CTPhieuPhatDTO> dsCTPP = new ArrayList<>();
-//        for (int i = 0; i < tableCTPP.getRowCount(); i++) {
-//            CTPhieuPhatDTO ct = new CTPhieuPhatDTO();
-//            ct.setMaPP(pp.getMaPP());
-//            ct.setMaSach(tableCTPP.getValueAt(i, 0).toString());
-//            ct.setQdPhat(tableCTPP.getValueAt(i, 1).toString());
-//            ct.setSoLuong(Integer.parseInt(tableCTPP.getValueAt(i, 2).toString()));
-//            ct.setSoNgayTre(Integer.parseInt(tableCTPP.getValueAt(i, 3).toString()));
-//            ct.setLyDo(tableCTPP.getValueAt(i, 4).toString());
-//            ct.setThanhTien(Double.parseDouble(tableCTPP.getValueAt(i, 5).toString()));
-//            dsCTPP.add(ct);
-//        }
-
+        ArrayList<CTPhieuPhatDTO> dsCTPP = new ArrayList<>();
+        DefaultTableModel model = (DefaultTableModel) CTPPTable.getModel();
+        for (int i = 0; i < CTPPTable.getRowCount(); i++) {
+            CTPhieuPhatDTO ct = new CTPhieuPhatDTO();
+            ct.setMaPP(pp.getMaPP());
+            ct.setMaSach(model.getValueAt(i, 0).toString());
+            ct.setQdPhat(model.getValueAt(i, 3).toString());
+            ct.setSoLuong(Integer.parseInt(model.getValueAt(i, 2).toString()));
+            ct.setSoNgayTre(Integer.parseInt(model.getValueAt(i, 4).toString()));
+            ct.setThanhTien(Double.parseDouble(model.getValueAt(i, 5).toString()));
+            dsCTPP.add(ct);
+        }
+        
         PhieuPhatBUS bus = new PhieuPhatBUS();
         //Thêm
         if(!isEdit){
@@ -671,6 +674,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 
     private void cbxLyDoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxLyDoActionPerformed
         // TODO add your handling code here:
+        
         
     }//GEN-LAST:event_cbxLyDoActionPerformed
 

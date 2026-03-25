@@ -70,32 +70,6 @@ public class PhieuPhatBUS {
     return Math.max(days, 0); // không âm
 }
     
-    public double tinhTien(String maQDP, int soNgayTre, int soLuong){
-        QuyDinhPhatDAO qdp =  new QuyDinhPhatDAO();
-        QuyDinhPhatDTO qdpDto = qdp.getByMaQDP(maQDP);
-        
-        if(qdpDto == null) return 0;
-        
-//        if(qdpDto.getLoaiphat().equals("trehan")){
-//            return soNgayTre * qdpDto.getSoTienPhat();
-//        }
-//        else {
-//            return qdpDto.getSoTienPhat();
-//        }     
-        switch (qdpDto.getLoaiphat()) {
-            case "trehan":
-                return soNgayTre * qdpDto.getSoTienPhat();
-            case "matsach":
-                // phạt theo giá trị sách * số lượng
-                return qdpDto.getSoTienPhat() * soLuong;
-            case "hongsach":
-                // phạt cố định cho mỗi cuốn hỏng
-                return qdpDto.getSoTienPhat() * soLuong;
-            default:
-            // các loại phạt khác: trả về số tiền phạt cố định
-            return qdpDto.getSoTienPhat();
-        }
-    }
     
     //===========Thêm sửa xóa===========//
     public boolean insertPP(PhieuPhatDTO pp, ArrayList<CTPhieuPhatDTO> ctpp){

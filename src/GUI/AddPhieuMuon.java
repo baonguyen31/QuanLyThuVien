@@ -502,6 +502,8 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         pm.setNgayMuon(txtNgayMuon.getDate());
         pm.setHanTra(txtHanTra.getDate());
         
+        
+        
         Date today = new Date();
         Date hanTra = pm.getHanTra();
         

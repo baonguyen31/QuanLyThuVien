@@ -6,9 +6,10 @@
             <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/phieuPhatForm.java</file>
             <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/DAO/PhieuPhatDAO.java</file>
             <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/BUS/PhieuPhatBUS.java</file>
-            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/DTO/PhieuPhatDTO.java</file>
             <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/AddPhieuPhat.java</file>
-            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/AddPhieuMuon.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/GUI/phieuMuonForm.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/BUS/QuyDinhPhatBUS.java</file>
+            <file>file:/C:/Users/PC/Downloads/QuanLyThuVien1/src/DAO/QuyDinhPhatDAO.java</file>
         </group>
     </open-files>
 </project-private>

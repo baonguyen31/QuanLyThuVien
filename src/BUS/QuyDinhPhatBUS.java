@@ -22,4 +22,21 @@ public class QuyDinhPhatBUS {
         return list;
     }
     
+    public double tinhTien(String maQDP, int soNgayTre, int soLuong){
+        QuyDinhPhatDTO qdpDto = dao.getByMaQDP(maQDP);
+        if(maQDP == null) return 0;
+        switch (qdpDto.getLoaiphat()) {
+            case "trehan":
+                return soNgayTre * qdpDto.getSoTienPhat();
+            case "matsach":
+                // phạt theo giá trị sách * số lượng
+                return qdpDto.getSoTienPhat() * soLuong;
+            case "huhong":
+                // phạt cố định cho mỗi cuốn hỏng
+                return qdpDto.getSoTienPhat() * soLuong;
+            default:
+            // các loại phạt khác: trả về số tiền phạt cố định
+            return 0;
+        }
+    }
 }
