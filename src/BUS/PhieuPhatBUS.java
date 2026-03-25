@@ -149,9 +149,17 @@ public class PhieuPhatBUS {
         ctppDao.deleteByMaPP(maPP);
         return dao.deletePP(maPP);
     }
-    
+    //tìm kiếm
     public ArrayList<PhieuPhatDTO> searchByMaPP(String keyword, ArrayList<PhieuPhatDTO> list){
         return dao.searchByMaPP(keyword, list);
+    }
+    //lọc và thống kê
+    public int thongKeTheoTrangThai(int trangThai) {
+        return dao.thongKeTheoTrangThai(trangThai);
+    }
+
+    public ArrayList<PhieuPhatDTO> filterByTrangThai(int trangThai) {
+        return dao.filterByTrangThai(trangThai);
     }
     
     //=============================//

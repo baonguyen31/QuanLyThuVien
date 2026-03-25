@@ -149,7 +149,7 @@ public class PhieuPhatDAO {
             return false;
         }
     }
-    
+    //tìm kiếm
     public ArrayList<PhieuPhatDTO> searchByMaPP(String keyword, ArrayList<PhieuPhatDTO> list){
         ArrayList<PhieuPhatDTO> searchList = new ArrayList<>();
         try {
@@ -172,5 +172,42 @@ public class PhieuPhatDAO {
         }
         return searchList;
         }
-    
+    //thống kê và lọc
+    public int thongKeTheoTrangThai(int trangThai) {
+        int count = 0;
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "SELECT COUNT(*) AS total FROM phieuphat WHERE TrangThai = " + trangThai;
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi không thể thống kê phiếu phạt");
+        }
+        return count;
+    }
+    public ArrayList<PhieuPhatDTO> filterByTrangThai(int trangThai) {
+        ArrayList<PhieuPhatDTO> list = new ArrayList<>();
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "SELECT * FROM phieuphat WHERE TrangThai = " + trangThai;
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+
+            while (rs.next()) {
+                PhieuPhatDTO pp = new PhieuPhatDTO();
+                pp.setMaPP(rs.getString("MaPP"));
+                pp.setMaDG(rs.getString("MaDG"));
+                pp.setNgayLap(rs.getDate("NgayLap"));
+                pp.setTongTien(rs.getDouble("TongTien"));
+                pp.setTrangThai(rs.getInt("TrangThai"));
+                list.add(pp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

@@ -48,6 +48,7 @@ public class phieuPhatForm extends javax.swing.JPanel {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
+        btnLoc = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPhieuPhat = new javax.swing.JTable();
 
@@ -100,6 +101,13 @@ public class phieuPhatForm extends javax.swing.JPanel {
             }
         });
 
+        btnLoc.setText("Lọc");
+        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLocActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnTimkiem4Layout = new javax.swing.GroupLayout(pnTimkiem4);
         pnTimkiem4.setLayout(pnTimkiem4Layout);
         pnTimkiem4Layout.setHorizontalGroup(
@@ -109,7 +117,9 @@ public class phieuPhatForm extends javax.swing.JPanel {
                 .addComponent(btnEdit)
                 .addGap(18, 18, 18)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -125,12 +135,6 @@ public class phieuPhatForm extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
-                        .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                            .addComponent(btnLamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
                         .addGap(0, 11, Short.MAX_VALUE)
                         .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnTimkiem4Layout.createSequentialGroup()
@@ -140,7 +144,14 @@ public class phieuPhatForm extends javax.swing.JPanel {
                                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel16)
                                     .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(21, 21, 21))))))
+                                .addGap(21, 21, 21))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
+                        .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnLoc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                            .addComponent(btnLamMoi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
         );
 
         tblPhieuPhat.setModel(new javax.swing.table.DefaultTableModel(
@@ -281,6 +292,35 @@ public class phieuPhatForm extends javax.swing.JPanel {
         currentList = pmBus.getAll();
         loadData(currentList);
     }//GEN-LAST:event_btnLamMoiActionPerformed
+
+    private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
+        // TODO add your handling code here: thống kê
+        PhieuPhatBUS bus = new PhieuPhatBUS();
+        int daTra = bus.thongKeTheoTrangThai(0);
+        int chuaTra = bus.thongKeTheoTrangThai(1);
+        int quaHan = bus.thongKeTheoTrangThai(2);
+
+        Object[] options = {"Đã trả (" + daTra + ")", "Chưa trả (" + chuaTra + ")", "Quá hạn trả (" + quaHan +")"};
+        int choice = JOptionPane.showOptionDialog(this,
+            "Chọn trạng thái để lọc:",
+            "Lọc phiếu phạt",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.INFORMATION_MESSAGE,
+            null,
+            options,
+            options[0]);
+
+        if (choice == 0) {
+            ArrayList<PhieuPhatDTO> list = bus.filterByTrangThai(0);
+            loadData(list);
+        } else if (choice == 1) {
+            ArrayList<PhieuPhatDTO> list = bus.filterByTrangThai(1);
+            loadData(list);
+        } else {
+            ArrayList<PhieuPhatDTO> list = bus.filterByTrangThai(2);
+            loadData(list);
+        }
+    }//GEN-LAST:event_btnLocActionPerformed
     private void initEdit(){
         btnEdit.addActionListener(e -> {
             int row = tblPhieuPhat.getSelectedRow();
@@ -308,6 +348,7 @@ public class phieuPhatForm extends javax.swing.JPanel {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnLamMoi;
+    private javax.swing.JButton btnLoc;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JScrollPane jScrollPane2;

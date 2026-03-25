@@ -104,7 +104,7 @@ public class PhieuPhatDTO {
         switch(this.trangThai){
             case 0: return "Chưa trả tiền";
             case 1: return "Đã trả tiền";
-//            case 2: return "Quá hạn trả tiền";
+            case 2: return "Quá hạn trả tiền";
             default: return "";
         }
     }

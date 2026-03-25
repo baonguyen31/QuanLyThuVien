@@ -430,6 +430,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         isEdit = true;
         txtMaPP.setEditable(false);
         txtMaPm1.setEditable(false);
+        txtDocGia.setEditable(false);
 //        btnDocGiaList.setEnabled(true);
         txtNhanVien.setEditable(false);
         btnXoa.setEnabled(false);
