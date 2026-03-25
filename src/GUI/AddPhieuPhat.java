@@ -98,7 +98,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         cbxLyDo = new javax.swing.JComboBox<>();
         jLabel13 = new javax.swing.JLabel();
         txtNgayLap = new com.toedter.calendar.JDateChooser();
-        btnSave1 = new javax.swing.JButton();
+        btnThanhToan = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1250, 821));
 
@@ -236,11 +236,11 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 
         txtNgayLap.setDateFormatString("yyyy-MM-dd");
 
-        btnSave1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnSave1.setText("Thanh Toán");
-        btnSave1.addActionListener(new java.awt.event.ActionListener() {
+        btnThanhToan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnThanhToan.setText("Thanh Toán");
+        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSave1ActionPerformed(evt);
+                btnThanhToanActionPerformed(evt);
             }
         });
 
@@ -302,7 +302,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnSave)
                                 .addGap(66, 66, 66)
-                                .addComponent(btnSave1))))
+                                .addComponent(btnThanhToan))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addComponent(jLabel8)
@@ -385,7 +385,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSave1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(183, Short.MAX_VALUE))
         );
 
@@ -672,7 +672,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         int soNgaytre = Integer.parseInt(txtSoNgayTre.getText());
         pp.setSoNgayTre(soNgaytre);
         pp.setTongTien(Double.parseDouble(txtTongTien.getText()));
-        pp.setTrangThai(cbxLyDo.getSelectedIndex()); // 0,1,2
+        pp.setTrangThai(0); // 0,1,2
         
         PhieuPhatBUS bus = new PhieuPhatBUS();
         
@@ -766,9 +766,23 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         
     }//GEN-LAST:event_cbxLyDoActionPerformed
 
-    private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnSave1ActionPerformed
+         PhieuPhatBUS bus = new PhieuPhatBUS();
+         PhieuPhatDTO pp = bus.getPPByMa(txtMaPP.getText());
+         if(pp != null && pp.getTrangThai() == 1) 
+         {
+            JOptionPane.showMessageDialog(this, "Phiếu này đã thanh toán");
+         } else if (pp != null && pp.getTrangThai() == 0){
+             pp.setTrangThai(1);
+             bus.updatePP(pp, dsCTPP);
+             JOptionPane.showMessageDialog(this, "Thanh toán thành công");
+         }
+         else{
+             JOptionPane.showMessageDialog(this, "Thanh toán không thành công");
+         }
+         
+    }//GEN-LAST:event_btnThanhToanActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -776,7 +790,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private javax.swing.JPanel btnBack;
     private javax.swing.JButton btnSachList;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnSave1;
+    private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnThemSach;
     private javax.swing.JButton btnXoa;
     private javax.swing.JComboBox<String> cbxLyDo;
