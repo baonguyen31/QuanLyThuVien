@@ -55,7 +55,6 @@ public class CTPhieuPhatDAO {
         qry += "'" + ctpn.getMaSach() + "', ";
         qry += "'" + ctpn.getQdPhat()+ "', ";
         qry += "'" + ctpn.getSoLuong() + "', ";
-//        qry += "'" + ctpn.getSoNgayTre()+ "', ";
         qry += "'" + ctpn.getLyDo() + "', ";
         qry += "'" + ctpn.getThanhTien() + "')";
         
