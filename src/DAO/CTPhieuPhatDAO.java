@@ -68,7 +68,7 @@ public class CTPhieuPhatDAO {
             return false;
         }
     }
-    
+    // Xóa toàn bộ chi tiết theo phiếu phạt bị xóa
     public boolean deleteByMaPP(String ma) {
         try {
             conn = JDBCUtil.getConnect();
@@ -76,6 +76,20 @@ public class CTPhieuPhatDAO {
             st = conn.createStatement();
             st.executeUpdate(qry); 
             return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi xóa ct phiếu phạt trong DB");
+            return false;
+        }
+    }
+    
+    public boolean deleteChiTietPhieuPhatByMaSach(String maPP, String maSach) {
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "DELETE FROM ct_phieuphat WHERE MaPP ='" + maPP + "' AND MaSach = '" + maSach + "'";
+            
+            st = conn.createStatement();
+            int changes = st.executeUpdate(qry); 
+            return changes > 0;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Lỗi xóa ct phiếu phạt trong DB");
             return false;

@@ -85,8 +85,8 @@ public class PhieuPhatBUS {
         }
         double tienTre = 0;
         if(soNgayTre > 0) {
-             tienTre = soNgayTre *  20000;
-            System.out.println("Tiền trễ hạn:" + tienTre +"Số ngày trễ:" + soNgayTre + "-"+qdpDto.getSoTienPhat() );
+            tienTre = soNgayTre *  20000;
+            System.out.println("Tiền trễ hạn:" + tienTre +", Số ngày trễ:" + soNgayTre + "-"+qdpDto.getSoTienPhat() );
         }       
        
         return tong + tienTre;
@@ -150,6 +150,10 @@ public class PhieuPhatBUS {
         return dao.deletePP(maPP);
     }
     
+    public ArrayList<PhieuPhatDTO> searchByMaPP(String keyword, ArrayList<PhieuPhatDTO> list){
+        return dao.searchByMaPP(keyword, list);
+    }
+    
     //=============================//
     public boolean daCoPhieuPhat(String maPM){
         list = dao.getAll();
@@ -159,6 +163,13 @@ public class PhieuPhatBUS {
         }
         return false;
     }
+    
+//    public boolean deleteChiTietPhieuPhatByMaSach(String maPP, String maSach) {
+//        boolean check = ctppDao.deleteChiTietPhieuPhatByMaSach(maPP, maSach);
+//        if(check){
+//            double tong = tinhTongTien()
+//        }
+//    }
 }
   
 

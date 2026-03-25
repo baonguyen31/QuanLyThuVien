@@ -214,6 +214,11 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         jLabel11.setText("Tổng Tiền");
 
         txtTongTien.setText("jTextField1");
+        txtTongTien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTongTienActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Số Ngày Trễ");
 
@@ -767,6 +772,10 @@ public class AddPhieuPhat extends javax.swing.JPanel {
     private void btnSave1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSave1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSave1ActionPerformed
+
+    private void txtTongTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTongTienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTongTienActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

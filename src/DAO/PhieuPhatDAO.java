@@ -150,7 +150,27 @@ public class PhieuPhatDAO {
         }
     }
     
-    
-    
+    public ArrayList<PhieuPhatDTO> searchByMaPP(String keyword, ArrayList<PhieuPhatDTO> list){
+        ArrayList<PhieuPhatDTO> searchList = new ArrayList<>();
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "SELECT * FROM phieuphat WHERE MaPP LIKE '%" + keyword + "%'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+
+            while (rs.next()) {
+                PhieuPhatDTO pp = new PhieuPhatDTO();
+                pp.setMaPP(rs.getString("MaPP"));
+                pp.setMaDG(rs.getString("MaDG"));
+                pp.setNgayLap(rs.getDate("NgayLap"));
+                pp.setTongTien(rs.getDouble("TongTien"));
+                pp.setTrangThai(rs.getInt("TrangThai"));
+                searchList.add(pp);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Lỗi tìm kiếm phiếu phạt trong DB");
+        }
+        return searchList;
+        }
     
 }
