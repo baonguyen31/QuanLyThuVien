@@ -12,19 +12,19 @@ public class CTPhieuMuonDTO {
     private String MaPM;
     private String MaSach;
     private int SoLuong;
+    private int SoLuongTra;
     private int tongSoLuong;
 
     public CTPhieuMuonDTO() {
     }
 
-    public CTPhieuMuonDTO(String MaPM, String MaSach, int SoLuong, int tongSoLuong) {
+    public CTPhieuMuonDTO(String MaPM, String MaSach, int SoLuong, int SoLuongTra, int tongSoLuong) {
         this.MaPM = MaPM;
         this.MaSach = MaSach;
         this.SoLuong = SoLuong;
+        this.SoLuongTra = SoLuongTra;
         this.tongSoLuong = tongSoLuong;
     }
-
-   
 
     public String getMaPM() {
         return MaPM;
@@ -50,6 +50,14 @@ public class CTPhieuMuonDTO {
         this.SoLuong = SoLuong;
     }
 
+    public int getSoLuongTra() {
+        return SoLuongTra;
+    }
+
+    public void setSoLuongTra(int SoLuongTra) {
+        this.SoLuongTra = SoLuongTra;
+    }
+
     public int getTongSoLuong() {
         return tongSoLuong;
     }
@@ -57,6 +65,8 @@ public class CTPhieuMuonDTO {
     public void setTongSoLuong(int tongSoLuong) {
         this.tongSoLuong = tongSoLuong;
     }
+
+    
     
     
 }

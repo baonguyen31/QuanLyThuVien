@@ -4,12 +4,15 @@
  */
 package BUS;
 
+import DAO.CTPhieuMuonDAO;
 import DAO.CTPhieuNhapDAO;
 import DAO.CTPhieuPhatDAO;
+import DAO.PhieuMuonDAO;
 import DAO.PhieuNhapDAO;
 import DAO.PhieuPhatDAO;
 import DAO.QuyDinhPhatDAO;
 import DAO.SachDAO;
+import DTO.CTPhieuMuonDTO;
 import DTO.CTPhieuNhapHangDTO;
 import DTO.CTPhieuPhatDTO;
 import DTO.PhieuNhapHangDTO;
@@ -126,7 +129,10 @@ public class PhieuPhatBUS {
                 ct.setMaPP(pp.getMaPP());
                 boolean checkCT = ctppDao.insertCTPP(ct);
                 if(!checkCT) return false;
+                
                 }
+            //====Đặt xulytrasach ở ngoài đẻ ko bị chạy nhiều lần trong vòng for
+                xuLyTraSach(pp.getMaPM(), ctpp);
                 return true;
             }
         return false;
@@ -158,6 +164,35 @@ public class PhieuPhatBUS {
                 return true;
         }
         return false;
+    }
+    
+    
+    //===============================================//
+    public void xuLyTraSach(String maPm, ArrayList<CTPhieuPhatDTO> list){
+        System.out.println("====xử lý số lượng trả========");
+        CTPhieuMuonDAO pmDao = new CTPhieuMuonDAO();
+        PhieuMuonDAO pm = new PhieuMuonDAO();
+        SachDAO sachDao = new SachDAO();
+        ArrayList<CTPhieuMuonDTO> pmList = pmDao.getCTPMByMaPM(maPm);
+        for (CTPhieuMuonDTO ct : pmList){
+            int slMuon = ct.getSoLuong();
+            int slMat = 0;
+            
+            for(CTPhieuPhatDTO ctpp : list){
+                if(ctpp.getMaSach().equals(ct.getMaSach())){
+                    slMat += ctpp.getSoLuong();
+                     }   
+                }
+                    int slTra = slMuon - slMat;
+                    System.out.println("Mượn" + slMuon + "Trả" + slTra + "Mất" + slMat);
+                if(slTra > 0 ){
+                    sachDao.tangSoluong(ct.getMaSach(), slTra);
+                }
+                
+                ct.setSoLuongTra(slTra);
+                pmDao.update(ct);
+        }
+//        pm.traSach(maPm);
     }
 }
   

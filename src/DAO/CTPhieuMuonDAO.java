@@ -77,7 +77,7 @@ public class CTPhieuMuonDAO {
             if(tuNgay != null) qry += " and pm.NgayMuon >= '" + sdf.format(tuNgay) + "'";
             if(denNgay != null) qry += " and pm.NgayMuon <= '" + sdf.format(denNgay) + "'";
             qry += " group by s.MaSach ";
-            qry += " order by SoLuongMuon desc";
+            qry += " order by SoLuongMuon desc"; 
             qry += " limit 10";
 //            System.out.println(qry);
             st = conn.createStatement();
@@ -108,4 +108,22 @@ public class CTPhieuMuonDAO {
         }
     }
     
+     public boolean update(CTPhieuMuonDTO ctpm){
+        try {
+        conn = JDBCUtil.getConnect();
+        String qry = "Update ct_phieumuon Set ";
+        qry += "SoLuongTra = '" + ctpm.getSoLuongTra() + "'";
+        qry += " where MaPM = '" + ctpm.getMaPM() + "'";
+        qry += " and MaSach = '" + ctpm.getMaSach()+ "'";
+        st = conn.createStatement();
+        st.executeUpdate(qry); 
+        System.out.print(qry);
+        JDBCUtil.closeConnection(conn);
+        return true;
+        } catch(SQLException e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "thêm số lượng còn không thành công");
+        }
+        return false;
+    }
 }

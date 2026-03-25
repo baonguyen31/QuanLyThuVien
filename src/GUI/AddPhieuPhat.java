@@ -486,6 +486,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtNgayLap.setDate(new Date());
         txtNgaytrathucte.setDate(pmDto.getNgayTraThucTe());
         btnXoa.setEnabled(true);
+        btnSave.setVisible(true);
         
         Date hanTra = pmDto.getHanTra();
         Date ngayTra =  pmDto.getNgayTraThucTe();
@@ -638,6 +639,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                 ctpp.setQdPhat(maQdp);
                 ctpp.setSoLuong(soluong);
                 ctpp.setThanhTien(thanhtien);
+                ctpp.setLyDo(selected.getQuyDinh());
                 dsCTPP.add(ctpp);
                 modelCt.addRow(new Object[]{
                     ma,
