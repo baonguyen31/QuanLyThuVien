@@ -86,8 +86,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         btnSave = new javax.swing.JButton();
         txtMaSach = new javax.swing.JTextField();
         btnXoa = new javax.swing.JButton();
-        btnTraSach = new javax.swing.JButton();
-        btnPhieuphat = new javax.swing.JButton();
+        btnThanhToan = new javax.swing.JButton();
         btnDocGiaList = new javax.swing.JButton();
         btnSachList = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -180,19 +179,11 @@ public class AddPhieuNhap extends javax.swing.JPanel {
             }
         });
 
-        btnTraSach.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnTraSach.setText("jButton2");
-        btnTraSach.addActionListener(new java.awt.event.ActionListener() {
+        btnThanhToan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnThanhToan.setText("Thanh Toán");
+        btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTraSachActionPerformed(evt);
-            }
-        });
-
-        btnPhieuphat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnPhieuphat.setText("jButton2");
-        btnPhieuphat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPhieuphatActionPerformed(evt);
+                btnThanhToanActionPerformed(evt);
             }
         });
 
@@ -241,7 +232,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 115, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                         .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -274,9 +265,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
                         .addGap(44, 44, 44)
                         .addComponent(btnSave)
                         .addGap(77, 77, 77)
-                        .addComponent(btnTraSach)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPhieuphat)))
+                        .addComponent(btnThanhToan)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -321,8 +310,7 @@ public class AddPhieuNhap extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnTraSach, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnPhieuphat, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
                         .addComponent(btnXoa)))
@@ -429,27 +417,27 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        PhieuNhapHangDTO pm = new PhieuNhapHangDTO();       
-        pm.setMaPNH(txtMaPn.getText());
-        pm.setMaNCC(txtNhaCungCap.getText());
-        pm.setMaNV(txtNhanVien.getText());
-        pm.setNgayNhap(txtNgayNhap.getDate());
+        PhieuNhapHangDTO pn = new PhieuNhapHangDTO();       
+        pn.setMaPNH(txtMaPn.getText());
+        pn.setMaNCC(txtNhaCungCap.getText());
+        pn.setMaNV(txtNhanVien.getText());
+        pn.setNgayNhap(txtNgayNhap.getDate());
         
 //        PhieuNhapBUS bus = new PhieuNhapBUS();
         validateForm();
         if(!isEdit){
         //Thêm
-            boolean ok = bus.insert(pm, dsCTPN);
+            boolean ok = bus.insert(pn, dsCTPN);
             if (ok){
                 JOptionPane.showMessageDialog(this, "Thêm phiếu nhập thành công");
                 resetform();               
             }
-//        }else{
-//        //Cập nhật===========
-//            boolean update = bus.updateQuaHan(pm);
-//            if(update){
-//                JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
-//            }
+        }else{
+        //Cập nhật===========
+            boolean update = bus.updatePN(pn);
+            if(update){
+                JOptionPane.showMessageDialog(this, "Cập nhật phiếu mượn thành công");
+            }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -509,19 +497,13 @@ public class AddPhieuNhap extends javax.swing.JPanel {
         }     
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void btnTraSachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTraSachActionPerformed
+    private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
-        PhieuMuonBUS pmBus = new PhieuMuonBUS();
-        pmBus.returnSach(MaPN);
-        JOptionPane.showMessageDialog(this, "Trả sách thành công");
-        mainPage.showPMList();
-    }//GEN-LAST:event_btnTraSachActionPerformed
-
-    private void btnPhieuphatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuphatActionPerformed
-        // TODO add your handling code here:
-//        currentMaPM = txtMaPn.getText();
-//        mainPage.showAddPhieuPhat(currentMaPM);
-    }//GEN-LAST:event_btnPhieuphatActionPerformed
+//        PhieuMuonBUS pmBus = new PhieuMuonBUS();
+//        pmBus.returnSach(MaPN);
+//        JOptionPane.showMessageDialog(this, "Trả sách thành công");
+//        mainPage.showPMList();
+    }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void btnDocGiaListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocGiaListActionPerformed
         Frame parent = (Frame) SwingUtilities.getWindowAncestor(this);
@@ -629,10 +611,9 @@ public class AddPhieuNhap extends javax.swing.JPanel {
     private javax.swing.JTable CTPNTable;
     private javax.swing.JPanel btnBack;
     private javax.swing.JButton btnDocGiaList;
-    private javax.swing.JButton btnPhieuphat;
     private javax.swing.JButton btnSachList;
     private javax.swing.JButton btnSave;
-    private javax.swing.JButton btnTraSach;
+    private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnXoa;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

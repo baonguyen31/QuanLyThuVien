@@ -453,10 +453,11 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 //        cbTrangThai.setSelectedIndex(0);
 //        
         txtMaSach.setText("");
-        txtSoLuong.setText("");       
+        txtSoLuong.setText("");  
+        txtTongTien.setText("0");
+
 //        txtNgaytrathucte.setDate(null);
-        
-        dsCTPP.clear();
+        if(dsCTPP != null) dsCTPP.clear();
         modelCt.setRowCount(0);
     }
     
@@ -466,10 +467,9 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         if (modelCt == null) dsCTPP = new ArrayList();
         resetform();
         
-        PhieuPhatBUS ppBus = new PhieuPhatBUS();
+//        PhieuPhatBUS ppBus = new PhieuPhatBUS();
         PhieuMuonBUS pmBus = new PhieuMuonBUS();
         PhieuMuonDTO pmDto = pmBus.getByMaPM(maPm);
-        SachDAO sachDao = new SachDAO();
         
         txtMaPP.setText(generateMaPP());
         txtMaPP.setEnabled(false);
@@ -485,6 +485,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtHanTra.setDate(pmDto.getHanTra());
         txtNgayLap.setDate(new Date());
         txtNgaytrathucte.setDate(pmDto.getNgayTraThucTe());
+        btnXoa.setEnabled(true);
         
         Date hanTra = pmDto.getHanTra();
         Date ngayTra =  pmDto.getNgayTraThucTe();
@@ -492,7 +493,6 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         int soNgayTre = bus.tinhSoNgayTre(hanTra, ngayTra);
         txtSoNgayTre.setText(String.valueOf(soNgayTre));
         
-//        txtTongTien.setText("0");
         tinhTongTien();
         txtTongTien.revalidate();
         txtTongTien.repaint();
@@ -518,12 +518,13 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         PhieuPhatBUS pm = new PhieuPhatBUS();
         PhieuPhatDTO dto = pm.getPPByMa(MaPP);
         
-        String soNgayTre = String.valueOf(dto.getSoNgayTre());
-        String tongTien =  String.valueOf(dto.getTongTien());
         if(dto == null){
             JOptionPane.showMessageDialog(this, "Không tìm thấy phiếu phạt");
             return;
-        }       
+        }  
+        String soNgayTre = String.valueOf(dto.getSoNgayTre());
+        String tongTien =  String.valueOf(dto.getTongTien());
+     
         txtMaPP.setText(dto.getMaPP());
         txtDocGia.setText(dto.getMaDG());
         txtNhanVien.setText(dto.getMaNV());
@@ -560,10 +561,8 @@ public class AddPhieuPhat extends javax.swing.JPanel {
             modelCt.addRow(row);
             
     }
-        CTPPTable.setModel(modelCt);
-//        CTPPTable.getColumnModel().getColumn(3).setMinWidth(0);
-//        CTPPTable.getColumnModel().getColumn(3).setMaxWidth(0);
-//        CTPPTable.getColumnModel().getColumn(3).setWidth(0);
+//        CTPPTable.setModel(modelCt);
+
   }
     private void tinhTongTien(){
         int soNgayTre = Integer.parseInt(txtSoNgayTre.getText());
@@ -571,6 +570,9 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         double tong = bus.tinhTongTien(dsCTPP, soNgayTre);
         txtTongTien.setText(String.valueOf(tong));
         System.out.println("Tổng Tiền:"  +tong);
+        txtTongTien.revalidate();
+        txtTongTien.repaint();
+        
     }
     
     
@@ -600,7 +602,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
             QuyDinhPhatDTO selected =  (QuyDinhPhatDTO) cbxLyDo.getSelectedItem();
             if (selected == null) return;
             String maQdp = selected.getMaQDP();
-            int soTienPhat = selected.getSoTienPhat();
+//            int soTienPhat = selected.getSoTienPhat();
             PhieuPhatBUS ppBus = new PhieuPhatBUS();
 //            int soNgayTre = Integer.parseInt(txtSoNgayTre.getText());
             double thanhtien = ppBus.tinhTien(maQdp, soluong);
@@ -646,8 +648,12 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                     thanhtien
                 });
             }
-            tinhTongTien();
+            modelCt.fireTableDataChanged();
+            tinhTongTien();    
+            txtTongTien.revalidate();
+            txtTongTien.repaint();
         }
+       
     }//GEN-LAST:event_btnThemSachActionPerformed
 
     private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
@@ -667,10 +673,21 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         pp.setTrangThai(cbxLyDo.getSelectedIndex()); // 0,1,2
         
         PhieuPhatBUS bus = new PhieuPhatBUS();
+        
+        if(bus.daCoPhieuPhat(txtMaPm1.getText())){
+               JOptionPane.showMessageDialog(this, "Phiếu mượn đã có phiếu phạt");
+                    return;
+            }
         //Thêm
         if(!isEdit){
             boolean ok = bus.insertPP(pp, dsCTPP);
             if (ok){
+                for(CTPhieuPhatDTO ct : dsCTPP){
+                    for(int i = 0; i < dsCTPP.size(); i++){
+                    String lyDo = modelCt.getValueAt(i, 4).toString();
+                    dsCTPP.get(i).setLyDo(lyDo);
+                }
+            }
                 JOptionPane.showMessageDialog(this, "Thêm phiếu phạt thành công");
     //            resetform();
             }

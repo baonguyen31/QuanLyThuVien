@@ -55,7 +55,6 @@ public class phieuNhapForm extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         btnLoc = new javax.swing.JButton();
         txtDenNgay = new com.toedter.calendar.JDateChooser();
-        cbxTrangThai = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         phieuNhapTable = new javax.swing.JTable();
 
@@ -139,8 +138,6 @@ public class phieuNhapForm extends javax.swing.JPanel {
 
         txtDenNgay.setDateFormatString("yyyy-MM-dd");
 
-        cbxTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout pnTimkiem4Layout = new javax.swing.GroupLayout(pnTimkiem4);
         pnTimkiem4.setLayout(pnTimkiem4Layout);
         pnTimkiem4Layout.setHorizontalGroup(
@@ -161,8 +158,6 @@ public class phieuNhapForm extends javax.swing.JPanel {
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnTimkiem4Layout.createSequentialGroup()
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cbxTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSearch)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -198,12 +193,13 @@ public class phieuNhapForm extends javax.swing.JPanel {
                     .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAdd)
                         .addComponent(btnEdit))
-                    .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(btnSearch)
-                        .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(cbxTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(pnTimkiem4Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnSearch)
+                            .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -248,18 +244,16 @@ public class phieuNhapForm extends javax.swing.JPanel {
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
 //        // TODO add your handling code here:
-//        phieuNhapBus = new PhieuNhapBUS();
-//        String maPm = txtSearch.getText();
-//        PhieuNhapHangDTO dto = phieuNhapBus.searchByMaPm(maPm, currentList);
-//        if(dto == null){
-//            JOptionPane.showMessageDialog(null, "Không tìm thấy phiếu mượn");
-//        }else{
-//            ArrayList<PhieuNhapHangDTO> result = new ArrayList<>();
-//            result.add(dto);
-//            loadData(result);
+        phieuNhapBus = new PhieuNhapBUS();
+        String keyWord = txtSearch.getText();
+        ArrayList<PhieuNhapHangDTO> dto = phieuNhapBus.search(keyWord, currentList);
+        if(dto == null){
+            JOptionPane.showMessageDialog(null, "Không tìm thấy phiếu nhập");
+        }else{
+            loadData(dto); 
 //            System.out.println(dto.getMaPM());
-////            System.out.print(result);
-//        }
+//            System.out.print(result);
+        }
         // TODO add your handling code h
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -323,6 +317,13 @@ public class phieuNhapForm extends javax.swing.JPanel {
         phieuNhapBus = new PhieuNhapBUS();
         Date tuNgay = txtTuNgay.getDate();
         Date denNgay = txtDenNgay.getDate();
+
+        if (tuNgay.getTime()>denNgay.getTime() && tuNgay!=null && denNgay!=null)
+        {
+            JOptionPane.showMessageDialog(null, "Nhập sai ngày");
+            txtTuNgay.requestFocus();
+            return;
+        }
         
         currentList = phieuNhapBus.filter(tuNgay, denNgay);
         loadData(currentList);
@@ -367,7 +368,6 @@ public class phieuNhapForm extends javax.swing.JPanel {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnLoc;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JComboBox<String> cbxTrangThai;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -25,6 +25,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -258,6 +259,12 @@ import org.jfree.data.general.DefaultPieDataset;
         Date tuNgay = txtTuNgay.getDate();
         Date denNgay = txtDenNgay.getDate();
         System.out.println(denNgay);
+        if (tuNgay.getTime()>denNgay.getTime() && tuNgay!=null && denNgay!=null)
+        {
+            JOptionPane.showMessageDialog(null, "Nhập sai ngày");
+            txtTuNgay.requestFocus();
+            return;
+        }
 
         createBarChart(pnChart, tuNgay, denNgay);
         loadlistDocGiaSach(tuNgay, denNgay);

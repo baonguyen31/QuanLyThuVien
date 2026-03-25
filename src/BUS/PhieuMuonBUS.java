@@ -87,8 +87,46 @@ public class PhieuMuonBUS {
        return true;
    }
    
-   public boolean updatePM(PhieuMuonDTO dto){ 
-       return phieuMuonDao.updatePM(dto);
+   public boolean updatePM(PhieuMuonDTO pm, ArrayList<CTPhieuMuonDTO> ctpm){ 
+       CTPhieuMuonDAO ctpmDao = new CTPhieuMuonDAO();
+       boolean check = phieuMuonDao.updatePM(pm);
+       if(!check){
+           return false;
+       }
+       else {
+           SachDAO sachDao = new SachDAO();
+           //lẤY DS CŨ 
+          ArrayList<CTPhieuMuonDTO> oldList = ctpmDao.getCTPMByMaPM(pm.getMaPM());
+           //TRẢ LẠI DS CŨ VÀO KHO
+           for(CTPhieuMuonDTO ct : oldList){
+                boolean checkCt = sachDao.tangSoluong(ct.getMaSach(), ct.getSoLuong());
+                if (!checkCt) return false;
+
+            }
+           //XÓA DS CŨ
+           ctpmDao.deleteCtpm(pm.getMaPM());
+           //CHECK SỐ LƯỢNG CHO DS MỚI 
+           for (CTPhieuMuonDTO ct : ctpm){
+                int soLuongcon = sachDao.getSoluong(ct.getMaSach());
+                int soLuongmuon = ct.getSoLuong();
+                if (soLuongcon < soLuongmuon){            
+                    JOptionPane.showMessageDialog(null, "Số lượng sách còn lại không đủ");
+                return false;
+                }
+                boolean sach =  sachDao.giamSoluong(ct.getMaSach(), soLuongmuon);
+                if(!sach){
+                    return false;
+                }
+                //THÊM DS MỚI 
+                ct.setMaPM(pm.getMaPM());
+                boolean checkCt = ctpmDao.insert(ct);
+                if (!checkCt){
+                    return false;
+                }
+            }
+           
+           return true;
+       }
    }
    
 //   public boolean updateQuaHan(PhieuMuonDTO pm){
@@ -115,12 +153,14 @@ public class PhieuMuonBUS {
        return phieuMuonDao.filter(loaiNgay, trangThai, tuNgay, denNgay);
    }
    
-   public PhieuMuonDTO searchByMaPm(String maPm, ArrayList<PhieuMuonDTO> listPm){
-       for( PhieuMuonDTO dto : dsPhieuMuon){
-           if(dto.getMaPM().equalsIgnoreCase(maPm))
-               return dto;
+   public ArrayList<PhieuMuonDTO>  searchByMaPm(String keyWord, ArrayList<PhieuMuonDTO> listPm){
+        ArrayList<PhieuMuonDTO> result = new ArrayList<>();
+       for( PhieuMuonDTO dto : listPm){
+           if(dto.getMaPM().equalsIgnoreCase(keyWord) || dto.getMaNV().equalsIgnoreCase(keyWord)
+                   || dto.getMaDG().equalsIgnoreCase(keyWord))
+               result.add(dto);
        }
-       return null;
+       return result;
    }
    
     public int countDangMuon(){

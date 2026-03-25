@@ -38,12 +38,12 @@ public class PhieuNhapBUS {
 
     int number = Integer.parseInt(lastMaPM.substring(2));
     number++;
-    if(number <= 9)
-    return "PN0" + number;
-    
-    else{
-         return "PN" + number;
-            }
+
+    if(number < 9){
+    return "PM0" + number;
+    } else {
+        return "PM" + number;
+    }
 }
     public PhieuNhapHangDTO getPNByMa(String MaPn){
         dao = new PhieuNhapDAO();
@@ -97,5 +97,19 @@ public class PhieuNhapBUS {
       public ArrayList<PhieuNhapHangDTO> filter(Date tuNgay, Date denNgay){
           return dao.filter(tuNgay, denNgay);
       }
+     public boolean updatePN(PhieuNhapHangDTO pn){
+         return dao.update(pn);
      }
+     
+     public ArrayList<PhieuNhapHangDTO> search(String keyWord, ArrayList<PhieuNhapHangDTO> listPn){
+           ArrayList<PhieuNhapHangDTO> result = new ArrayList<>();
+           for( PhieuNhapHangDTO dto : listPn){
+           if(dto.getMaPNH().equalsIgnoreCase(keyWord) || dto.getMaNV().equalsIgnoreCase(keyWord) 
+                   || dto.getMaNCC().equalsIgnoreCase(keyWord))
+               result.add(dto);
+            } 
+            return result;
+                 
+     }
+ }
 

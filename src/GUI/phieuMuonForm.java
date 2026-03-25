@@ -278,16 +278,17 @@ public class phieuMuonForm extends javax.swing.JPanel {
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         // TODO add your handling code here:
         phieuMuonBus = new PhieuMuonBUS();
-        String maPm = txtSearch.getText();
-        PhieuMuonDTO dto = phieuMuonBus.searchByMaPm(maPm, currentList);
-        if(dto == null){
+        String keyWord = txtSearch.getText();
+        ArrayList<PhieuMuonDTO> searchList = phieuMuonBus.searchByMaPm(keyWord, currentList);
+        if(searchList == null){
             JOptionPane.showMessageDialog(null, "Không tìm thấy phiếu mượn");
         }else{
-            ArrayList<PhieuMuonDTO> result = new ArrayList<>();
-            result.add(dto);   
-            loadData(result);
-            System.out.println(dto.getMaPM());
-            System.out.print(result);
+//            ArrayList<PhieuMuonDTO> result = new ArrayList<>();
+//            result.add(dto);   
+//            loadData(result);
+              loadData(searchList);
+//            System.out.println(dto.getMaPM());
+//            System.out.print(result);
         }
         // TODO add your handling code h
     }//GEN-LAST:event_btnSearchActionPerformed
@@ -352,6 +353,12 @@ public class phieuMuonForm extends javax.swing.JPanel {
         String loaiNgay = cbxLoaiNgay.getSelectedItem().toString();
         Date tuNgay = txtTuNgay.getDate();
         Date denNgay = txtDenNgay.getDate();
+        if (tuNgay.getTime()>denNgay.getTime())
+        {
+            JOptionPane.showMessageDialog(null, "Nhập sai ngày");
+            txtTuNgay.requestFocus();
+            return;
+        }
         
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         int trangThai = cbxTrangThai.getSelectedIndex() - 1;

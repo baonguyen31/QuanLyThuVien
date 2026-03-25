@@ -28,6 +28,7 @@ public class PhieuPhatBUS {
     static ArrayList<PhieuPhatDTO> list;
     private PhieuPhatDAO dao = new PhieuPhatDAO();
     private CTPhieuPhatDAO ctppDao =new CTPhieuPhatDAO();
+//    private ArrayList<CTPhieuPhatDTO> ctList;
 
     public ArrayList<PhieuPhatDTO> getAll(){
         dao = new PhieuPhatDAO();
@@ -147,6 +148,16 @@ public class PhieuPhatBUS {
     public boolean deletePP(String maPP) {
         ctppDao.deleteByMaPP(maPP);
         return dao.deletePP(maPP);
+    }
+    
+    //=============================//
+    public boolean daCoPhieuPhat(String maPM){
+        list = dao.getAll();
+        for(PhieuPhatDTO ct: list){
+            if(ct.getMaPM() != null && ct.getMaPM().equalsIgnoreCase(maPM)) 
+                return true;
+        }
+        return false;
     }
 }
   

@@ -129,6 +129,23 @@ public class PhieuNhapDAO {
     } catch (Exception e) {
         e.printStackTrace();
     }
-    return null;
-}
+        return null;
+    }
+    public boolean update(PhieuNhapHangDTO pn){
+          
+        try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Update phieunhap ";
+            qry += "Set MaNCC = '" + pn.getMaNCC() + "'";
+            qry += " , NgayNhap = '" + sdf.format(pn.getNgayNhap())  + "'";
+            qry += " where MaPN = '" + pn.getMaPNH() + "'";
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            JDBCUtil.closeConnection(conn);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PhieuNhapDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+       }
 }
