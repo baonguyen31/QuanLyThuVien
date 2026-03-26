@@ -15,12 +15,12 @@ public class SachDTO {
     private String MaNXB;
     private Date NgayXB;
     private int SoLuong;
-    private int DonGia;
+    private double DonGia;
 
     public SachDTO() {
     }
 
-    public SachDTO(String MaSach, String TenSach, String MaTL, String MaNXB, Date NgayXB, int SoLuong, int DonGia) {
+    public SachDTO(String MaSach, String TenSach, String MaTL, String MaNXB, Date NgayXB, int SoLuong, double DonGia) {
         this.MaSach = MaSach;
         this.TenSach = TenSach;
         this.MaTL = MaTL;
@@ -78,11 +78,11 @@ public class SachDTO {
         this.SoLuong = SoLuong;
     }
 
-    public int getDonGia() {
+    public double getDonGia() {
         return DonGia;
     }
 
-    public void setDonGia(int DonGia) {
+    public void setDonGia(double DonGia) {
         this.DonGia = DonGia;
     }
 

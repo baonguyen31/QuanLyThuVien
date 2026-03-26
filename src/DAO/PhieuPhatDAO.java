@@ -155,12 +155,15 @@ public class PhieuPhatDAO {
         try {
             conn = JDBCUtil.getConnect();
             String qry = "SELECT * FROM phieuphat WHERE MaPP LIKE '%" + keyword + "%'";
+            qry += " OR MaPM LIKE '%" + keyword + "%'";
+            qry += " OR MaDG LIKE '%" + keyword + "%'";
             st = conn.createStatement();
             rs = st.executeQuery(qry);
 
             while (rs.next()) {
                 PhieuPhatDTO pp = new PhieuPhatDTO();
                 pp.setMaPP(rs.getString("MaPP"));
+                pp.setMaPM(rs.getString("MaPM"));
                 pp.setMaDG(rs.getString("MaDG"));
                 pp.setNgayLap(rs.getDate("NgayLap"));
                 pp.setTongTien(rs.getDouble("TongTien"));

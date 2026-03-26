@@ -8,13 +8,16 @@ import Content.CT_PhieuMuon;
 import BUS.PhieuMuonBUS;
 import DTO.PhieuMuonDTO;
 import DTO.SachDTO;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
@@ -69,6 +72,7 @@ public class phieuMuonForm extends javax.swing.JPanel {
         btnLoc = new javax.swing.JButton();
         txtDenNgay = new com.toedter.calendar.JDateChooser();
         cbxTrangThai = new javax.swing.JComboBox<>();
+        btnExport = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         phieuMuonTable = new javax.swing.JTable();
 
@@ -91,6 +95,11 @@ public class phieuMuonForm extends javax.swing.JPanel {
                 txtSearchActionPerformed(evt);
             }
         });
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSearchKeyPressed(evt);
+            }
+        });
 
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/search-interface-symbol.png"))); // NOI18N
@@ -102,6 +111,11 @@ public class phieuMuonForm extends javax.swing.JPanel {
         btnSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSearchActionPerformed(evt);
+            }
+        });
+        btnSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnSearchKeyPressed(evt);
             }
         });
 
@@ -167,6 +181,14 @@ public class phieuMuonForm extends javax.swing.JPanel {
 
         cbxTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-export-32.png"))); // NOI18N
+        btnExport.setText("Xuất Excel");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnTimkiem4Layout = new javax.swing.GroupLayout(pnTimkiem4);
         pnTimkiem4.setLayout(pnTimkiem4Layout);
         pnTimkiem4Layout.setHorizontalGroup(
@@ -195,7 +217,7 @@ public class phieuMuonForm extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnTimkiem4Layout.createSequentialGroup()
                         .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDenNgay, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -203,7 +225,9 @@ public class phieuMuonForm extends javax.swing.JPanel {
                         .addComponent(cbxTrangThai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(168, 168, 168)
+                        .addGap(42, 42, 42)
+                        .addComponent(btnExport)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAdd1)
                         .addGap(39, 39, 39))))
         );
@@ -218,7 +242,9 @@ public class phieuMuonForm extends javax.swing.JPanel {
                                 .addComponent(cbxLoaiNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel1))
-                            .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtTuNgay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnTimkiem4Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
@@ -348,12 +374,49 @@ public class phieuMuonForm extends javax.swing.JPanel {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_btnSearchMouseClicked
+
+    private void btnSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSearchKeyPressed
+        // TODO add your handling code here:
+     
+    }//GEN-LAST:event_btnSearchKeyPressed
+
+    private void txtSearchKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+          if (!txtSearch.getText().isEmpty()) {
+                btnSearch.doClick();  
+            }
+        }
+    }//GEN-LAST:event_txtSearchKeyPressed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser("D:\\Netbeans Projects\\QuanLyThuVien\\src\\Export");
+        //        fileChooser.setDialogTitle("Chọn nơi lưu file");
+        //        String userHome = System.getProperty("user.home");
+        //        File desktop = new File(userHome + "\\QuanLyThuVien\\src\\Export\\PhieuPhat_Export");
+
+        //        fileChooser.setSelectedFile(desktop);
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if(userSelection == JFileChooser.APPROVE_OPTION){
+            //            File defaultFile = new File("D:\\Netbeans Projects\\QuanLyThuVien\\src\\Export\\PhieuPhat_Export");
+            File fileToSave = fileChooser.getSelectedFile();
+
+            String path = fileToSave.getAbsolutePath() + ".xlsx";
+
+            PhieuMuonBUS bus = new PhieuMuonBUS();
+            ArrayList<PhieuMuonDTO> list = bus.getAll();
+
+            bus.exportPhieuMuonToExcel(list, path);
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
     private void filter(){
         phieuMuonBus = new PhieuMuonBUS();
         String loaiNgay = cbxLoaiNgay.getSelectedItem().toString();
         Date tuNgay = txtTuNgay.getDate();
         Date denNgay = txtDenNgay.getDate();
-        if (tuNgay.getTime()>denNgay.getTime())
+        if (tuNgay != null && denNgay != null && tuNgay.getTime()>denNgay.getTime())
         {
             JOptionPane.showMessageDialog(null, "Nhập sai ngày");
             txtTuNgay.requestFocus();
@@ -432,6 +495,7 @@ public class phieuMuonForm extends javax.swing.JPanel {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnAdd1;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnExport;
     private javax.swing.JButton btnLoc;
     private javax.swing.JButton btnSearch;
     private javax.swing.JComboBox<String> cbxLoaiNgay;

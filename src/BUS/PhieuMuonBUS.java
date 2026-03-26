@@ -9,10 +9,16 @@ import DAO.PhieuMuonDAO;
 import DAO.SachDAO;
 import DTO.CTPhieuMuonDTO;
 import DTO.PhieuMuonDTO;
+import DTO.PhieuPhatDTO;
 import Util.JDBCUtil;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -188,5 +194,51 @@ public class PhieuMuonBUS {
             JOptionPane.showMessageDialog(null, "Phiếu mượn không hợp lệ");
         }
         return false;
+    }
+    
+     public void exportPhieuMuonToExcel(ArrayList<PhieuMuonDTO> list, String filePath){
+        try {
+            Workbook wb = new XSSFWorkbook();
+            Sheet sheet = wb.createSheet("PhieuMuon");
+
+            // header
+            Row header = sheet.createRow(0);
+            header.createCell(1).setCellValue("MaPM");
+            header.createCell(2).setCellValue("MaDG");
+            header.createCell(3).setCellValue("MaNV");
+            header.createCell(4).setCellValue("NgayMuon");
+            header.createCell(5).setCellValue("HanTra");
+            header.createCell(6).setCellValue("NgayTraThucTe");
+            header.createCell(7).setCellValue("TrangThai");
+
+            int rowNum = 1;
+
+            for(PhieuMuonDTO pp : list){
+                Row row = sheet.createRow(rowNum++);
+
+                row.createCell(1).setCellValue(pp.getMaPM());
+                row.createCell(2).setCellValue(pp.getMaDG());
+                row.createCell(3).setCellValue(pp.getMaNV());
+                row.createCell(4).setCellValue(pp.getNgayMuon().toString());
+                row.createCell(5).setCellValue(pp.getHanTra().toString());
+                row.createCell(6).setCellValue(pp.getNgayTraThucTe() != null ? pp.getNgayTraThucTe().toString() : "Chưa xác định");
+                row.createCell(7).setCellValue(pp.getTrangThaiString());
+            }
+
+            // auto size
+            for(int i = 0; i < 8; i++){
+                sheet.autoSizeColumn(i);
+            }
+
+            FileOutputStream fos = new FileOutputStream(filePath);
+            wb.write(fos);
+            wb.close();
+
+            JOptionPane.showMessageDialog(null, "Export thành công!");
+
+        } catch (Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Export thất bại!");
+        }
     }
 }

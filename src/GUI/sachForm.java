@@ -9,9 +9,11 @@ import static BUS.SachBUS.dsSach;
 import DTO.SachDTO;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -48,6 +50,8 @@ public class sachForm extends javax.swing.JPanel {
         editBook3 = new javax.swing.JButton();
         deleteBook3 = new javax.swing.JButton();
         btnAdd1 = new javax.swing.JButton();
+        btnExport = new javax.swing.JButton();
+        btnImport = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         sachTable = new javax.swing.JTable();
 
@@ -115,6 +119,21 @@ public class sachForm extends javax.swing.JPanel {
             }
         });
 
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-export-32.png"))); // NOI18N
+        btnExport.setText("Xuất Excel");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
+
+        btnImport.setText("Import");
+        btnImport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnTimkiem4Layout = new javax.swing.GroupLayout(pnTimkiem4);
         pnTimkiem4.setLayout(pnTimkiem4Layout);
         pnTimkiem4Layout.setHorizontalGroup(
@@ -132,7 +151,11 @@ public class sachForm extends javax.swing.JPanel {
                 .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnExport)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
@@ -143,7 +166,10 @@ public class sachForm extends javax.swing.JPanel {
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(editBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(addBook3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdd1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAdd1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(deleteBook3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
@@ -237,7 +263,7 @@ public class sachForm extends javax.swing.JPanel {
         String maNXB = (String)sachTable.getValueAt(selectedRow, 3);
         Date ngayXB = (Date)sachTable.getValueAt(selectedRow, 4);
         int soLuong = (int)sachTable.getValueAt(selectedRow, 5);
-        int donGia = (int)sachTable.getValueAt(selectedRow, 6);
+        double donGia = (double)sachTable.getValueAt(selectedRow, 6);
         
         SachDTO sach1 = new SachDTO(maSach, tenSach, maTL, maNXB, ngayXB, soLuong, donGia);
         
@@ -272,6 +298,42 @@ public class sachForm extends javax.swing.JPanel {
         sachBus.getALL();
         loadData();
     }//GEN-LAST:event_btnAdd1ActionPerformed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser("D:\\Netbeans Projects\\QuanLyThuVien\\src\\Export");
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if(userSelection == JFileChooser.APPROVE_OPTION){
+            //            File defaultFile = new File("D:\\Netbeans Projects\\QuanLyThuVien\\src\\Export\\PhieuPhat_Export");
+            File fileToSave = fileChooser.getSelectedFile();
+
+            String path = fileToSave.getAbsolutePath() + ".xlsx";
+
+            SachBUS bus = new SachBUS();
+            ArrayList<SachDTO> list = bus.getALL();
+
+            bus.exportSachToExcel(list, path);
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
+
+    private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser("D:\\Netbeans Projects\\QuanLyThuVien\\src\\ImportSample");
+        fileChooser.setDialogTitle("Chọn file Excel");
+
+        int result = fileChooser.showOpenDialog(this);
+
+        if(result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = fileChooser.getSelectedFile();
+
+            SachBUS bus = new SachBUS();
+            bus.importSachFromExcel(selectedFile);
+
+            loadData(); // reload lại bảng
+        }
+    }//GEN-LAST:event_btnImportActionPerformed
     private void customizeTable() {
     sachTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // cho phép chỉnh tay
 
@@ -325,6 +387,8 @@ public class sachForm extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBook3;
     private javax.swing.JButton btnAdd1;
+    private javax.swing.JButton btnExport;
+    private javax.swing.JButton btnImport;
     private javax.swing.JButton deleteBook3;
     private javax.swing.JButton editBook3;
     private javax.swing.JButton jButton8;

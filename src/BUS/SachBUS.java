@@ -5,10 +5,20 @@
 package BUS;
 
 import DAO.SachDAO;
+import DTO.PhieuMuonDTO;
 import DTO.SachDTO;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -18,6 +28,7 @@ public class SachBUS {
     public static ArrayList<SachDTO> dsSach;
     public SachBUS(){}
     private SachDAO sachDao = new SachDAO();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     
     // Đọc dsSach
     public ArrayList<SachDTO> getALL(){
@@ -147,4 +158,104 @@ public class SachBUS {
         num++;
         return String.format("S%03d", num);
     }
+    
+    public double getDonGia(String maSach){
+        dsSach = sachDao.selectAll();
+        for(SachDTO dto : dsSach){
+        if(dto.getMaSach().equals(maSach)){
+            return dto.getDonGia();
+            }
+        }
+        return 0;
+    }
+    
+    public void exportSachToExcel(ArrayList<SachDTO> list, String filePath){
+        try {
+            Workbook wb = new XSSFWorkbook();
+            Sheet sheet = wb.createSheet("Sach");
+
+            // header
+            Row header = sheet.createRow(0);
+            header.createCell(1).setCellValue("MaSach");
+            header.createCell(2).setCellValue("TenSach");
+            header.createCell(3).setCellValue("TheLoai");
+            header.createCell(4).setCellValue("NhaXuatBan");
+            header.createCell(5).setCellValue("NgayXuatBan");
+            header.createCell(6).setCellValue("SoLuong");
+            header.createCell(7).setCellValue("DonGia");
+
+            int rowNum = 1;
+
+            for(SachDTO sach : list){
+                Row row = sheet.createRow(rowNum++);
+
+                row.createCell(1).setCellValue(sach.getMaSach());
+                row.createCell(2).setCellValue(sach.getTenSach());
+                row.createCell(3).setCellValue(sach.getMaTL());
+                row.createCell(4).setCellValue(sach.getMaNXB());
+                row.createCell(5).setCellValue(sach.getNgayXB().toString());
+                row.createCell(6).setCellValue(sach.getSoLuong());
+                row.createCell(7).setCellValue(sach.getDonGia());
+            }
+
+            // auto size
+            for(int i = 0; i < 8; i++){
+                sheet.autoSizeColumn(i);
+            }
+
+            FileOutputStream fos = new FileOutputStream(filePath);
+            wb.write(fos);
+            wb.close();
+
+            JOptionPane.showMessageDialog(null, "Export thành công!");
+
+        } catch (Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Export thất bại!");
+        }
+    }
+    public void importSachFromExcel(File file){
+        SachBUS bus =new SachBUS();
+    try {
+        FileInputStream fis = new FileInputStream(file);
+        Workbook wb = new XSSFWorkbook(fis);
+        Sheet sheet = wb.getSheetAt(0);
+
+        SachDAO dao = new SachDAO();
+
+        for(int i = 1; i <= sheet.getLastRowNum(); i++){
+            Row row = sheet.getRow(i);
+
+            String maSach = row.getCell(1).getStringCellValue();
+            String tenSach = row.getCell(2).getStringCellValue();
+            String theLoai = row.getCell(3).getStringCellValue();
+            String nxb = row.getCell(4).getStringCellValue();
+            Date ngayXB = row.getCell(5).getDateCellValue();
+            int soLuong = (int) row.getCell(6).getNumericCellValue();
+            double donGia = row.getCell(7).getNumericCellValue();
+
+            SachDTO sach = new SachDTO();
+            sach.setMaSach(maSach);
+            sach.setTenSach(tenSach);
+            sach.setMaTL(theLoai);
+            sach.setMaNXB(nxb);
+            sach.setNgayXB(ngayXB);
+            sach.setSoLuong(soLuong);
+            sach.setDonGia(donGia);
+
+            if(dao.isExisted(maSach)){
+                dao.editSach(sach);
+            }else {
+            dao.insertSach(sach);
+            }// hoặc update nếu trùng
+        }
+
+        wb.close();
+        JOptionPane.showMessageDialog(null, "Import thành công!");
+
+    } catch(Exception e){
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Import thất bại!");
+    }
+}
 }

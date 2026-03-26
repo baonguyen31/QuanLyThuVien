@@ -18,9 +18,15 @@ import DTO.CTPhieuPhatDTO;
 import DTO.PhieuNhapHangDTO;
 import DTO.PhieuPhatDTO;
 import DTO.QuyDinhPhatDTO;
+import DTO.SachDTO;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 /**
@@ -88,7 +94,7 @@ public class PhieuPhatBUS {
         }
         double tienTre = 0;
         if(soNgayTre > 0) {
-            tienTre = soNgayTre *  20000;
+            tienTre = soNgayTre *  10000;
             System.out.println("Tiền trễ hạn:" + tienTre +", Số ngày trễ:" + soNgayTre + "-"+qdpDto.getSoTienPhat() );
         }       
        
@@ -96,25 +102,27 @@ public class PhieuPhatBUS {
     }
         
     
-    public double tinhTien(String maQDP, int soLuong){
+    public double tinhTien(String maQDP, int soLuong, String maSach){
         QuyDinhPhatDAO qdp =  new QuyDinhPhatDAO();
         QuyDinhPhatDTO qdpDto = qdp.getByMaQDP(maQDP);
+        SachBUS sachBus = new SachBUS();
         if(qdpDto == null) return 0;
            
-//        switch (qdpDto.getLoaiphat()) {
-////            case "trehan":
-////                return soNgayTre * qdpDto.getSoTienPhat();
-//            case "matsach":
-//                // phạt theo giá trị sách * số lượng
-//                return qdpDto.getSoTienPhat() * soLuong;
-//            case "huhong":
-//                // phạt cố định cho mỗi cuốn hỏng
-//                return qdpDto.getSoTienPhat() * soLuong;
-//            default:
-//            // các loại phạt khác: trả về số tiền phạt cố định
+        switch (qdpDto.getLoaiphat()) {
+//            case "trehan":
+//                return soNgayTre * qdpDto.getSoTienPhat();
+            case "matsach":
+                // phạt theo giá trị sách * số lượng
+                double donGia =  soLuong * sachBus.getDonGia(maSach);
+                return qdpDto.getSoTienPhat() + donGia;
+            case "huhong":
+                // phạt cố định cho mỗi cuốn hỏng
+                return qdpDto.getSoTienPhat() * soLuong;
+            default:
+            // các loại phạt khác: trả về số tiền phạt cố định
             return qdpDto.getSoTienPhat() * soLuong;
         }
-    
+    }
     
     //===========Thêm sửa xóa===========//
     public boolean insertPP(PhieuPhatDTO pp, ArrayList<CTPhieuPhatDTO> ctpp){
@@ -206,6 +214,56 @@ public class PhieuPhatBUS {
         }
 //        pm.traSach(maPm);
     }
+    
+     public void exportPhieuPhatToExcel(ArrayList<PhieuPhatDTO> list, String filePath){
+        try {
+            Workbook wb = new XSSFWorkbook();
+            Sheet sheet = wb.createSheet("PhieuPhat");
+
+            // header
+            Row header = sheet.createRow(0);
+            header.createCell(0).setCellValue("MaPP");
+            header.createCell(1).setCellValue("MaPM");
+            header.createCell(2).setCellValue("MaDG");
+            header.createCell(3).setCellValue("MaNV");
+            header.createCell(4).setCellValue("NgayLap");
+            header.createCell(5).setCellValue("SoNgayTre");
+            header.createCell(6).setCellValue("TongTien");
+            header.createCell(7).setCellValue("TrangThai");
+
+            int rowNum = 1;
+
+            for(PhieuPhatDTO pp : list){
+                Row row = sheet.createRow(rowNum++);
+
+                row.createCell(0).setCellValue(pp.getMaPP());
+                row.createCell(1).setCellValue(pp.getMaPM());
+                row.createCell(2).setCellValue(pp.getMaDG());
+                row.createCell(3).setCellValue(pp.getMaNV());
+                row.createCell(4).setCellValue(pp.getNgayLap().toString());
+                row.createCell(5).setCellValue(pp.getSoNgayTre());
+                row.createCell(6).setCellValue(pp.getTongTien());
+                row.createCell(7).setCellValue(pp.getTrangThaiString());
+            }
+
+            // auto size
+            for(int i = 0; i < 8; i++){
+                sheet.autoSizeColumn(i);
+            }
+
+            FileOutputStream fos = new FileOutputStream(filePath);
+            wb.write(fos);
+            wb.close();
+
+            JOptionPane.showMessageDialog(null, "Export thành công!");
+
+        } catch (Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Export thất bại!");
+        }
+    }
+    
+    
 
 }
   

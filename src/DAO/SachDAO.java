@@ -178,8 +178,8 @@ public class SachDAO {
                 sach.setMaTL(rs.getString("MaTL"));
                 sach.setMaNXB(rs.getString("MaNXB"));
                 sach.setNgayXB(rs.getDate("NgayXuatBan"));
-                sach.setDonGia(rs.getInt("DonGia"));
                 sach.setSoLuong(rs.getInt("SoLuong"));
+                sach.setDonGia(rs.getInt("DonGia"));
                 list.add(sach);
             }
         } catch(SQLException e){
@@ -274,6 +274,19 @@ public class SachDAO {
 }
         return soLuong;
     }
-    
+    public boolean isExisted(String maSach){
+        try{
+        conn = JDBCUtil.getConnect();
+        String qry = "SELECT COUNT(*) FROM sach WHERE MaSach = '" + maSach + "'";
+        st = conn.createStatement();
+        rs = st.executeQuery(qry);
+        if (rs.next()) {
+            return rs.getInt(1) > 0; // Trả về true nếu đã tồn tại
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false;
+    }
    
 }

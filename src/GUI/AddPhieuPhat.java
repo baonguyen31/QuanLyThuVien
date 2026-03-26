@@ -612,7 +612,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
 //            int soTienPhat = selected.getSoTienPhat();
             PhieuPhatBUS ppBus = new PhieuPhatBUS();
 //            int soNgayTre = Integer.parseInt(txtSoNgayTre.getText());
-            double thanhtien = ppBus.tinhTien(maQdp, soluong);
+            double thanhtien = ppBus.tinhTien(maQdp, soluong, ma);
             
             
 //            System.out.println(maQdp + "-" + soTienPhat + "-"+ thanhtien);
@@ -624,7 +624,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
                 if(maSachTable.equals(ma) && selected.getMaQDP().equals(maQdpTable)){
                     int slCu = Integer.parseInt(modelCt.getValueAt(i, 2).toString());
                     int slMoi = slCu + soluong;
-                    double thanhTienMoi = ppBus.tinhTien(maQdp, slMoi);
+                    double thanhTienMoi = ppBus.tinhTien(maQdp, slMoi, ma);
                     
                     modelCt.setValueAt(slMoi, i, 2);
                     modelCt.setValueAt(thanhTienMoi, i, 5);

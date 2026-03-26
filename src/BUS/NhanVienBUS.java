@@ -54,7 +54,7 @@ public class NhanVienBUS {
         if (dsnv == null) getAll();
 
         for (NhanVienDTO nv : dsnv) {
-            if (nv.getMaNV().equalsIgnoreCase(maNV) && nv.getMatKhau().equals(matKhau)) {
+            if (nv.getMaNV().equals(maNV) && nv.getMatKhau().equals(matKhau)) {
                 return nv;
             }
         }

@@ -6,8 +6,10 @@ package GUI;
 
 import BUS.PhieuPhatBUS;
 import DTO.PhieuPhatDTO;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -48,7 +50,7 @@ public class phieuPhatForm extends javax.swing.JPanel {
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
-        btnLoc = new javax.swing.JButton();
+        btnExport = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPhieuPhat = new javax.swing.JTable();
 
@@ -101,10 +103,11 @@ public class phieuPhatForm extends javax.swing.JPanel {
             }
         });
 
-        btnLoc.setText("Lọc");
-        btnLoc.addActionListener(new java.awt.event.ActionListener() {
+        btnExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/icons8-export-32.png"))); // NOI18N
+        btnExport.setText("Xuất Excel");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLocActionPerformed(evt);
+                btnExportActionPerformed(evt);
             }
         });
 
@@ -117,15 +120,15 @@ public class phieuPhatForm extends javax.swing.JPanel {
                 .addComponent(btnEdit)
                 .addGap(18, 18, 18)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnLoc, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 179, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addGap(179, 179, 179)
+                .addGap(46, 46, 46)
+                .addComponent(btnExport)
+                .addGap(28, 28, 28)
                 .addComponent(btnLamMoi)
                 .addGap(19, 19, 19))
         );
@@ -135,23 +138,22 @@ public class phieuPhatForm extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
-                        .addGap(0, 11, Short.MAX_VALUE)
                         .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                            .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel16)
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnTimkiem4Layout.createSequentialGroup()
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap())
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
-                                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel16)
-                                    .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(21, 21, 21))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
-                        .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnLoc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEdit, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
-                            .addComponent(btnLamMoi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(pnTimkiem4Layout.createSequentialGroup()
+                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(23, 23, 23))
+                    .addGroup(pnTimkiem4Layout.createSequentialGroup()
+                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         tblPhieuPhat.setModel(new javax.swing.table.DefaultTableModel(
@@ -193,7 +195,7 @@ public class phieuPhatForm extends javax.swing.JPanel {
         phieuPhatBus = new PhieuPhatBUS();
         String keyword = txtSearch.getText();
         if(keyword.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Vui lòng nhập mã phiếu phạt");
+            JOptionPane.showMessageDialog(null, "Vui lòng nhập thông tin tìm kiếm");
             return;
         }
         
@@ -296,8 +298,8 @@ public class phieuPhatForm extends javax.swing.JPanel {
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
         // TODO add your handling code here: thống kê
         PhieuPhatBUS bus = new PhieuPhatBUS();
-        int daTra = bus.thongKeTheoTrangThai(0);
-        int chuaTra = bus.thongKeTheoTrangThai(1);
+        int daTra = bus.thongKeTheoTrangThai(1);
+        int chuaTra = bus.thongKeTheoTrangThai(0);
         int quaHan = bus.thongKeTheoTrangThai(2);
 
         Object[] options = {"Đã trả (" + daTra + ")", "Chưa trả (" + chuaTra + ")", "Quá hạn trả (" + quaHan +")"};
@@ -321,6 +323,30 @@ public class phieuPhatForm extends javax.swing.JPanel {
             loadData(list);
         }
     }//GEN-LAST:event_btnLocActionPerformed
+
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser("D:\\Netbeans Projects\\QuanLyThuVien\\src\\Export");
+//        fileChooser.setDialogTitle("Chọn nơi lưu file");
+//        String userHome = System.getProperty("user.home");
+//        File desktop = new File(userHome + "\\QuanLyThuVien\\src\\Export\\PhieuPhat_Export");
+        
+//        fileChooser.setSelectedFile(desktop);
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if(userSelection == JFileChooser.APPROVE_OPTION){
+//            File defaultFile = new File("D:\\Netbeans Projects\\QuanLyThuVien\\src\\Export\\PhieuPhat_Export");
+            File fileToSave = fileChooser.getSelectedFile();
+            
+            String path = fileToSave.getAbsolutePath() + ".xlsx";
+
+            PhieuPhatBUS bus = new PhieuPhatBUS();
+            ArrayList<PhieuPhatDTO> list = bus.getAll();
+
+            bus.exportPhieuPhatToExcel(list, path);
+        }
+
+    }//GEN-LAST:event_btnExportActionPerformed
     private void initEdit(){
         btnEdit.addActionListener(e -> {
             int row = tblPhieuPhat.getSelectedRow();
@@ -347,8 +373,8 @@ public class phieuPhatForm extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnExport;
     private javax.swing.JButton btnLamMoi;
-    private javax.swing.JButton btnLoc;
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JScrollPane jScrollPane2;
