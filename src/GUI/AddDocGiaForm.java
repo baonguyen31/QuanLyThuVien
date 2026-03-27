@@ -30,6 +30,8 @@ public class AddDocGiaForm extends javax.swing.JFrame {
         setBackground(new java.awt.Color(0, 0, 0, 0));
         setLocationRelativeTo(null);
         this.pack();
+        DocGiaBUS bus = new DocGiaBUS();
+        madocgialabel.setText(bus.generateMADG());
         madocgialabel.setVisible(false);
         madocgiatext.setVisible(false);
         trangthaitext.setVisible(false);
