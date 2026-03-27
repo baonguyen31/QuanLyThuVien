@@ -262,9 +262,19 @@ public class PhieuPhatBUS {
             JOptionPane.showMessageDialog(null, "Export thất bại!");
         }
     }
-    
-    
 
+    public int countChuaXuLy() { 
+            int dem=0;
+            for (PhieuPhatDTO pp : PhieuPhatBUS.list)
+            {
+                
+                if (pp.getTrangThai()==0)
+                {
+                  dem++;
+                }
+            }
+            return dem;
+    }
+         
 }
-  
 
