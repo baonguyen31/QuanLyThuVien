@@ -257,7 +257,7 @@ public class docgiaForm extends javax.swing.JPanel {
     }                                         
 
     private void customizeTable() {
-        docGiaTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // cho phép chỉnh tay
+        docGiaTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
         docGiaTable.getColumnModel().getColumn(0).setPreferredWidth(80);   // Mã dg
         docGiaTable.getColumnModel().getColumn(1).setPreferredWidth(400);  // Họ dg
