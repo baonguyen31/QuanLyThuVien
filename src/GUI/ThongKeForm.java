@@ -434,9 +434,7 @@ import org.jfree.data.general.DefaultPieDataset;
     private void loadThongKe() {
         int tongSach = sachBus.countSach();
         int dangMuon = pmBus.countDangMuon();
-//    int chuaXuLy = phatBus.countChuaXuLy();
-
-        int chuaXuLy = 0;
+        int chuaXuLy = phatBus.countChuaXuLy();
 
         pnTop.removeAll();
         pnTop.setLayout(new GridLayout(1, 3, 10, 0));
