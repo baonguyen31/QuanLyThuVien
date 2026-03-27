@@ -42,6 +42,9 @@ public class AddNhanVienForm extends javax.swing.JFrame {
         setUndecorated(true);
         initComponents();
         loadChucVuTuComboBox();
+        jTextField3.setEnabled(false);
+        NhanVienBUS bus = new NhanVienBUS();
+        jTextField3.setText(bus.generateMANV());
         setLocationRelativeTo(null);
         jButton2.setText("Lưu");
         jButton1.setText("Hủy");
@@ -55,7 +58,7 @@ public class AddNhanVienForm extends javax.swing.JFrame {
         jComboBox1.addItem("Nhân viên");   
     }
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         jTextField5 = new javax.swing.JTextField();
@@ -175,6 +178,12 @@ public class AddNhanVienForm extends javax.swing.JFrame {
         manvlabel.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         manvlabel.setText("Mã nhân viên");
 
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
         jLabel5.setFont(new java.awt.Font("Segoe UI Semibold", 1, 18)); // NOI18N
         jLabel5.setText("Tên");
 
@@ -293,41 +302,41 @@ public class AddNhanVienForm extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
-    private void pnCloseMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCloseMouseExited
+    private void pnCloseMouseExited(java.awt.event.MouseEvent evt) {                                    
         // TODO add your handling code here:
         pnClose.setBackground(Color.WHITE);
         closeIcon.setIcon(ReColorIcon.recolorIcon(icon, Color.BLACK));
-    }//GEN-LAST:event_pnCloseMouseExited
+    }                                   
 
-    private void pnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCloseMouseEntered
+    private void pnCloseMouseEntered(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
         pnClose.setBackground(Color.red);
         closeIcon.setIcon(ReColorIcon.recolorIcon(icon, Color.WHITE));
-    }//GEN-LAST:event_pnCloseMouseEntered
+    }                                    
 
-    private void pnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnCloseMouseClicked
+    private void pnCloseMouseClicked(java.awt.event.MouseEvent evt) {                                     
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_pnCloseMouseClicked
+    }                                    
 
-    private void closeIconMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeIconMouseEntered
+    private void closeIconMouseEntered(java.awt.event.MouseEvent evt) {                                       
         // TODO add your handling code here:
         pnClose.setBackground(Color.red);
         closeIcon.setIcon(ReColorIcon.recolorIcon(icon, Color.WHITE));
-    }//GEN-LAST:event_closeIconMouseEntered
+    }                                      
 
-    private void closeIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeIconMouseClicked
+    private void closeIconMouseClicked(java.awt.event.MouseEvent evt) {                                       
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_closeIconMouseClicked
+    }                                      
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // Thêm, sửa
-                                                
+    NhanVienBUS bus = new NhanVienBUS();
     NhanVienDTO nv = new NhanVienDTO();
-    nv.setMaNV(jTextField3.getText().trim());
+    nv.setMaNV(bus.generateMANV());
     nv.setHo(jTextField4.getText().trim());
     nv.setTen(jTextField2.getText().trim());
     nv.setSDT(jTextField1.getText().trim());
@@ -345,7 +354,7 @@ public class AddNhanVienForm extends javax.swing.JFrame {
     nv.setMatKhau(jTextField6.getText().trim());
     
     // Gọi lớp BUS để xử lý nghiệp vụ
-    NhanVienBUS bus = new NhanVienBUS();
+    
     
     if (mode.equalsIgnoreCase("them")) {
         // Trường hợp thêm mới
@@ -369,28 +378,32 @@ public class AddNhanVienForm extends javax.swing.JFrame {
     
 }
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }                                        
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }                                        
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
         // TODO add your handling code here:
         this.dispose();
-    }//GEN-LAST:event_jButton1MouseClicked
+    }                                     
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {                                            
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }                                           
 
-    private void jComboBox1ComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_jComboBox1ComponentAdded
+    private void jComboBox1ComponentAdded(java.awt.event.ContainerEvent evt) {                                          
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ComponentAdded
+    }                                         
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {                                           
       
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }                                          
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
+    }                                           
     ImageIcon icon = new ImageIcon(AddNhanVienForm.class.getResource("/icons/close.png"));
     /**
      * @param args the command line arguments
@@ -434,7 +447,7 @@ public class AddNhanVienForm extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JLabel closeIcon;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -456,7 +469,7 @@ public class AddNhanVienForm extends javax.swing.JFrame {
     private javax.swing.JLabel manvlabel;
     private javax.swing.JLabel matkhautext;
     private javax.swing.JPanel pnClose;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
 
 
 }
