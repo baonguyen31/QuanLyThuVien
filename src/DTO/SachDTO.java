@@ -12,6 +12,7 @@ public class SachDTO {
     private String MaSach;
     private String TenSach;
     private String MaTL;
+    private String MaTG;
     private String MaNXB;
     private Date NgayXB;
     private int SoLuong;
@@ -20,10 +21,11 @@ public class SachDTO {
     public SachDTO() {
     }
 
-    public SachDTO(String MaSach, String TenSach, String MaTL, String MaNXB, Date NgayXB, int SoLuong, double DonGia) {
+    public SachDTO(String MaSach, String TenSach, String MaTL, String MaTG, String MaNXB, Date NgayXB, int SoLuong, double DonGia) {
         this.MaSach = MaSach;
         this.TenSach = TenSach;
         this.MaTL = MaTL;
+        this.MaTG = MaTG;
         this.MaNXB = MaNXB;
         this.NgayXB = NgayXB;
         this.SoLuong = SoLuong;
@@ -53,7 +55,15 @@ public class SachDTO {
     public void setMaTL(String MaTL) {
         this.MaTL = MaTL;
     }
-
+    
+    public String getMaTG(){
+        return MaTG;
+    }
+    
+    public void setMaTG(String MaTG){
+        this.MaTG = MaTG;
+    }
+    
     public String getMaNXB() {
         return MaNXB;
     }

@@ -6,6 +6,7 @@ package DAO;
 
 import DTO.NhaXuatBanDTO;
 import DTO.SachDTO;
+import DTO.TacGiaDTO;
 import DTO.TheLoaiDTO;
 import Util.JDBCUtil;
 import java.sql.Connection;
@@ -14,7 +15,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,7 +33,7 @@ public class SachDAO {
         ArrayList<SachDTO> result = new ArrayList<SachDTO>();
         try {
             conn = JDBCUtil.getConnect();
-            String qry = "Select * from sach";
+            String qry = "SELECT * from sach";
             st = conn.createStatement();
             rs = st.executeQuery(qry);
             while (rs.next()){
@@ -38,6 +41,7 @@ public class SachDAO {
                 sach.setMaSach(rs.getString("MaSach"));
                 sach.setTenSach(rs.getString("TenSach"));
                 sach.setMaTL(rs.getString("MaTL"));
+                sach.setMaTG(rs.getString("MaTG"));
                 sach.setMaNXB(rs.getString("MaNXB"));
                 sach.setNgayXB(rs.getDate("NgayXuatBan"));
                 sach.setSoLuong(rs.getInt("SoLuong"));
@@ -52,6 +56,7 @@ public class SachDAO {
         }
         return result;    
     }
+
     
       public SachDTO getSachByMa(String maSach){
         SachDTO sach = new SachDTO();
@@ -143,7 +148,7 @@ public class SachDAO {
             return false;
         }
     }
-    
+    //Lấy tên từ mã
     public String getTenSachByMa(String MaSach){
          String tenSach = null;
          try {
@@ -162,6 +167,57 @@ public class SachDAO {
                     JOptionPane.showMessageDialog(null, "Không thể lấy dữ liễu sách !","Lỗi",JOptionPane.ERROR_MESSAGE);
         }
         return tenSach;
+    }
+    public String getTenTLByMa(String ma){
+         String ten = null;
+         try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select TenTL from theloai where MaTL = "+"'"+ ma +"'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            if (rs.next()){
+                ten= rs.getString("TenTL");
+            } 
+            conn.close();
+        }catch(java.sql.SQLException e)
+            {
+                    JOptionPane.showMessageDialog(null, "Không thể lấy dữ liễu sách !","Lỗi",JOptionPane.ERROR_MESSAGE);
+        }
+        return ten;
+    }
+    public String getTenTGByMa(String ma){
+         String ten = null;
+         try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select TenTG from tacgia where MaTG = "+"'"+ ma +"'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            if (rs.next()){
+                ten= rs.getString("TenTG");
+            } 
+            
+        }catch(java.sql.SQLException e)
+            {
+                    JOptionPane.showMessageDialog(null, "Không thể lấy dữ liễu sách !","Lỗi",JOptionPane.ERROR_MESSAGE);
+        }
+        return ten;
+    }
+    public String getTenNXBByMa(String ma){
+         String ten = null;
+         try {
+            conn = JDBCUtil.getConnect();
+            String qry = "Select TenNXB from nhaxuatban where MaNXB = "+"'"+ ma +"'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            if (rs.next()){
+                ten= rs.getString("TenNXB");
+            } 
+            
+        }catch(java.sql.SQLException e)
+            {
+                    JOptionPane.showMessageDialog(null, "Không thể lấy dữ liễu sách !","Lỗi",JOptionPane.ERROR_MESSAGE);
+        }
+        return ten;
     }
     //tìm kiếm sách
     public ArrayList<SachDTO> searchSach(String keyword){
@@ -187,25 +243,27 @@ public class SachDAO {
         }
         return list;
     }
-    //đổ data vào combobox
-    public ArrayList<TheLoaiDTO> getTenTLByMaTL(){
-           ArrayList<TheLoaiDTO> dsTL = new ArrayList<>();
-           try{
-               conn = JDBCUtil.getConnect();
-               String qry = "SELECT MaTL, TenTL FROM theloai";
-               st = conn.createStatement();
-               rs = st.executeQuery(qry);
-               
-               while(rs.next()){
-                   TheLoaiDTO tl = new TheLoaiDTO();
-                    tl.setMaTL(rs.getString("MaTL"));
-                    tl.setTenTL(rs.getString("TenTL"));
-                    dsTL.add(tl);
-               }
-               conn.close();
-           } catch(SQLException e){}
-           return dsTL;
+    
+    //Lọc
+    public ArrayList<String> thongKeTheoTheLoai() {
+        ArrayList<String> result = new ArrayList<>();
+        try {
+            conn = JDBCUtil.getConnect();
+            String sql = "SELECT MaTL, COUNT(*) AS SoLuong FROM sach GROUP BY MaTL";
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+                String theLoai = rs.getString("MaTL");
+                int soLuong = rs.getInt("SoLuong");
+                result.add(theLoai + " - " + soLuong);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
+
     //đổ data vào combobox
     public ArrayList<NhaXuatBanDTO> getTenNXBByMaNXB(){
            ArrayList<NhaXuatBanDTO> dsNXB = new ArrayList<>();
@@ -225,7 +283,43 @@ public class SachDAO {
            } catch(SQLException e){}
            return dsNXB;
     }
-    
+    public ArrayList<TheLoaiDTO> getTenTLByMaTL(){
+           ArrayList<TheLoaiDTO> dsTL = new ArrayList<>();
+           try{
+               conn = JDBCUtil.getConnect();
+               String qry = "SELECT MaTL, TenTL FROM theloai";
+               st = conn.createStatement();
+               rs = st.executeQuery(qry);
+               
+               while(rs.next()){
+                   TheLoaiDTO tl = new TheLoaiDTO();
+                    tl.setMaTL(rs.getString("MaTL"));
+                    tl.setTenTL(rs.getString("TenTL"));
+                    dsTL.add(tl);
+               }
+               conn.close();
+           } catch(SQLException e){}
+           return dsTL;
+    }
+    public ArrayList<TacGiaDTO> getTenTGByMaTG(){
+           ArrayList<TacGiaDTO> dsTG = new ArrayList<>();
+           try{
+               conn = JDBCUtil.getConnect();
+               String qry = "SELECT MaTG, TenTG FROM tacgia";
+               st = conn.createStatement();
+               rs = st.executeQuery(qry);
+               
+               while(rs.next()){
+                    TacGiaDTO tg = new TacGiaDTO();
+                    tg.setMaTG(rs.getString("MaTG"));
+                    tg.setTenTG(rs.getString("TenTG"));
+                    dsTG.add(tg);
+               }
+               conn.close();
+           } catch(SQLException e){}
+           return dsTG;
+    }
+    //cho phiếu mượn
     public boolean giamSoluong(String maSach, int soLuong){
         try  {
             conn = JDBCUtil.getConnect();
@@ -237,11 +331,11 @@ public class SachDAO {
             JDBCUtil.closeConnection(conn);
             return true;           
     }
-    catch(SQLException e){
-        e.printStackTrace();
-}
-        return false;
-}
+        catch(SQLException e){
+            e.printStackTrace();
+    }
+            return false;
+    }   
     public boolean tangSoluong(String maSach, int soLuong){
         try  {
             conn = JDBCUtil.getConnect();
@@ -256,7 +350,7 @@ public class SachDAO {
     catch(SQLException e){e.printStackTrace();}
         return false;
     }
-    
+    //cho phiếu mượn
     public int getSoluong(String maSach){
         int soLuong = 0;
         try  {
@@ -274,6 +368,7 @@ public class SachDAO {
 }
         return soLuong;
     }
+    
     public boolean isExisted(String maSach){
         try{
         conn = JDBCUtil.getConnect();

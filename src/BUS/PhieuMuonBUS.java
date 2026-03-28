@@ -134,7 +134,20 @@ public class PhieuMuonBUS {
            return true;
        }
    }
-   
+   public boolean deletePM(String ma){
+        if(ma == null) return false;
+        
+        boolean found = false;
+        for(int i = 0; i < dsPhieuMuon.size(); i++){
+            if(dsPhieuMuon.get(i).getMaPM().equalsIgnoreCase(ma)){
+                dsPhieuMuon.remove(i);
+                found = true;
+                break;
+            }
+        }
+        if(!found) return false;
+        return phieuMuonDao.deletePM(ma);
+    }
 //   public boolean updateQuaHan(PhieuMuonDTO pm){
 //       return phieuMuonDao.updateQuaHan(pm);
 //   }

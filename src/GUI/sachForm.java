@@ -6,13 +6,16 @@ package GUI;
 
 import BUS.SachBUS;
 import static BUS.SachBUS.dsSach;
+import DAO.SachDAO;
 import DTO.SachDTO;
+import DTO.TheLoaiDTO;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -31,6 +34,17 @@ public class sachForm extends javax.swing.JPanel {
     public sachForm() {
         initComponents();
         loadData();
+        loadThongKeTheLoaiCombo();
+    }
+    
+    //tạo combobox thong ke
+    private void loadThongKeTheLoaiCombo() {
+        cbxTheLoai.removeAllItems(); // clear trước
+        SachBUS bus = new SachBUS();
+        ArrayList<String> data = bus.thongKeTheoTheLoai();
+        for (String item : data) {
+            cbxTheLoai.addItem(item);
+        }
     }
 
     /**
@@ -52,6 +66,7 @@ public class sachForm extends javax.swing.JPanel {
         btnAdd1 = new javax.swing.JButton();
         btnExport = new javax.swing.JButton();
         btnImport = new javax.swing.JButton();
+        cbxTheLoai = new javax.swing.JComboBox<>();
         jScrollPane2 = new javax.swing.JScrollPane();
         sachTable = new javax.swing.JTable();
 
@@ -60,8 +75,7 @@ public class sachForm extends javax.swing.JPanel {
         pnTimkiem4.setBackground(new java.awt.Color(255, 255, 255));
         pnTimkiem4.setPreferredSize(new java.awt.Dimension(1237, 60));
 
-        jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel16.setText("TÌM KIẾM THEO MÃ ");
+        jLabel16.setText("Tìm kiếm");
 
         jTextField5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +148,13 @@ public class sachForm extends javax.swing.JPanel {
             }
         });
 
+        cbxTheLoai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Thống kê tổng hợp" }));
+        cbxTheLoai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTheLoaiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnTimkiem4Layout = new javax.swing.GroupLayout(pnTimkiem4);
         pnTimkiem4.setLayout(pnTimkiem4Layout);
         pnTimkiem4Layout.setHorizontalGroup(
@@ -145,41 +166,43 @@ public class sachForm extends javax.swing.JPanel {
                 .addComponent(editBook3, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(deleteBook3)
-                .addGap(88, 88, 88)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(jLabel16)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton8)
+                .addGap(26, 26, 26)
                 .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExport)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnExport)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAdd1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
         );
         pnTimkiem4Layout.setVerticalGroup(
             pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
+            .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(editBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(addBook3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAdd1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnImport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(deleteBook3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(editBook3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                    .addComponent(addBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnExport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAdd1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteBook3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton8)
+            .addGroup(pnTimkiem4Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel16)))
-                .addGap(15, 15, 15))
+                        .addComponent(jLabel16)
+                        .addComponent(cbxTheLoai, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton8))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         sachTable.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -230,6 +253,7 @@ public class sachForm extends javax.swing.JPanel {
                 sach.getMaSach(),
                 sach.getTenSach(),
                 sach.getMaTL(),
+                sach.getMaTG(),
                 sach.getMaNXB(),
                 sach.getNgayXB(),
                 sach.getDonGia(),
@@ -260,12 +284,13 @@ public class sachForm extends javax.swing.JPanel {
         String maSach = (String)sachTable.getValueAt(selectedRow, 0);
         String tenSach = (String)sachTable.getValueAt(selectedRow, 1);
         String maTL = (String)sachTable.getValueAt(selectedRow, 2);
-        String maNXB = (String)sachTable.getValueAt(selectedRow, 3);
-        Date ngayXB = (Date)sachTable.getValueAt(selectedRow, 4);
-        int soLuong = (int)sachTable.getValueAt(selectedRow, 5);
-        double donGia = (double)sachTable.getValueAt(selectedRow, 6);
+        String maTG = (String)sachTable.getValueAt(selectedRow, 3);
+        String maNXB = (String)sachTable.getValueAt(selectedRow, 4);
+        Date ngayXB = (Date)sachTable.getValueAt(selectedRow, 5);
+        int soLuong = (int)sachTable.getValueAt(selectedRow, 6);
+        double donGia = (double)sachTable.getValueAt(selectedRow, 7);
         
-        SachDTO sach1 = new SachDTO(maSach, tenSach, maTL, maNXB, ngayXB, soLuong, donGia);
+        SachDTO sach1 = new SachDTO(maSach, tenSach, maTL, maTG, maNXB, ngayXB, soLuong, donGia);
         
         AddBookForm bookForm = new AddBookForm();
         bookForm.setModeSua(sach1);
@@ -334,16 +359,21 @@ public class sachForm extends javax.swing.JPanel {
             loadData(); // reload lại bảng
         }
     }//GEN-LAST:event_btnImportActionPerformed
+
+    private void cbxTheLoaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTheLoaiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxTheLoaiActionPerformed
     private void customizeTable() {
     sachTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); // cho phép chỉnh tay
 
     sachTable.getColumnModel().getColumn(0).setPreferredWidth(80);   // Mã sách
-    sachTable.getColumnModel().getColumn(1).setPreferredWidth(400);  // Tên sách
-    sachTable.getColumnModel().getColumn(2).setPreferredWidth(220);  // Thể loại
-    sachTable.getColumnModel().getColumn(3).setPreferredWidth(200);  // NXB
-    sachTable.getColumnModel().getColumn(4).setPreferredWidth(140);  // Năm XB
-    sachTable.getColumnModel().getColumn(5).setPreferredWidth(80);   // Số lượng
-    sachTable.getColumnModel().getColumn(6).setPreferredWidth(150);     
+    sachTable.getColumnModel().getColumn(1).setPreferredWidth(320);  // Tên sách
+    sachTable.getColumnModel().getColumn(2).setPreferredWidth(170);  // Thể loại
+    sachTable.getColumnModel().getColumn(3).setPreferredWidth(180);  // Tác giả
+    sachTable.getColumnModel().getColumn(4).setPreferredWidth(140);  // NXB
+    sachTable.getColumnModel().getColumn(5).setPreferredWidth(140);  // Năm XB
+    sachTable.getColumnModel().getColumn(6).setPreferredWidth(80);   // Số lượng
+    sachTable.getColumnModel().getColumn(7).setPreferredWidth(120);  // Đơn giá
     
     sachTable.setRowHeight(32);
     sachTable.setFont(new Font("Segoe UI", Font.PLAIN, 14));
@@ -362,6 +392,7 @@ public class sachForm extends javax.swing.JPanel {
         header.add("Mã Sách");
         header.add("Tên Sách");
         header.add("Thể loại");
+        header.add("Tác giả");
         header.add("Nhà xuất bản");
         header.add("Năm xuất bản");
         header.add("Số lượng");
@@ -372,8 +403,9 @@ public class sachForm extends javax.swing.JPanel {
             Vector now = new Vector();
             now.add(sach.getMaSach());
             now.add(sach.getTenSach());
-            now.add(sach.getMaTL());
-            now.add(sach.getMaNXB());
+            now.add(sachBus.getTenByMaTL(sach.getMaTL()));
+            now.add(sachBus.getTenByMaTG(sach.getMaTG()));
+            now.add(sachBus.getTenNXBByMaNXB(sach.getMaNXB()));
             now.add(sach.getNgayXB());
             now.add(sach.getSoLuong());
             now.add(sach.getDonGia());
@@ -389,6 +421,7 @@ public class sachForm extends javax.swing.JPanel {
     private javax.swing.JButton btnAdd1;
     private javax.swing.JButton btnExport;
     private javax.swing.JButton btnImport;
+    private javax.swing.JComboBox<String> cbxTheLoai;
     private javax.swing.JButton deleteBook3;
     private javax.swing.JButton editBook3;
     private javax.swing.JButton jButton8;

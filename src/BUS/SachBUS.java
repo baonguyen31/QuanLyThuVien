@@ -5,8 +5,11 @@
 package BUS;
 
 import DAO.SachDAO;
+import DTO.NhaXuatBanDTO;
 import DTO.PhieuMuonDTO;
 import DTO.SachDTO;
+import DTO.TacGiaDTO;
+import DTO.TheLoaiDTO;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -42,8 +46,6 @@ public class SachBUS {
     }
     //Thêm
     public boolean insertSach(SachDTO sach){
-        //Kiểm tra data hợp lệ
-        sach.setSoLuong(0);
         
         if(sach.getTenSach() == null){
             JOptionPane.showMessageDialog(null, "Không được để trống Tên sách");
@@ -100,6 +102,16 @@ public class SachBUS {
         if(!found) return false;
         return sachDao.deleteSach(ma);
     }
+    //Đổ data vào combobox
+    public ArrayList<NhaXuatBanDTO> getTenNXBByMaNXB(){
+        return sachDao.getTenNXBByMaNXB();
+    }
+    public ArrayList<TheLoaiDTO> getTenTLByMaTL(){
+        return sachDao.getTenTLByMaTL();
+    }
+    public ArrayList<TacGiaDTO> getTenTGByMaTG(){
+        return sachDao.getTenTGByMaTG();
+    }
     
     public String timTenSachTheoMa(String id){
         //Kiểm tra data hợp lệ
@@ -114,6 +126,15 @@ public class SachBUS {
     //lấy tên sách cho thống kê
     public String getTenByMaSach(String MaSach){
         return sachDao.getTenSachByMa(MaSach);
+    } 
+    public String getTenByMaTL(String ma){
+        return sachDao.getTenTLByMa(ma);
+    } 
+    public String getTenByMaTG(String ma){
+        return sachDao.getTenTGByMa(ma);
+    } 
+    public String getTenNXBByMaNXB(String ma){
+        return sachDao.getTenNXBByMa(ma);
     } 
     //tìm kiếm sách
     public ArrayList<SachDTO> searchSach(String keyword){
@@ -131,7 +152,11 @@ public class SachBUS {
         }
         return result;
     }
-    
+    //Lọc và thống kê
+    public ArrayList<String> thongKeTheoTheLoai() {
+        return sachDao.thongKeTheoTheLoai();
+    }
+
     public int countSach(){
          int tong = 0;
          dsSach = new ArrayList<SachDTO>();

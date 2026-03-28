@@ -114,7 +114,19 @@ public class PhieuMuonDAO {
         return false;
     }
     
-    
+    public boolean deletePM(String ma){
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "Delete FROM phieumuon WHERE MaPM = '"+ ma +"'";
+            
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            return true;
+        } catch(java.sql.SQLException e){
+            JOptionPane.showMessageDialog(null, "Lỗi xóa phiếu mượn trong DB");
+            return false;
+        }
+    }
     public void updateQuaHan() {
     try {
         conn = JDBCUtil.getConnect();
