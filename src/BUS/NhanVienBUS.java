@@ -60,6 +60,7 @@ public class NhanVienBUS {
         }
         return null;
     }
+    
     public boolean checkChucVu(NhanVienDTO nv){
         if(nv.getChucVu().equalsIgnoreCase("Quản lý")){
             return true;

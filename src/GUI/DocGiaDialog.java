@@ -21,6 +21,7 @@ public class DocGiaDialog extends javax.swing.JDialog {
      */
     private DocGiaDTO selectedDocGia;
     private ArrayList<DocGiaDTO> list = new ArrayList<>();
+    private ArrayList<DocGiaDTO> currentList = new ArrayList<>();
     public DocGiaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         setUndecorated(true);
@@ -151,12 +152,14 @@ public class DocGiaDialog extends javax.swing.JDialog {
     public void loadList(){
         String keyWord = txtDocGia.getText().trim();
         DocGiaBUS bus = new DocGiaBUS();
-        
-        if(keyWord.isEmpty()) list = bus.getALL();
-        else{
-            list = bus.searchList(keyWord);            
+        list = bus.dgKhongKhoa();
+        if(keyWord.isEmpty()) {
+            currentList = list;
         }
-        loadData(list);
+        else{
+            currentList = bus.searchList(keyWord, currentList);   
+        }
+        loadData(currentList);
         System.out.print(list.size());
     }
     public void loadData(ArrayList<DocGiaDTO> list){

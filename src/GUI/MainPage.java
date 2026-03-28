@@ -620,13 +620,11 @@ public class MainPage extends javax.swing.JFrame {
         boolean checkChucvu = bus.checkChucVu(Auth.user);
         System.out.println(Auth.user.getChucVu());
         if(checkChucvu){
-//            pnNhanVien.setEnabled(true);
-//            jLabel8.setEnabled(true);
+
               pnNhanVien.setVisible(true);
               pnThongKe.setVisible(true);
         } else {
-//            pnNhanVien.setEnabled(false);
-//            jLabel8.setEnabled(false);
+
               pnNhanVien.setVisible(false);
               pnThongKe.setVisible(false);
         }

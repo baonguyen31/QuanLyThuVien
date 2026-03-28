@@ -158,6 +158,11 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         jLabel6.setText("Trạng thái");
 
         cbTrangThai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTrangThai.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTrangThaiActionPerformed(evt);
+            }
+        });
 
         CTPMTable.setModel(CTPMTable.getModel());
         jScrollPane2.setViewportView(CTPMTable);
@@ -637,6 +642,10 @@ public class AddPhieuMuon extends javax.swing.JPanel {
 //        SachDTO sach = sachDia.getSelectedSach();
         if(sach != null) txtMaSach.setText(sach.getMaSach());
     }//GEN-LAST:event_btnSachListActionPerformed
+
+    private void cbTrangThaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTrangThaiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbTrangThaiActionPerformed
      private void loadPMByMaPm(String MaPM){
         PhieuMuonBUS pm = new PhieuMuonBUS();
         PhieuMuonDTO dto = pm.getByMaPM(MaPM);

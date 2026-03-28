@@ -21,11 +21,24 @@ public class DocGiaBUS {
         return dsdg;
     }
     
-    public ArrayList<DocGiaDTO> searchList(String keyWord){
+    public ArrayList<DocGiaDTO> searchList(String keyWord, ArrayList<DocGiaDTO> list){
         ArrayList<DocGiaDTO> result = new ArrayList<>();
-        for(DocGiaDTO dg : dsdg){
+        for(DocGiaDTO dg : list){
             if ((dg.getHoDG()+ " " + dg.getTenDG() + " " + dg.getDiaChi() + " " + dg.getSDT()).toLowerCase().contains(keyWord.toLowerCase()))
                 result.add(dg);
+        }
+        System.out.println("Đọc giả" + result.size());
+        return result;
+    }
+    
+    public ArrayList<DocGiaDTO> dgKhongKhoa(){
+        ArrayList<DocGiaDTO> result = new ArrayList<>();
+        if(dsdg == null ) dsdg = new ArrayList<DocGiaDTO>();
+        dsdg =  docgiadao.selectAll();
+        for(DocGiaDTO dto : dsdg){
+            if(dto.getTrangThai() == 0){
+                result.add(dto);
+            }
         }
         return result;
     }

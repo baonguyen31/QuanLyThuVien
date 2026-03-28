@@ -114,7 +114,7 @@ public class AddDocGiaForm extends javax.swing.JFrame {
         xacnhanbutton.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         xacnhanbutton.setForeground(new java.awt.Color(255, 255, 255));
         xacnhanbutton.setText("Xác Nhận");
-        xacnhanbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+   	xacnhanbutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 xacnhanbuttonMouseClicked(evt);
             }
@@ -241,19 +241,21 @@ public class AddDocGiaForm extends javax.swing.JFrame {
                         .addGap(14, 14, 14)
                         .addComponent(pnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(hodocgialabel)
-                    .addComponent(hodocgiatext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(madocgialabel)
-                        .addComponent(madocgiatext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(madocgiatext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(hodocgialabel)
+                        .addComponent(hodocgiatext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(tendocgialabel)
-                    .addComponent(tendocgiatext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(trangthailabel)
-                        .addComponent(trangthaitext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(trangthaitext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tendocgialabel)
+                        .addComponent(tendocgiatext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(sdtlabel)
@@ -266,7 +268,6 @@ public class AddDocGiaForm extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(diachidocgiatext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(49, 49, 49)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(huybutton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(xacnhanbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -313,6 +314,14 @@ public class AddDocGiaForm extends javax.swing.JFrame {
     private void xacnhanbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_xacnhanbuttonActionPerformed
         DocGiaBUS bus = new DocGiaBUS();
         DocGiaDAO dao = new DocGiaDAO();
+        String ttString = trangthaitext.getText().trim(); 
+        int trangthai;
+
+        if (ttString.equalsIgnoreCase("Hoạt động")) {
+            trangthai = 0;
+        } else {
+            trangthai = 1;
+        }
         DocGiaDTO dg;
          if (sdttext.getText().length()!=10)
         {
@@ -322,7 +331,7 @@ public class AddDocGiaForm extends javax.swing.JFrame {
         }
         if (titlelabel.getText().equals("Thêm độc giả"))
         {
-        dg = new DocGiaDTO(bus.generateMADG(),hodocgiatext.getText(),tendocgiatext.getText(),sdttext.getText(),diachidocgiatext.getText(),1);
+        dg = new DocGiaDTO(bus.generateMADG(),hodocgiatext.getText(),tendocgiatext.getText(),sdttext.getText(),diachidocgiatext.getText(),0);
         if (dao.insertDocGia(dg))
         {
             JOptionPane.showMessageDialog(null, "thêm độc giả thành công");
@@ -337,8 +346,8 @@ public class AddDocGiaForm extends javax.swing.JFrame {
             String ten = tendocgiatext.getText();
             String sdt = sdttext.getText();
             String diachi = diachidocgiatext.getText();
-            int trangthai = Integer.parseInt(trangthaitext.getText());
-            dg = new DocGiaDTO(ma,ho,ten,sdt,diachi,trangthai);
+            int trangThai = Integer.parseInt(trangthaitext.getText());
+            dg = new DocGiaDTO(ma,ho,ten,sdt,diachi,trangThai);
             if (dao.updateDocGia(dg))
             {
             JOptionPane.showMessageDialog(null,"sửa thành công");
