@@ -362,6 +362,9 @@ public class phieuMuonForm extends javax.swing.JPanel {
         PhieuMuonBUS pmBus = new PhieuMuonBUS();
         currentList = pmBus.getAll();
         pmBus.updateQuaHan();
+        txtSearch.setText(null);
+        txtTuNgay.setDate(null);
+        txtDenNgay.setDate(null);
         loadData(currentList);
     }//GEN-LAST:event_btnAdd1ActionPerformed
 

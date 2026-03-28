@@ -22,6 +22,7 @@ import javax.swing.table.DefaultTableModel;
 public class docgiaForm extends javax.swing.JPanel {
 
     
+    private ArrayList<DocGiaDTO> listDg  = new ArrayList<>();
     public docgiaForm() {
         initComponents();
         loadData();
@@ -193,7 +194,10 @@ public class docgiaForm extends javax.swing.JPanel {
             dgbus.getALL();
         }
         String ten = timkiemtext.getText();
-        loadDataSearch(dgbus.searchList(ten));
+        listDg = dgbus.searchList(ten, DocGiaBUS.dsdg);
+        loadDataSearch(listDg);
+        
+        
     }                                        
 
     private void addDocGia3MouseClicked(java.awt.event.MouseEvent evt) {                                        
@@ -220,7 +224,15 @@ public class docgiaForm extends javax.swing.JPanel {
         String dc = docGiaTable.getValueAt(selectedRow, 4).toString();
 
 
-        int trangthai = Integer.parseInt(docGiaTable.getValueAt(selectedRow, 5).toString());
+        String ttString = docGiaTable.getValueAt(selectedRow, 5).toString(); 
+        int trangthai;
+
+        if (ttString.equalsIgnoreCase("Hoạt động")) {
+            trangthai = 0;
+        } else {
+            trangthai = 1;
+        }
+//        int trangthai = Integer.parseInt(docGiaTable.getValueAt(selectedRow, 5).toString());
 
 
         DocGiaDTO dto = new DocGiaDTO(ma, ho, ten, sdt, dc, trangthai);
@@ -323,7 +335,7 @@ public class docgiaForm extends javax.swing.JPanel {
             now.add(docgia.getTenDG());
             now.add(docgia.getSDT());
             now.add(docgia.getDiaChi());
-            now.add(docgia.getTrangThai());
+            now.add(docgia.getTrangThaiString());
             model.addRow(now);
 
         }

@@ -121,21 +121,25 @@
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="hodocgialabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="hodocgiatext" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="madocgialabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="madocgiatext" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="hodocgialabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="hodocgiatext" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace pref="10" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tendocgialabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tendocgiatext" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="trangthailabel" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="trangthaitext" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="tendocgialabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tendocgiatext" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
@@ -154,7 +158,6 @@
                           <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="huybutton" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                       <Component id="xacnhanbutton" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>

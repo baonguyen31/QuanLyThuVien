@@ -59,7 +59,7 @@ public class DocGiaDAO {
             qry += "'" + docgiadto.getTenDG() + "',";
             qry += "'" + docgiadto.getSDT() + "',";
             qry += "'" + docgiadto.getDiaChi() + "',";
-            qry += "'1')";
+            qry += "'0')";
             st = conn.createStatement();
             st.executeUpdate(qry);
             JDBCUtil.closeConnection(conn);

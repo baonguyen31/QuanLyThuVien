@@ -87,9 +87,9 @@ public class DocGiaDTO {
     }
     public String getTrangThaiString(){
         switch(this.trangThai){
-            case 0: return "Mở khóa";
+            case 0: return "Hoạt động";
             case 1: return "Đang khóa";
-            default: return "";
+            default: return "";  
         }
     }
 }
