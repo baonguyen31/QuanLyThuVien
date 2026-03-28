@@ -4,7 +4,10 @@
  */
 package GUI;
 
+import BUS.NhanVienBUS;
 import BUS.PhieuMuonBUS;
+import DTO.NhanVienDTO;
+import Util.Auth;
 import java.awt.CardLayout;
 import java.awt.Color;
 import javax.smartcardio.Card;
@@ -35,6 +38,7 @@ public class MainPage extends javax.swing.JFrame {
 
     public MainPage() {
         initComponents();
+        checkChucVu();
         addMenuEffect(pnSach);
         addMenuEffect(pnDocGia);
         addMenuEffect(pnNhanVien);
@@ -542,11 +546,6 @@ public class MainPage extends javax.swing.JFrame {
 
     private void pnNhanVienMouseClicked(java.awt.event.MouseEvent evt) {                                        
         // TODO add your handling code here:
-//        sach.setVisible(false);
-//        docgia.setVisible(false);
-//        nhanvien.setVisible(true);
-//        phieuphat.setVisible(false);
-//        phieumuon.setVisible(false);
         cardlayout.show(content, "nhanvien_list");
     }                                       
 
@@ -614,7 +613,27 @@ public class MainPage extends javax.swing.JFrame {
             login.setVisible(true);
         }
         // Nếu chọn NO, hệ thống sẽ bỏ qua vòng lặp if này và không làm gì cả (ở lại MainPage)
-    }                                     
+    }
+    private void checkChucVu(){
+        NhanVienBUS bus = new NhanVienBUS();
+        if(Auth.user != null){
+        boolean checkChucvu = bus.checkChucVu(Auth.user);
+        System.out.println(Auth.user.getChucVu());
+        if(checkChucvu){
+//            pnNhanVien.setEnabled(true);
+//            jLabel8.setEnabled(true);
+              pnNhanVien.setVisible(true);
+              pnThongKe.setVisible(true);
+        } else {
+//            pnNhanVien.setEnabled(false);
+//            jLabel8.setEnabled(false);
+              pnNhanVien.setVisible(false);
+              pnThongKe.setVisible(false);
+        }
+        }
+                
+    }
+    
 
     private void pnThongKeMouseClicked(java.awt.event.MouseEvent evt) {                                       
         // TODO add your handling code here:

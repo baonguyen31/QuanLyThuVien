@@ -60,7 +60,13 @@ public class NhanVienBUS {
         }
         return null;
     }
-
+    public boolean checkChucVu(NhanVienDTO nv){
+        if(nv.getChucVu().equalsIgnoreCase("Quản lý")){
+            return true;
+        }
+        return false;
+    }
+    
     // Tìm kiếm nhân viên
     public ArrayList<NhanVienDTO> searchList(String keyWord) {
     ArrayList<NhanVienDTO> result = new ArrayList<>();

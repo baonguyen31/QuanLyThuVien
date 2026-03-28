@@ -205,9 +205,10 @@ public class PhieuMuonDAO {
            if(!column.trim().isEmpty()){
            if(tuNgay != null) qry += " and " + column + " >= '" + sdf.format(tuNgay) + "'";
            if(denNgay != null) qry += " and " + column+ "<= '" + sdf.format(denNgay) + "'" ;
-           }
+           
            if(trangThai != -1)   qry += " and TrangThai = " + trangThai;
            qry += " order by " + column + " desc ";
+           }
            System.out.print(qry);
             st  = conn.createStatement();
             rs = st.executeQuery(qry);
