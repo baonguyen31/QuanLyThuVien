@@ -250,8 +250,8 @@ public class docgiaForm extends javax.swing.JPanel {
             return;
         }
         String maDG = docGiaTable.getValueAt(selectedRow, 0).toString();
-        DocGiaDAO dao = new DocGiaDAO();
-        if (dao.deleteDocGia(maDG)) {
+        DocGiaBUS bus = new DocGiaBUS();
+        if (bus.deleteDocGia(maDG)) {
             JOptionPane.showMessageDialog(null, "xóa thành công");
         }
 
