@@ -90,10 +90,11 @@ public class SachDAO {
         
         try{
             conn = JDBCUtil.getConnect();
-            String qry = "INSERT INTO sach(MaSach, TenSach, MaTL, MaNXB, NgayXuatBan, SoLuong, DonGia) VALUES (";
+            String qry = "INSERT INTO sach(MaSach, TenSach, MaTL, MaTG, MaNXB, NgayXuatBan, SoLuong, DonGia) VALUES (";
             qry += "'" + sach.getMaSach() + "'";
             qry += "," + "'" + sach.getTenSach() + "'";
             qry += "," + "'" + sach.getMaTL() + "'";
+            qry += "," + "'" + sach.getMaTG() + "'";
             qry += "," + "'" + sach.getMaNXB()+ "'";
             qry += "," + "'" + ngayXB + "'";
             qry += "," + "'" + sach.getSoLuong()+ "'";
@@ -120,6 +121,7 @@ public class SachDAO {
             String qry = "UPDATE sach SET ";
             qry += "TenSach = '" + sach.getTenSach() + "', ";
             qry += "MaTL = '" + sach.getMaTL() + "', ";
+            qry += "MaTG = '" + sach.getMaTG() + "', ";
             qry += "MaNXB = '" + sach.getMaNXB() + "', ";
             qry += "NgayXuatBan = '" + ngayXB + "', ";
             qry += "SoLuong = " + sach.getSoLuong() + ", ";
@@ -146,6 +148,17 @@ public class SachDAO {
         } catch(java.sql.SQLException e){
             JOptionPane.showMessageDialog(null, "Lỗi xóa sách trong DB");
             return false;
+        }
+    }
+    public void capNhatSoLuongSauXoaPhieuNhap(String maSach) {
+        try {
+            conn = JDBCUtil.getConnect();
+            String sql = "UPDATE sach SET SoLuong = 0 WHERE MaSach = '" + maSach + "'";
+            st = conn.createStatement();
+            st.executeUpdate(sql);
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     //Lấy tên từ mã

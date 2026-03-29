@@ -57,8 +57,8 @@ public class AddPhieuNhap extends javax.swing.JPanel {
      */
     
     private String generateMaPm(){
-        PhieuMuonBUS bus = new PhieuMuonBUS();
-        return bus.generateMaPM();
+        PhieuNhapBUS bus = new PhieuNhapBUS();
+        return bus.generateMaPN();
     }
     
     @SuppressWarnings("unchecked")

@@ -48,7 +48,7 @@ public class PhieuNhapDAO {
         return result;
     }
         
-     public PhieuNhapHangDTO getByMaPM(String MaPN){
+     public PhieuNhapHangDTO getByMaPN(String MaPN){
         PhieuNhapHangDTO PhieuNhapHangDto = null;
         try {
             conn = JDBCUtil.getConnect();
@@ -90,7 +90,34 @@ public class PhieuNhapDAO {
         }
         return false;
     }
-      
+    public boolean deletePN(String ma){
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "Delete FROM phieunhap WHERE MaPN = '"+ ma +"'";
+            
+            st = conn.createStatement();
+            st.executeUpdate(qry);
+            return true;
+        } catch(java.sql.SQLException e){
+            JOptionPane.showMessageDialog(null, "Lỗi xóa phiếu nhập trong DB");
+            return false;
+        }
+    }
+    public ArrayList<String> layDanhSachMaSachTheoPhieu(String ma){
+        ArrayList<String> dsMaSach = new ArrayList<>();
+        try{
+            conn = JDBCUtil.getConnect();
+            String qry = "SELECT MaSach FROM ct_phieunhap WHERE MaPN ='" + ma + "'";
+            st = conn.createStatement();
+            rs = st.executeQuery(qry);
+            while(rs.next()){
+                dsMaSach.add(rs.getString("MaSach"));
+            }
+        } catch(java.sql.SQLException e){e.printStackTrace(); return null;}
+        return dsMaSach;
+    }
+    
+
       public ArrayList<PhieuNhapHangDTO> filter(Date tuNgay, Date denNgay){
         ArrayList<PhieuNhapHangDTO> result  = new ArrayList<>();
         try {

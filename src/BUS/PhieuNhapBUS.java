@@ -30,24 +30,24 @@ public class PhieuNhapBUS {
     }
     
     public String generateMaPN() {
-    String lastMaPM = dao.getLastMaPN();
+    String lastMaPN = dao.getLastMaPN();
 
-    if (lastMaPM == null) {
-        return "PN01";
+    if (lastMaPN == null) {
+        return "PN001";
     }
 
-    int number = Integer.parseInt(lastMaPM.substring(2));
+    int number = Integer.parseInt(lastMaPN.substring(2));
     number++;
 
     if(number < 9){
-    return "PM0" + number;
+    return "PN00" + number;
     } else {
-        return "PM" + number;
+        return "PN0" + number;
     }
 }
     public PhieuNhapHangDTO getPNByMa(String MaPn){
         dao = new PhieuNhapDAO();
-        return dao.getByMaPM(MaPn);
+        return dao.getByMaPN(MaPn);
     }
     
     
@@ -94,6 +94,25 @@ public class PhieuNhapBUS {
                  }
              return true;
          }
+      public boolean deletePN(String ma){
+        SachDAO sachDao = new SachDAO();
+        if(ma == null) return false;
+        
+        boolean found = false;
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).getMaPNH().equalsIgnoreCase(ma)){
+                list.remove(i);
+                found = true;
+                break;
+            }
+        }
+        if(!found) return false;
+        ArrayList<String> dsMaSach = dao.layDanhSachMaSachTheoPhieu(ma);
+        for (String maSach : dsMaSach) {
+            sachDao.capNhatSoLuongSauXoaPhieuNhap(maSach);
+        }
+        return dao.deletePN(ma);
+    }
       public ArrayList<PhieuNhapHangDTO> filter(Date tuNgay, Date denNgay){
           return dao.filter(tuNgay, denNgay);
       }

@@ -78,6 +78,7 @@ public class SachBUS {
         
         boolean found = false;
         for(int i = 0; i < dsSach.size(); i++){
+            System.out.print("Vòng lặp: " + i + "\t");
             if(dsSach.get(i).getMaSach().equalsIgnoreCase(sach.getMaSach())){
                 dsSach.set(i, sach);
                 found = true;

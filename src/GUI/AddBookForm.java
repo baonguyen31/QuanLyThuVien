@@ -85,7 +85,7 @@ public class AddBookForm extends javax.swing.JFrame {
     public void loadTacGiaTuComboBox(){
         SachBUS bus = new SachBUS();
         ArrayList<TacGiaDTO> dsTG = bus.getTenTGByMaTG();
-        jComboBox2.removeAllItems();
+        jComboBox3.removeAllItems();
         for(TacGiaDTO dto: dsTG){
             jComboBox3.addItem(dto.getMaTG() + " - " + dto.getTenTG());
         }
@@ -333,10 +333,6 @@ public class AddBookForm extends javax.swing.JFrame {
                     .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(pnClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -391,12 +387,16 @@ public class AddBookForm extends javax.swing.JFrame {
         String maTL = selected.split(" - ")[0];
         sach.setMaTL(maTL);
         
+        selected = (String) jComboBox3.getSelectedItem();
+        String maTG = selected.split(" - ")[0];
+        sach.setMaTG(maTG);
+        
         sach.setNgayXB(jDateChooser1.getDate());
         
         selected = (String) jComboBox2.getSelectedItem();
         String maNXB = selected.split(" - ")[0];
         sach.setMaNXB(maNXB);
-        sach.setDonGia(Integer.parseInt(jTextField4.getText()));
+        sach.setDonGia(Double.parseDouble(jTextField4.getText()));
         
         SachBUS bus = new SachBUS();
         if(mode.equalsIgnoreCase("them")){
