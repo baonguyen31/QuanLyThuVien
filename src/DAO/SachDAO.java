@@ -246,6 +246,7 @@ public class SachDAO {
                 sach.setMaSach(rs.getString("MaSach"));
                 sach.setTenSach(rs.getString("TenSach"));
                 sach.setMaTL(rs.getString("MaTL"));
+                sach.setMaTG(rs.getString("MaTG"));
                 sach.setMaNXB(rs.getString("MaNXB"));
                 sach.setNgayXB(rs.getDate("NgayXuatBan"));
                 sach.setSoLuong(rs.getInt("SoLuong"));
