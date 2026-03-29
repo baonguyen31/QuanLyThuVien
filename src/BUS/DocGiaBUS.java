@@ -30,7 +30,7 @@ public class DocGiaBUS {
         System.out.println("Đọc giả" + result.size());
         return result;
     }
-    
+
     public ArrayList<DocGiaDTO> dgKhongKhoa(){
         ArrayList<DocGiaDTO> result = new ArrayList<>();
         if(dsdg == null ) dsdg = new ArrayList<DocGiaDTO>();

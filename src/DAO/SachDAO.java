@@ -150,17 +150,18 @@ public class SachDAO {
             return false;
         }
     }
-    public void capNhatSoLuongSauXoaPhieuNhap(String maSach) {
-        try {
-            conn = JDBCUtil.getConnect();
-            String sql = "UPDATE sach SET SoLuong = 0 WHERE MaSach = '" + maSach + "'";
-            st = conn.createStatement();
-            st.executeUpdate(sql);
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public void capNhatSoLuongSauXoaPhieuNhap(String maSach, int soLuong) {
+//        try {
+//            conn = JDBCUtil.getConnect();
+//            String sql = "UPDATE sach SET SoLuong = 0 WHERE MaSach = '" + maSach + "'";
+//            sql += " Set SoLuong = SoLuong" + soLuong;
+//            st = conn.createStatement();
+//            st.executeUpdate(sql);
+//            conn.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
     //Lấy tên từ mã
     public String getTenSachByMa(String MaSach){
          String tenSach = null;
@@ -285,7 +286,6 @@ public class SachDAO {
                String qry = "SELECT MaNXB, TenNXB FROM nhaxuatban";
                st = conn.createStatement();
                rs = st.executeQuery(qry);
-               
                while(rs.next()){
                    NhaXuatBanDTO nxb = new NhaXuatBanDTO();
                     nxb.setMaNXB(rs.getString("MaNXB"));

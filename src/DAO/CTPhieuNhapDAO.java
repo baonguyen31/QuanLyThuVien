@@ -21,7 +21,7 @@ public class CTPhieuNhapDAO {
     Statement st = null;
     ResultSet rs = null;
     Connection conn = null;
-      public ArrayList<CTPhieuNhapHangDTO> getCTPNByMaPM(String MaPN){
+      public ArrayList<CTPhieuNhapHangDTO> getCTPNByMaPN(String MaPN){
         ArrayList<CTPhieuNhapHangDTO> dsCTPhieuNhapHang =  new ArrayList<CTPhieuNhapHangDTO>();
         try{
             conn = JDBCUtil.getConnect();

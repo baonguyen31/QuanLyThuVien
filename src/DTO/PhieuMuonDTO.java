@@ -95,6 +95,7 @@ public class PhieuMuonDTO {
             case 0: return "Đang mượn";
             case 1: return "Đã Trả";
             case 2: return "Quá Hạn";
+            case 3: return "Đã Hủy";
             default: return "";
         }
     }

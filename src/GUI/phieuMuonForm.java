@@ -190,7 +190,7 @@ public class phieuMuonForm extends javax.swing.JPanel {
             }
         });
 
-        btnXoa.setText("Xóa");
+        btnXoa.setText("Hủy phiếu");
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
@@ -435,17 +435,26 @@ public class phieuMuonForm extends javax.swing.JPanel {
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
         int selected = phieuMuonTable.getSelectedRow();
+        if(selected == -1){
+            JOptionPane.showMessageDialog(null, "Hãy chọn 1 phiếu để hủy");
+            return;
+        }
         String maPM = phieuMuonTable.getValueAt(selected, 0).toString();
-        
         PhieuMuonBUS pmBus = new PhieuMuonBUS();
-        boolean ok = pmBus.deletePM(maPM);
-        
-        if(ok){
-            JOptionPane.showMessageDialog(null, "Xóa phiếu mượn thành công");
+        PhieuMuonDTO dto = pmBus.getByMaPM(maPM);
+        if(dto.getTrangThai() == 0){
+            boolean ok = pmBus.deletePM(maPM);
+
+            if(ok){
+                JOptionPane.showMessageDialog(null, "Hủy phiếu mượn thành công");
+            }
+            else if(!ok){
+                JOptionPane.showMessageDialog(null, "Hủy phiếu mượn thất bại");
+            }
+        }else {
+            JOptionPane.showMessageDialog(null, "Không thể xóa! Phiếu này không ở trạng thái 'Đang mượn'.");
         }
-        else if(!ok){
-            JOptionPane.showMessageDialog(null, "Xóa phiếu mượn thất bại");
-        }
+
     }//GEN-LAST:event_btnXoaActionPerformed
     private void filter(){
         phieuMuonBus = new PhieuMuonBUS();

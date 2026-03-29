@@ -1,4 +1,5 @@
  .gitignore
 build/
 nbproject/private/config.properties
-
+src/Export/*.xlsx
+src/Export/~*

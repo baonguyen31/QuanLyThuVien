@@ -134,20 +134,34 @@ public class PhieuMuonBUS {
            return true;
        }
    }
-   public boolean deletePM(String ma){
-        if(ma == null) return false;
-        
-        boolean found = false;
-        for(int i = 0; i < dsPhieuMuon.size(); i++){
-            if(dsPhieuMuon.get(i).getMaPM().equalsIgnoreCase(ma)){
-                dsPhieuMuon.remove(i);
-                found = true;
-                break;
-            }
-        }
-        if(!found) return false;
-        return phieuMuonDao.deletePM(ma);
-    }
+//   public boolean deletePM(String ma){
+//        if(ma == null) return false;
+//        
+//        boolean found = false;
+//        for(int i = 0; i < dsPhieuMuon.size(); i++){
+//            if(dsPhieuMuon.get(i).getMaPM().equalsIgnoreCase(ma)){
+//                dsPhieuMuon.remove(i);
+//                found = true;
+//                break;
+//            }
+//        }
+//        if(!found) return false;
+//        return phieuMuonDao.deletePM(ma);
+//    }
+   
+    public boolean deletePM(String MaPm){
+       PhieuMuonDTO pm = phieuMuonDao.getByMaPM(MaPm);   
+       ArrayList<CTPhieuMuonDTO> ctpmList = ctpmDao.getCTPMByMaPM(MaPm);
+       SachDAO sachDao = new SachDAO();
+       if (pm == null) return false;
+       
+       for(CTPhieuMuonDTO ct : ctpmList){
+           boolean checkCt = sachDao.tangSoluong(ct.getMaSach(), ct.getSoLuong());
+           if (!checkCt) return false;
+           
+       }            
+       return phieuMuonDao.deletePM(MaPm);
+   }
 //   public boolean updateQuaHan(PhieuMuonDTO pm){
 //       return phieuMuonDao.updateQuaHan(pm);
 //   }

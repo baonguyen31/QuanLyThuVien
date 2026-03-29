@@ -114,19 +114,37 @@ public class PhieuMuonDAO {
         return false;
     }
     
-    public boolean deletePM(String ma){
-        try{
+//    public boolean deletePM(String ma){
+//        try{
+//            conn = JDBCUtil.getConnect();
+//            String qry = "Delete FROM phieumuon WHERE MaPM = '"+ ma +"'";
+//            
+//            st = conn.createStatement();
+//            st.executeUpdate(qry);
+//            return true;
+//        } catch(java.sql.SQLException e){
+//            JOptionPane.showMessageDialog(null, "Lỗi xóa phiếu mượn trong DB");
+//            return false;
+//        }
+//    }
+    
+        public boolean deletePM(String maPm){
+        try  {
             conn = JDBCUtil.getConnect();
-            String qry = "Delete FROM phieumuon WHERE MaPM = '"+ ma +"'";
-            
+            String qry = "Update phieumuon set TrangThai = 3";
+//            qry += " , NgayTraThucTe = CURDATE()";
+            qry += " where MaPM = " + "'" + maPm  + "'";
+//            System.out.print(qry);
             st = conn.createStatement();
             st.executeUpdate(qry);
-            return true;
-        } catch(java.sql.SQLException e){
-            JOptionPane.showMessageDialog(null, "Lỗi xóa phiếu mượn trong DB");
-            return false;
-        }
+            JDBCUtil.closeConnection(conn);
+            return true;           
     }
+    catch(SQLException e){
+        e.printStackTrace();
+}
+        return false;
+}
     public void updateQuaHan() {
     try {
         conn = JDBCUtil.getConnect();

@@ -95,23 +95,17 @@ public class PhieuNhapBUS {
              return true;
          }
       public boolean deletePN(String ma){
-        SachDAO sachDao = new SachDAO();
-        if(ma == null) return false;
-        
-        boolean found = false;
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getMaPNH().equalsIgnoreCase(ma)){
-                list.remove(i);
-                found = true;
-                break;
-            }
-        }
-        if(!found) return false;
-        ArrayList<String> dsMaSach = dao.layDanhSachMaSachTheoPhieu(ma);
-        for (String maSach : dsMaSach) {
-            sachDao.capNhatSoLuongSauXoaPhieuNhap(maSach);
-        }
-        return dao.deletePN(ma);
+       PhieuNhapHangDTO pn = dao.getByMaPN(ma);   
+       ArrayList<CTPhieuNhapHangDTO> ctpnList = ctpnDao.getCTPNByMaPN(ma);
+       SachDAO sachDao = new SachDAO();
+       if (pn == null) return false;
+       
+       for(CTPhieuNhapHangDTO ct : ctpnList){
+           boolean checkCt = sachDao.giamSoluong(ct.getMaSach(), ct.getSl());
+           if (!checkCt) return false;
+           
+       }            
+       return dao.deletePN(ma);
     }
       public ArrayList<PhieuNhapHangDTO> filter(Date tuNgay, Date denNgay){
           return dao.filter(tuNgay, denNgay);

@@ -16,7 +16,7 @@ public class CTPhieuNhapBUS {
      public static ArrayList<CTPhieuNhapHangDTO> dsCTPN;
     public ArrayList<CTPhieuNhapHangDTO> getCTPNByMaPm(String MaPN){
         CTPhieuNhapDAO dao = new CTPhieuNhapDAO();
-        dsCTPN = dao.getCTPNByMaPM(MaPN);
+        dsCTPN = dao.getCTPNByMaPN(MaPN);
         return dsCTPN;
     }
 }
