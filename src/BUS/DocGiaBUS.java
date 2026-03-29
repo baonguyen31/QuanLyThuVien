@@ -57,4 +57,19 @@ public class DocGiaBUS {
             return "DG" + String.format("%02d", nextMADG);
         }
     }
+      public boolean addDocGia(DocGiaDTO dg)
+    {
+        DocGiaDAO dao = new DocGiaDAO();
+        return dao.insertDocGia(dg);
+    }
+    public boolean updateDocGia(DocGiaDTO dg)
+    {
+        DocGiaDAO dao = new DocGiaDAO();
+        return dao.updateDocGia(dg);
+    }
+    public boolean deleteDocGia(String madg)
+    {
+        DocGiaDAO dao = new DocGiaDAO();
+        return dao.deleteDocGia(madg);
+    }
 }
