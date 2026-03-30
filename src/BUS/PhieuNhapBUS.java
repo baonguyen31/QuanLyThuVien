@@ -66,21 +66,21 @@ public class PhieuNhapBUS {
         SachDTO sachDTO = new SachDTO();
         try {
             
-            System.out.println("Bắt đầu thêm phiếu");
+//            System.out.println("Bắt đầu thêm phiếu");
             pn.setTongTien(tinhTongTien(ctpn));
             boolean check  = dao.insert(pn);
-             System.out.println("thêm phiếu" + check);
+//             System.out.println("thêm phiếu" + check);
              if(!check){
-                              System.out.println("thêm phiếu fail");
+//                              System.out.println("thêm phiếu fail");
                  return false;
              } else {
                  for (CTPhieuNhapHangDTO ct : ctpn){
-                      System.out.println("Chi tiết " + ctpn.size());
+//                      System.out.println("Chi tiết " + ctpn.size());
                      SachDAO sachDao = new SachDAO();
                      ct.setMaPn(pn.getMaPNH());
                      boolean checkCt = ctpnDao.insert(ct);
                      if (!checkCt) {
-                         System.out.println("Chi tiết " + checkCt);
+//                         System.out.println("Chi tiết " + checkCt);
                        return false;
                      }         
                      else {

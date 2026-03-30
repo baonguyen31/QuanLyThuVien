@@ -484,7 +484,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         
         txtDocGia.setText(pmDto.getMaDG());
         txtDocGia.setEnabled(false);
-        txtNhanVien.setText(pmDto.getMaNV());
+        txtNhanVien.setText(Auth.user.getMaNV());
         txtNhanVien.setEditable(false);
         
         txtNgayMuon.setDate(pmDto.getNgayMuon());

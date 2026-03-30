@@ -230,7 +230,6 @@ public class PhieuMuonDAO {
                column = "NgayTraThucTe";
            }
            String qry = "Select * from phieumuon where 1 = 1 ";
-           SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
            if(!column.trim().isEmpty()){
            if(tuNgay != null) qry += " and " + column + " >= '" + sdf.format(tuNgay) + "'";
