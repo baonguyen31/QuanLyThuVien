@@ -66,6 +66,7 @@ public class AddPhieuMuon extends javax.swing.JPanel {
         model.addElement("Đang mượn");
         model.addElement("Đã Trả");
         model.addElement("Quá Hạn");
+        model.addElement("Đã Hủy");
         cbTrangThai.setModel(model);
     }
     
@@ -500,7 +501,7 @@ public class AddPhieuMuon extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackMouseClicked
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        if (txtNgayMuon.getDate().getTime()>txtHanTra.getDate().getTime())
+        if (txtNgayMuon != null && txtHanTra != null && txtNgayMuon.getDate().getTime()>txtHanTra.getDate().getTime())
         {
             JOptionPane.showMessageDialog(null, "Hạn trả phải sau ngày mượn");
             txtNgayMuon.requestFocus();

@@ -26,7 +26,9 @@ public class CTPhieuMuonDAO {
     Statement st = null;
     ResultSet rs = null;
     Connection conn = null;
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+    
+    
     public ArrayList<CTPhieuMuonDTO> getCTPMByMaPM(String MaPM){
         ArrayList<CTPhieuMuonDTO> dsCTPhieuMuon =  new ArrayList<CTPhieuMuonDTO>();
         try{
@@ -82,7 +84,6 @@ public class CTPhieuMuonDAO {
 //            System.out.println(qry);
             st = conn.createStatement();
             rs = st.executeQuery(qry);           
-         
             while(rs.next()){
                 CTPhieuMuonDTO ctpm = new CTPhieuMuonDTO();
                 ctpm.setMaSach(rs.getString("MaSach"));
@@ -91,8 +92,8 @@ public class CTPhieuMuonDAO {
             }
             JDBCUtil.closeConnection(conn);
         } catch (SQLException ex) {
-            Logger.getLogger(PhieuMuonDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+                    ex.printStackTrace();
+               }
         return result;
     }
         

@@ -44,7 +44,6 @@ public class phieuMuonForm extends javax.swing.JPanel {
         initEdit();
         phieuMuonTable.setDefaultEditor(Object.class, null);
 
-        
     }
 
     /**

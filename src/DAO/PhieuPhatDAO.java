@@ -22,7 +22,7 @@ public class PhieuPhatDAO {
     Statement st = null;
     ResultSet rs = null;
     Connection conn = null;
-    
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public ArrayList<PhieuPhatDTO> getAll(){
          ArrayList<PhieuPhatDTO> result  = new ArrayList<>();
         try{
@@ -98,6 +98,7 @@ public class PhieuPhatDAO {
             qry += "'" + pp.getMaDG() + "', ";
             qry += "'" + pp.getMaNV() + "', ";
             qry += "'" + new java.sql.Date(pp.getNgayLap().getTime()) + "', ";
+//            qry += "'" + sdf.format(pp.getNgayLap()) + "', ";
             qry += pp.getSoNgayTre()+ ", ";
             qry += pp.getTongTien() + ", ";
             qry += pp.getTrangThai() + ")";
@@ -129,7 +130,7 @@ public class PhieuPhatDAO {
             st = conn.createStatement();
             st.executeUpdate(qry);
             return true;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Lỗi sửa phiếu phạt trong DB");
             return false;

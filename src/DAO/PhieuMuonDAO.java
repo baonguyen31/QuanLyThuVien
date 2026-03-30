@@ -200,8 +200,6 @@ public class PhieuMuonDAO {
             conn = JDBCUtil.getConnect();
             String qry = "Update phieumuon ";
             qry += " Set MaDG = " + "'" + pmDto.getMaDG() + "'";
-            
-            
             qry += " , HanTra = " + "'" + sdf.format(pmDto.getHanTra() )+ "'" ;
             qry += " where MaPM = " + "'" + pmDto.getMaPM() + "'";
             st = conn.createStatement();
@@ -230,12 +228,11 @@ public class PhieuMuonDAO {
                column = "NgayTraThucTe";
            }
            String qry = "Select * from phieumuon where 1 = 1 ";
-
+           if(trangThai != -1)   qry += " and TrangThai = " + trangThai;
            if(!column.trim().isEmpty()){
            if(tuNgay != null) qry += " and " + column + " >= '" + sdf.format(tuNgay) + "'";
            if(denNgay != null) qry += " and " + column+ "<= '" + sdf.format(denNgay) + "'" ;
            
-           if(trangThai != -1)   qry += " and TrangThai = " + trangThai;
            qry += " order by " + column + " desc ";
            }
            System.out.print(qry);

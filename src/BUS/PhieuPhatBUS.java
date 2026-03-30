@@ -204,7 +204,7 @@ public class PhieuPhatBUS {
                      }   
                 }
                     int slTra = slMuon - slMat;
-                    System.out.println("Mượn" + slMuon + "Trả" + slTra + "Mất" + slMat);
+//                    System.out.println("Mượn" + slMuon + "Trả" + slTra + "Mất" + slMat);
                 if(slTra > 0 ){
                     sachDao.tangSoluong(ct.getMaSach(), slTra);
                 }
@@ -275,6 +275,9 @@ public class PhieuPhatBUS {
             }
             return dem;
     }
+    
+    
+
          
 }
 

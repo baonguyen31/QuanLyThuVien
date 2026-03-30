@@ -48,8 +48,10 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         this.mainPage = main;
 //        modelCt = (DefaultTableModel) CTPPTable.getModel();
         initComponents();
+        CTPPTable.setDefaultEditor(Object.class, null);
         loadComboPhat();
         xoaDong();
+
     }
 
     /**
@@ -501,6 +503,7 @@ public class AddPhieuPhat extends javax.swing.JPanel {
         txtSoNgayTre.setText(String.valueOf(soNgayTre));
         
         tinhTongTien();
+        txtTongTien.setEnabled(false);
         txtTongTien.revalidate();
         txtTongTien.repaint();
     }

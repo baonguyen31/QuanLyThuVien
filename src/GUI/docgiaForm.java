@@ -5,8 +5,10 @@
 package GUI;
 
 import BUS.DocGiaBUS;
+import BUS.PhieuMuonBUS;
 import DAO.DocGiaDAO;
 import DTO.DocGiaDTO;
+import DTO.PhieuMuonDTO;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -26,6 +28,16 @@ public class docgiaForm extends javax.swing.JPanel {
     public docgiaForm() {
         initComponents();
         loadData();
+        
+        docGiaTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = docGiaTable.getSelectedRow();
+                if (row != -1) {
+                    String maDG = docGiaTable.getValueAt(row, 0).toString();
+                    loadPhieuMuonCuaDocGia(maDG);
+                }
+            }
+        });
     }
 
     /**
@@ -48,6 +60,9 @@ public class docgiaForm extends javax.swing.JPanel {
         btnLamMoi = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         docGiaTable = new javax.swing.JTable();
+        phieuMuonTable = new javax.swing.JTable();
+        jScrollPane3    = new javax.swing.JScrollPane();   
+
 
         setPreferredSize(new java.awt.Dimension(1201, 830));
 
@@ -166,20 +181,40 @@ public class docgiaForm extends javax.swing.JPanel {
         ));
         jScrollPane2.setViewportView(docGiaTable);
 
+    // --- Tìm đoạn này trong initComponents ---
+        jScrollPane3 = new javax.swing.JScrollPane();
+        phieuMuonTable = new javax.swing.JTable();
+
+        phieuMuonTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] { "Mã Phiếu", "Ngày Mượn", "Hạn Trả", "Trạng Thái" }
+        ));
+        jScrollPane3.setViewportView(phieuMuonTable);
+
+        // Tạo Panel chia đôi
+        javax.swing.JPanel pnTableContainer = new javax.swing.JPanel();
+        pnTableContainer.setLayout(new java.awt.GridLayout(1, 2, 10, 0)); 
+        pnTableContainer.add(jScrollPane2); 
+        pnTableContainer.add(jScrollPane3); 
+
+        // Thiết lập lại Layout cho cả cái Panel to (this)
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnTimkiemdocgia, javax.swing.GroupLayout.DEFAULT_SIZE, 1201, Short.MAX_VALUE)
-            .addComponent(jScrollPane2)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnTimkiemdocgia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 750, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>                        
 
@@ -288,6 +323,28 @@ public class docgiaForm extends javax.swing.JPanel {
                 new Dimension(docGiaTable.getWidth(), 40)
         );
     }
+    
+    private void loadPhieuMuonCuaDocGia(String maDG){
+        PhieuMuonBUS bus = new PhieuMuonBUS();
+        ArrayList<PhieuMuonDTO> listPm = bus.pmTheoDG(maDG);
+        Vector header = new Vector();
+        header.add("Mã phiếu");
+        header.add("Ngày Mượn");
+        header.add("Hạn Trả");
+        header.add("Trạng thái");
+        DefaultTableModel model = new DefaultTableModel(header, 0);
+        for (PhieuMuonDTO pm : listPm) {
+            Vector now = new Vector();
+            now.add(pm.getMaPM());
+            now.add(pm.getNgayMuon());
+            now.add(pm.getHanTra());
+            now.add(pm.getTrangThaiString());
+            model.addRow(now);
+
+        }
+        phieuMuonTable.setModel(model);
+        customizeTable();
+    }
 
     private void loadDataSearch(ArrayList<DocGiaDTO> dsdgSearch)
     {
@@ -354,5 +411,7 @@ public class docgiaForm extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel pnTimkiemdocgia;
     private javax.swing.JTextField timkiemtext;
+    private javax.swing.JTable phieuMuonTable;
+    private javax.swing.JScrollPane jScrollPane3;
     // End of variables declaration                   
 }

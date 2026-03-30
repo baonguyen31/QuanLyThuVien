@@ -103,7 +103,7 @@ public class PhieuMuonBUS {
            SachDAO sachDao = new SachDAO();
            //lẤY DS CŨ 
           ArrayList<CTPhieuMuonDTO> oldList = ctpmDao.getCTPMByMaPM(pm.getMaPM());
-           //TRẢ LẠI DS CŨ VÀO KHO
+           //TRẢ LẠI DS CŨ VÀO KHO 
            for(CTPhieuMuonDTO ct : oldList){
                 boolean checkCt = sachDao.tangSoluong(ct.getMaSach(), ct.getSoLuong());
                 if (!checkCt) return false;
@@ -202,7 +202,7 @@ public class PhieuMuonBUS {
          dsPhieuMuon = phieuMuonDao.selectAll();
              for(PhieuMuonDTO dto : dsPhieuMuon){
                 if(dto.getTrangThai() == 0)
-                tong += 1;
+                tong ++;
     
          }
          
@@ -268,4 +268,16 @@ public class PhieuMuonBUS {
             JOptionPane.showMessageDialog(null, "Export thất bại!");
         }
     }
+     
+     public ArrayList<PhieuMuonDTO> pmTheoDG(String MaDG){
+         ArrayList<PhieuMuonDTO> result = new ArrayList<PhieuMuonDTO>();
+         dsPhieuMuon = phieuMuonDao.selectAll();
+         for(PhieuMuonDTO dto : dsPhieuMuon){
+             if(dto.getMaDG().equalsIgnoreCase(MaDG)){
+                 result.add(dto);
+                } 
+            }
+          return result;
+     }
 }
+     

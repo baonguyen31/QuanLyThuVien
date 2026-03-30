@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -204,24 +207,34 @@ public class SachBUS {
             Row header = sheet.createRow(0);
             header.createCell(1).setCellValue("MaSach");
             header.createCell(2).setCellValue("TenSach");
-            header.createCell(3).setCellValue("TheLoai");
-            header.createCell(4).setCellValue("NhaXuatBan");
-            header.createCell(5).setCellValue("NgayXuatBan");
-            header.createCell(6).setCellValue("SoLuong");
-            header.createCell(7).setCellValue("DonGia");
+            header.createCell(3).setCellValue("TacGia");            
+            header.createCell(4).setCellValue("TheLoai");
+            header.createCell(5).setCellValue("NhaXuatBan");
+            header.createCell(6).setCellValue("NgayXuatBan");
+            header.createCell(7).setCellValue("SoLuong");
+            header.createCell(8).setCellValue("DonGia");
 
             int rowNum = 1;
 
+            CellStyle dateCellStyle = wb.createCellStyle();
+            CreationHelper createHelper = wb.getCreationHelper();
+            dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd/mm/yyyy"));
             for(SachDTO sach : list){
                 Row row = sheet.createRow(rowNum++);
 
                 row.createCell(1).setCellValue(sach.getMaSach());
                 row.createCell(2).setCellValue(sach.getTenSach());
                 row.createCell(3).setCellValue(sach.getMaTL());
-                row.createCell(4).setCellValue(sach.getMaNXB());
-                row.createCell(5).setCellValue(sach.getNgayXB().toString());
-                row.createCell(6).setCellValue(sach.getSoLuong());
-                row.createCell(7).setCellValue(sach.getDonGia());
+                row.createCell(4).setCellValue(sach.getMaTG());                
+                row.createCell(5).setCellValue(sach.getMaNXB());
+//                row.createCell(6).setCellValue(sach.getNgayXB().toString());
+                Cell dateCell = row.createCell(6);
+                if (sach.getNgayXB()!= null) {
+                    dateCell.setCellValue(sach.getNgayXB()); // Truyền đối tượng Date vào
+                    dateCell.setCellStyle(dateCellStyle);    // Áp dụng định dạng ngày
+                }
+                row.createCell(7).setCellValue(sach.getSoLuong());
+                row.createCell(8).setCellValue(sach.getDonGia());
             }
 
             // auto size
@@ -255,15 +268,18 @@ public class SachBUS {
             String maSach = row.getCell(1).getStringCellValue();
             String tenSach = row.getCell(2).getStringCellValue();
             String theLoai = row.getCell(3).getStringCellValue();
-            String nxb = row.getCell(4).getStringCellValue();
-            Date ngayXB = row.getCell(5).getDateCellValue();
-            int soLuong = (int) row.getCell(6).getNumericCellValue();
-            double donGia = row.getCell(7).getNumericCellValue();
+            String tacgia = row.getCell(4).getStringCellValue();
+            String nxb = row.getCell(5).getStringCellValue();
+            Date ngayXB = row.getCell(6).getDateCellValue();
+            int soLuong = (int) row.getCell(7).getNumericCellValue();
+            double donGia = row.getCell(8).getNumericCellValue();
 
+            
             SachDTO sach = new SachDTO();
             sach.setMaSach(maSach);
             sach.setTenSach(tenSach);
             sach.setMaTL(theLoai);
+            sach.setMaTG(tacgia);
             sach.setMaNXB(nxb);
             sach.setNgayXB(ngayXB);
             sach.setSoLuong(soLuong);

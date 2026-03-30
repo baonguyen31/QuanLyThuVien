@@ -124,5 +124,54 @@ public class PhieuNhapBUS {
             return result;
                  
      }
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     //tong tien pn theo nam
+     public double timkiem(double x, int nam){
+//         list = new ArrayList<>();
+         list = dao.getAll();
+         double tong = 0;
+         for(PhieuNhapHangDTO dto : list){
+             int namPN = dto.getNgayNhap().getYear();
+             if(namPN == nam){
+//                 list.add(dto);
+                 tong = tong + dto.getTongTien();
+             }
+         }
+         return tong;
+     }
  }
 
