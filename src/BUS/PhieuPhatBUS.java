@@ -276,7 +276,16 @@ public class PhieuPhatBUS {
             return dem;
     }
     
-    
+    public double tongToanBoTien(){
+        double tong = 0;
+        if (list != null) {
+            for (PhieuPhatDTO pp : list) {
+                tong += pp.getTongTien();
+            }
+        }
+        return tong;
+    }
+
 
          
 }

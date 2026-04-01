@@ -113,7 +113,7 @@ public class CTPhieuMuonDAO {
         try {
         conn = JDBCUtil.getConnect();
         String qry = "Update ct_phieumuon Set ";
-        qry += "SoLuongTra = '" + ctpm.getSoLuongTra() + "'";
+        qry += "SoLuong = '" + ctpm.getSoLuongTra() + "'";
         qry += " where MaPM = '" + ctpm.getMaPM() + "'";
         qry += " and MaSach = '" + ctpm.getMaSach()+ "'";
         st = conn.createStatement();

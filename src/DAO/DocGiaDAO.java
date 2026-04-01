@@ -53,14 +53,14 @@ public class DocGiaDAO {
     {
         try {
             conn = JDBCUtil.getConnect();
-            String qry = "Insert into docgia values(";
+            String qry = "Insert into docgia(MaDG, Ho, Ten, SDT, DiaChi, TrangThai) values(";
             qry += "'" + docgiadto.getMaDG() + "',";
             qry += "'" + docgiadto.getHoDG()+ "',";
             qry += "'" + docgiadto.getTenDG() + "',";
             qry += "'" + docgiadto.getSDT() + "',";
             qry += "'" + docgiadto.getDiaChi() + "',";
-            qry += "'" + docgiadto.getTrangThai()+ "',";
-            qry += "'0')";
+//            qry += "" + docgiadto.getTrangThai()+ ",";
+            qry += "0)";
             st = conn.createStatement();
             st.executeUpdate(qry);
             JDBCUtil.closeConnection(conn);

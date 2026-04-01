@@ -256,6 +256,21 @@ public class PhieuMuonDAO {
                 }
        return phieumuonDs;
      }
-     
+     public int kiemTraPhieuMuonTheoDocGia(String maDG) {
+        int count = 0;
+        try {
+            conn = JDBCUtil.getConnect();
+            String sql = "SELECT COUNT(*) FROM phieumuon WHERE MaDG = '" + maDG + "'";
+            st = conn.createStatement();
+            rs = st.executeQuery(sql);
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+            JDBCUtil.closeConnection(conn);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
    
 }

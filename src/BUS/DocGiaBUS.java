@@ -5,8 +5,10 @@
 package BUS;
 
 import DAO.DocGiaDAO;
+import DAO.PhieuMuonDAO;
 import DTO.DocGiaDTO;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -70,6 +72,11 @@ public class DocGiaBUS {
     public boolean deleteDocGia(String madg)
     {
         DocGiaDAO dao = new DocGiaDAO();
+        PhieuMuonDAO pmDao = new PhieuMuonDAO();
+        if (pmDao.kiemTraPhieuMuonTheoDocGia(madg) > 0) {
+            JOptionPane.showMessageDialog(null, "Độc giả này còn phiếu mượn, không thể xóa!");
+        return false;
+    }
         return dao.deleteDocGia(madg);
     }
 }

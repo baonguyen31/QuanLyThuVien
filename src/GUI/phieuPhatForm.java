@@ -32,6 +32,12 @@ public class phieuPhatForm extends javax.swing.JPanel {
         initComponents();
         loadList();
         initEdit();
+        tinhTong();
+    }
+    public void tinhTong(){
+        PhieuPhatBUS pmBus = new PhieuPhatBUS();
+        double tongTien = pmBus.tongToanBoTien();
+        lbTongTien.setText("Tổng thành tiền: " + tongTien);
     }
 
     /**
@@ -51,6 +57,7 @@ public class phieuPhatForm extends javax.swing.JPanel {
         btnDelete = new javax.swing.JButton();
         btnLamMoi = new javax.swing.JButton();
         btnExport = new javax.swing.JButton();
+        lbTongTien = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblPhieuPhat = new javax.swing.JTable();
 
@@ -111,6 +118,9 @@ public class phieuPhatForm extends javax.swing.JPanel {
             }
         });
 
+        lbTongTien.setBackground(new java.awt.Color(255, 255, 255));
+        lbTongTien.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout pnTimkiem4Layout = new javax.swing.GroupLayout(pnTimkiem4);
         pnTimkiem4.setLayout(pnTimkiem4Layout);
         pnTimkiem4Layout.setHorizontalGroup(
@@ -118,42 +128,41 @@ public class phieuPhatForm extends javax.swing.JPanel {
             .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnEdit)
-                .addGap(18, 18, 18)
+                .addGap(31, 31, 31)
                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(lbTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jLabel16)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton8)
-                .addGap(46, 46, 46)
+                .addGap(47, 47, 47)
                 .addComponent(btnExport)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(btnLamMoi)
-                .addGap(19, 19, 19))
+                .addGap(28, 28, 28))
         );
         pnTimkiem4Layout.setVerticalGroup(
             pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTimkiem4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnExport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTimkiem4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnEdit, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                            .addComponent(jButton8)
                             .addGroup(pnTimkiem4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel16)
-                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnTimkiem4Layout.createSequentialGroup()
-                                .addComponent(btnLamMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
-                    .addGroup(pnTimkiem4Layout.createSequentialGroup()
-                        .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(23, 23, 23))
-                    .addGroup(pnTimkiem4Layout.createSequentialGroup()
-                        .addComponent(btnExport, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel16)))
+                        .addGap(16, 16, 16))
+                    .addComponent(lbTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnLamMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         tblPhieuPhat.setModel(new javax.swing.table.DefaultTableModel(
@@ -174,15 +183,15 @@ public class phieuPhatForm extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnTimkiem4, javax.swing.GroupLayout.DEFAULT_SIZE, 1170, Short.MAX_VALUE)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnTimkiem4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 783, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 789, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -293,6 +302,8 @@ public class phieuPhatForm extends javax.swing.JPanel {
         PhieuPhatBUS pmBus = new PhieuPhatBUS();
         currentList = pmBus.getAll();
         loadData(currentList);
+        tinhTong();
+        
     }//GEN-LAST:event_btnLamMoiActionPerformed
 
     private void btnLocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocActionPerformed
@@ -378,6 +389,7 @@ public class phieuPhatForm extends javax.swing.JPanel {
     private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lbTongTien;
     private javax.swing.JPanel pnTimkiem4;
     private javax.swing.JTable tblPhieuPhat;
     private javax.swing.JTextField txtSearch;
